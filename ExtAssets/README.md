@@ -1,0 +1,1 @@
+This is where all the assets go that are not part of the ROM, but still part of the game. Think Famitracker files, Piskelapp files, concept art, unused test scripts, et cetera.

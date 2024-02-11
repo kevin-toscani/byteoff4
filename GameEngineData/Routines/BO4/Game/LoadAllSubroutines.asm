@@ -10,7 +10,7 @@
 	.include ROOT\Game\Subroutines\doCleanUpSpriteRam.asm
 	.include ROOT\Game\Subroutines\doWaitFrame.asm
 	.include ROOT\Game\Subroutines\doHandleBounds.asm
-	.include BO4_ROOT\Game\Subroutines\doLoadScreen.asm
+	.include Routines\BO4\Game\Subroutines\doLoadScreen.asm
 	.include ROOT\Game\Subroutines\doLoadScreen2.asm
 
 	.include ROOT\Game\Subroutines\ToggleTables.asm

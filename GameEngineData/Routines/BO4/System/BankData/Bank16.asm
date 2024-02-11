@@ -1,6 +1,6 @@
 
 ;; Add the Bank16 part of doLoadScreen 
-.include BO4_ROOT\Game\Subroutines\doLoadScreen16.asm
+.include Routines\BO4\Game\Subroutines\doLoadScreen16.asm
 
 AllTextGroups:	
 	.include "ScreenData\npcTextGroup.dat"

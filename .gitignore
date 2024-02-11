@@ -27,4 +27,4 @@ ExtAssets/untracked
 !GameEngineData
 !GameEngineData/Routines
 !GameEngineData/Routines/BO4
-!GameEngineData/Routines/BO4/*
+!GameEngineData/Routines/BO4/**/*

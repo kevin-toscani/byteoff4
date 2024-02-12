@@ -8,6 +8,10 @@ https://nesmakers.com/index.php?threads/4-5-x-move-doloadscreen-to-bank-16.7019/
 SciNEStist - Let's improve scrolling together! [4.5.9] (dohandlecamera updates/fixes)  
 https://nesmakers.com/index.php?threads/lets-improve-scrolling-together-4-5-9-dohandlecamera-updates-fixes.7929/
 
+## zapper
+[4.5.9] Adding zapper support
+https://www.nesmakers.com/index.php?threads/4-5-9-adding-zapper-support.8362/#post-49718
+
 ## To do
 JamesNES - [4.5.9] Move your Inputs out of the Static Bank  
 https://nesmakers.com/index.php?threads/4-5-9-move-your-inputs-out-of-the-static-bank.7730/

@@ -125,7 +125,14 @@ OBJECT_IS_ZAPPABLE = $80   ; Use object flag Bit-7 for zappability.
     LDX #$00
 -zap_objLoop:
 
-    ;; 4b. Check if "object x" is zappable
+    ;; 4b. Check if object is active
+    LDA Object_status,x     ; Get the current object's status
+    AND #%10000000          ; Check if it is active (i.e. Bit 7 = 1)
+    BNE +                   ;
+        JMP +zap_next       ; If it is inactive, go to step 6
+    +
+    
+    ;; 4c. Check if "object x" is zappable
     LDY Object_type,x       ; Get the current object's type id
     LDA MonsterBits,y       ; Check if the current object is zappable
     AND #OBJECT_IS_ZAPPABLE ;
@@ -133,7 +140,7 @@ OBJECT_IS_ZAPPABLE = $80   ; Use object flag Bit-7 for zappability.
         JMP +zap_next       ; If it is not zappable, go to step 6
     +
 
-    ;; 4c. Draw white sprite tiles where the object would be
+    ;; 4d. Draw white sprite tiles where the object would be
     
     LDA Object_x_hi,x      ; Get the object's x-position on screen
     STA tempA              ; and store it in a temp variable

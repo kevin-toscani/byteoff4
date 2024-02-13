@@ -42,6 +42,11 @@
     BEQ +drawSpace         ;; $00
     BMI +drawCharacter     ;; $80-$FF
 
+    CMP #$40
+    BCS +
+        JMP +updateFacialExpression
+    +
+
     AND #$0F
     BEQ +newLine
 
@@ -94,6 +99,10 @@
         JSR doWaitFrame
         DEC lineNumber
     BPL -
+    JMP +doPause
+
++setFacialExpression:
+    ;; update sprite data based on lower A nybble
     JMP +doPause
 
 +setPause:

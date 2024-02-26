@@ -1,7 +1,7 @@
 _default_Intro_header:
 	.byte 6
 	.byte 150
-	.byte 1
+	.byte 2
 	.word _default_Intro_pulse1
 	.word _default_Intro_pulse2
 	.word _default_Intro_triangle
@@ -10,23 +10,35 @@ _default_Intro_header:
 
 _default_Intro_pulse1:
 	.word _default_Intro_pulse1_pattern0
+	.word _default_Intro_pulse1_pattern1
 _default_Intro_pulse1_pattern0:
-	.byte NL64,INST|CONT|1,C2,D00
+	.byte NLC,17,INST|CONT|1,C2,NL1,INST|CONT|4,G5,NL2,A5,NL3
+	.byte B5,NLC,19,F5,NL3,D6,NL1,FS6,NL18,AS5
+	.byte D00
+_default_Intro_pulse1_pattern1:
+	.byte NL64,INST|CONT|1,C3,BXX,$01
 
 _default_Intro_pulse2:
 	.word _default_Intro_pulse2_pattern0
+	.word _default_Intro_pulse2_pattern1
 _default_Intro_pulse2_pattern0:
-	.byte NL64,INST|CONT|1,C2,D00
+	.byte NLC,17,INST|CONT|1,C2,NL1,INST|CONT|50,CS5,NL2,DS5,NL3
+	.byte F5,NLC,19,B4,NL3,GS5,NL1,C6,NL18,E5
+	.byte D00
+_default_Intro_pulse2_pattern1:
+	.byte NL64,INST|CONT|1,C3,BXX,$01
 
 _default_Intro_triangle:
 	.word _default_Intro_triangle_pattern0
+	.word _default_Intro_triangle_pattern0
 _default_Intro_triangle_pattern0:
-	.byte NL64,INST|CONT|6,AS0,D00
+	.byte NL64,INST|CONT|6,AS0,BXX,$01
 
 _default_Intro_noise:
 	.word _default_Intro_noise_pattern0
+	.word _default_Intro_noise_pattern0
 _default_Intro_noise_pattern0:
-	.byte NL64,INST|CONT|5,$E,D00
+	.byte NL64,INST|CONT|5,$E,BXX,$01
 
 _default_Title_header:
 	.byte 3

@@ -10,7 +10,7 @@
 	.include ROOT\Game\Subroutines\doCleanUpSpriteRam.asm
 	.include ROOT\Game\Subroutines\doWaitFrame.asm
 	.include ROOT\Game\Subroutines\doHandleBounds.asm
-	.include Routines\BO4\Game\Subroutines\doLoadScreen.asm
+	.include "Routines\BO4\Game\Subroutines\doLoadScreen.asm"
 	.include ROOT\Game\Subroutines\doLoadScreen2.asm
 
 	.include ROOT\Game\Subroutines\ToggleTables.asm
@@ -41,7 +41,7 @@
 	
 
 	.include SCR_HANDLE_OBJECTS
-	.include ROOT\Game\Subroutines\doHandleInputReads.asm
+	.include "Routines\BO4\Game\Subroutines\doHandleInputReads.asm"
 	.include ROOT\Game\Subroutines\doCreateObject.asm
 	.include ROOT\Game\Subroutines\locationFinders.asm
 	.include SCR_LOAD_SCROLL_COLUMN

@@ -185,8 +185,8 @@ skipNMIstuff:
 
 
 	SwitchBank #$1B ;; music bank
-	 JSR doSoundEngineUpdate 
-	 ReturnBank
+        JSR sabre_soundUpdate 
+    ReturnBank
 
 	
 	PLA

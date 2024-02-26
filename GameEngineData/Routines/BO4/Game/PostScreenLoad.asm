@@ -32,7 +32,19 @@
     JMP +done
 
 
+;; Screen 3: INTRO SEQUENCE
 +screen03:
+    CMP #$03
+    BNE +screen04
+
+    LDA #$21
+    STA introPPU
+    LDA #$4E
+    STA introPPU+1
+    JMP +done
+
+
++screen04:
 
 
 +done:

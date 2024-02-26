@@ -154,6 +154,7 @@
 
 
 +screen03:
+    .include "Routines/BO4/Game/IntroHandler.asm"
 
 
 +done:

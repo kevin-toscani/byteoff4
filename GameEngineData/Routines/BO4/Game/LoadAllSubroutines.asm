@@ -15,14 +15,13 @@
 
 	.include ROOT\Game\Subroutines\ToggleTables.asm
 	.include ROOT\Game\Subroutines\ejectionSubroutines.asm
-	.include ROOT\Game\Subroutines\doLoadScreenData.asm
+	.include "Routines\BO4\Game\Subroutines\doLoadScreenData.asm"
 	.include ROOT\Game\Subroutines\doLoadNametableDataFull.asm
 	.include ROOT\Game\Subroutines\doHandleCreateState.asm
 	.include ROOT\Game\Subroutines\doChangeActionStep.asm
 	.include ROOT\Game\Subroutines\doGetRandomNumber.asm
 	.include ROOT\Game\Subroutines\updateAction.asm
 	.include ROOT\Game\Subroutines\doClearAllMonsters.asm
-	;.include ROOT\Game\Subroutines\doDrawBox.asm
 	.include ROOT\Game\Subroutines\doDrawText.asm
 	.include ROOT\Game\Subroutines\doDrawTilesDirect.asm
 	.include ROOT\Game\Subroutines\doDrawVariableTiles.asm
@@ -32,6 +31,9 @@
 	.include ROOT\Game\Subroutines\doUpdateHudVarTiles.asm
 	.include ROOT\Game\Subroutines\doUpdateHudNumber.asm
 
+
+    .include "Routines\BO4\Game\Subroutines\doWaitXFrames.asm"
+    .include "Routines\BO4\Game\Subroutines\doUpdateBackgroundPalette.asm"
 
 
 	.include SCR_HANDLE_SCREEN_UPDATE

@@ -47,3 +47,4 @@ doSoundEngineUpdate:
 	.include "Routines\Sabre\sabre.asm"
 IntroSong:
 	.include "Routines\BO4\Sound\BO4.dnm_default.asm"
+    .include "Routines\BO4\Sound\BO4.dnm_static.asm"

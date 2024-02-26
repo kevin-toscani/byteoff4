@@ -23,8 +23,7 @@ StartMainGameLoop:
 	.include SCR_MATH_FUNCTIONS
 	.include SCR_LOAD_SUBROUTINES
 
-;9. Static sound data
-    .include "Routines\BO4\Sound\BO4.dnm_static.asm"
+;9. DPCM data
     .include "Routines\BO4\Sound\BO4.dnm_dpcm.asm"
 
 ;10. Vectors

@@ -11,6 +11,7 @@
 !ExtAssets
 !ExtAssets/*
 ExtAssets/untracked
+ExtAssets/sabre_ft_txt.py
 
 !Emulator
 !Emulator/game.nes

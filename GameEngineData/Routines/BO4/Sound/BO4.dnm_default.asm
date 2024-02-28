@@ -123,7 +123,7 @@ _default_Title_noise_pattern2:
 _default_StartGame_header:
 	.byte 2
 	.byte 150
-	.byte 2
+	.byte 1
 	.word _default_StartGame_pulse1
 	.word _default_StartGame_pulse2
 	.word _default_StartGame_triangle
@@ -132,40 +132,28 @@ _default_StartGame_header:
 
 _default_StartGame_pulse1:
 	.word _default_StartGame_pulse1_pattern0
-	.word _default_StartGame_pulse1_pattern1
 _default_StartGame_pulse1_pattern0:
 	.byte NL2,INST|CONT|10,F2,F3,GS3,C4,F4,INST|CONT|41,GS3,C4
 	.byte F4,INST|CONT|23,GS3,C4,F4,INST|CONT|40,GS3,C4,F4,INST|43
-	.byte NLC,34,INST|1,D00
-_default_StartGame_pulse1_pattern1:
-	.byte NL32,INST|CONT|1,C3,BXX,$01
+	.byte NL18,INST|1,C00
 
 _default_StartGame_pulse2:
 	.word _default_StartGame_pulse2_pattern0
-	.word _default_StartGame_pulse2_pattern1
 _default_StartGame_pulse2_pattern0:
 	.byte NL3,NUL,NL2,INST|CONT|23,F2,F3,GS3,C4,F4,INST|CONT|40
-	.byte GS3,C4,F4,INST|CONT|43,GS3,C4,F4,NLC,39,INST|CONT|1
-	.byte GS3,D00
-_default_StartGame_pulse2_pattern1:
-	.byte NL32,INST|CONT|1,C3,BXX,$01
+	.byte GS3,C4,F4,INST|CONT|43,GS3,C4,F4,NLC,23,INST|CONT|1
+	.byte GS3,C00
 
 _default_StartGame_triangle:
 	.word _default_StartGame_triangle_pattern0
-	.word _default_StartGame_triangle_pattern1
 _default_StartGame_triangle_pattern0:
-	.byte NL2,INST|CONT|32,DS2,NL26,F2,NL36,INST|1,D00
-_default_StartGame_triangle_pattern1:
-	.byte NL32,INST|CONT|1,C3,BXX,$01
+	.byte NL2,INST|CONT|32,DS2,NL26,F2,NL20,INST|1,C00
 
 _default_StartGame_noise:
 	.word _default_StartGame_noise_pattern0
-	.word _default_StartGame_noise_pattern1
 _default_StartGame_noise_pattern0:
-	.byte NL12,INST|CONT|27,$5,INST|CONT|5,$C,NL4,$D,$E,NL32,INST|CONT|1
-	.byte $F,D00
-_default_StartGame_noise_pattern1:
-	.byte NL32,INST|CONT|1,$4,BXX,$01
+	.byte NL12,INST|CONT|27,$5,INST|CONT|5,$C,NL4,$D,$E,NL16,INST|CONT|1
+	.byte $F,C00
 
 _default_Stage_header:
 	.byte 3
@@ -733,7 +721,7 @@ _default_Boss_DMC_pattern1:
 _default_Win_header:
 	.byte 2
 	.byte 180
-	.byte 2
+	.byte 1
 	.word _default_Win_pulse1
 	.word _default_Win_pulse2
 	.word _default_Win_triangle
@@ -742,45 +730,83 @@ _default_Win_header:
 
 _default_Win_pulse1:
 	.word _default_Win_pulse1_pattern0
-	.word _default_Win_pulse1_pattern1
 _default_Win_pulse1_pattern0:
 	.byte NL3,INST|CONT|10,F2,NL1,INST|40,NL3,INST|10,NL5,INST|40,NL3
 	.byte INST|CONT|10,GS2,NL5,INST|40,NL3,INST|CONT|10,C3,NL1,INST|40,NL15
 	.byte INST|CONT|10,F3,NL9,INST|40,NL4,INST|CONT|10,G3,F3,G3,A3
 	.byte NL32,INST|11,NL2,INST|CONT|46,F3,G3,A3,C4,F4,INST|CONT|47
 	.byte F3,G3,A3,C4,F4,INST|CONT|48,F3,G3,A3,C4
-	.byte F4,NL8,INST|CONT|1,F3,D00
-_default_Win_pulse1_pattern1:
-	.byte NL64,INST|CONT|1,F4,BXX,$01
+	.byte F4,NL8,INST|CONT|1,F3,C00
 
 _default_Win_pulse2:
 	.word _default_Win_pulse2_pattern0
-	.word _default_Win_pulse2_pattern1
 _default_Win_pulse2_pattern0:
 	.byte NL3,INST|CONT|41,GS2,NL1,INST|43,NL3,INST|41,NL5,INST|43,NL3
 	.byte INST|CONT|41,C3,NL5,INST|43,NL3,INST|CONT|41,F3,NL1,INST|43,NL15
 	.byte INST|CONT|41,GS3,NL9,INST|43,NL4,INST|CONT|41,AS3,A3,AS3,NL36
 	.byte C4,NL3,INST|1,NL2,INST|CONT|48,F3,G3,A3,C4,F4
-	.byte INST|CONT|49,F3,G3,A3,C4,F4,NL15,INST|CONT|1,E3,D00
-_default_Win_pulse2_pattern1:
-	.byte NL64,INST|CONT|1,E3,BXX,$01
+	.byte INST|CONT|49,F3,G3,A3,C4,F4,NL15,INST|CONT|1,E3,C00
 
 _default_Win_triangle:
 	.word _default_Win_triangle_pattern0
-	.word _default_Win_triangle_pattern1
 _default_Win_triangle_pattern0:
 	.byte NL8,INST|CONT|32,F2,NL4,F1,NL8,F2,NL4,INST|1,NL16
 	.byte INST|32,NL8,INST|1,INST|CONT|32,A2,C3,NL16,F2,INST|22,INST|CONT|32
-	.byte F1,NL22,INST|1,D00
-_default_Win_triangle_pattern1:
-	.byte NL64,INST|CONT|1,F1,BXX,$01
+	.byte F1,NL22,INST|1,C00
 
 _default_Win_noise:
 	.word _default_Win_noise_pattern0
-	.word _default_Win_noise_pattern1
 _default_Win_noise_pattern0:
 	.byte NL12,INST|CONT|27,$5,$5,$5,NL28,INST|CONT|5,$E,NL16,INST|CONT|27
-	.byte $5,NL32,INST|CONT|5,$E,NL22,INST|CONT|1,$F,D00
-_default_Win_noise_pattern1:
-	.byte NL64,INST|CONT|1,$F,BXX,$01
+	.byte $5,NL32,INST|CONT|5,$E,NL22,INST|CONT|1,$F,C00
+
+_default_End_header:
+	.byte 6
+	.byte 120
+	.byte 2
+	.word _default_End_pulse1
+	.word _default_End_pulse2
+	.word _default_End_triangle
+	.word NULL_noise
+	.word NULL_DMC
+
+_default_End_pulse1:
+	.word _default_End_pulse1_pattern0
+	.word _default_End_pulse1_pattern1
+_default_End_pulse1_pattern0:
+	.byte NL4,INST|CONT|51,E5,A4,C5,E5,NL10,D5,NL2,D5
+	.byte E5,F5,NL4,G5,NL2,G5,NL6,G5,NL4,E5
+	.byte A5,G5,NL2,E5,FXX,$07,D5,C5,A4,NL4,C5
+	.byte C5,NL2,D5,NL4,FXX,$08,E5,NL10,D5,NL8,FXX,$09
+	.byte G5,D00
+_default_End_pulse1_pattern1:
+	.byte NLC,44,FXX,$03,INST|CONT|51,A5,NL1,INST|CONT|52,A3,INST|49,INST|52
+	.byte INST|49,NL2,INST|52,NL14,INST|1,C00
+
+_default_End_pulse2:
+	.word _default_End_pulse2_pattern0
+	.word _default_End_pulse2_pattern1
+_default_End_pulse2_pattern0:
+	.byte NL4,INST|CONT|52,A2,C3,E3,C3,G2,B2,D3,B2
+	.byte F2,A2,G2,B2,A2,C3,E3,C3,F2,A2
+	.byte C3,A2,G2,B2,D3,G3,D00
+_default_End_pulse2_pattern1:
+	.byte NL1,INST|CONT|52,A4,INST|CONT|53,A3,INST|CONT|52,E4,INST|CONT|53,A4,INST|CONT|52
+	.byte CS4,INST|CONT|53,E4,INST|CONT|52,B3,INST|CONT|53,CS4,INST|CONT|52,E4,INST|CONT|53
+	.byte B3,INST|CONT|52,CS4,INST|CONT|53,E4,INST|CONT|52,B3,INST|CONT|53,CS4,INST|CONT|52
+	.byte A3,INST|CONT|53,B3,INST|CONT|52,CS4,INST|CONT|53,A3,INST|CONT|52,B3,INST|CONT|53
+	.byte CS4,INST|CONT|52,A3,INST|CONT|53,B3,INST|CONT|52,E3,INST|CONT|53,A3,INST|52
+	.byte INST|CONT|53,E3,INST|52,INST|CONT|53,A3,INST|CONT|52,CS3,INST|CONT|53,E3,INST|CONT|52
+	.byte B2,INST|CONT|53,CS3,NL12,INST|CONT|52,A2,NL1,A2,INST|49,INST|52
+	.byte INST|49,NL2,INST|52,NL14,INST|CONT|1,A1,C00
+
+_default_End_triangle:
+	.word _default_End_triangle_pattern0
+	.word _default_End_triangle_pattern1
+_default_End_triangle_pattern0:
+	.byte NL16,INST|CONT|21,A2,G2,NL8,F2,G2,NL16,A2,F2
+	.byte NL8,G2,B2,D00
+_default_End_triangle_pattern1:
+	.byte NLC,44,INST|CONT|21,CS4,NL1,A2,INST|1,INST|21,INST|1,NL2
+	.byte INST|21,NL14,INST|1,C00
 

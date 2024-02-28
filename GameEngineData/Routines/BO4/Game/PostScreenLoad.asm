@@ -1,13 +1,13 @@
 
 ;; Screen 0: by default, do not take any extra actions post screen load
     LDA screenType
-    BNE +screen01
+    BNE +nextScreen
         JMP +done
     
 ;; Screen 1: KEVIN81
-+screen01:
++nextScreen:
     CMP #$01
-    BNE +screen02
+    BNE +nextScreen
 
     LDA #$0F
     STA bckPal+13
@@ -18,9 +18,9 @@
 
 
 ;; Screen 2: BYTE OFF 4
-+screen02:
++nextScreen:
     CMP #$02
-    BNE +screen03
+    BNE +nextScreen
 
     LDA #$0F
     STA bckPal+1
@@ -33,9 +33,9 @@
 
 
 ;; Screen 3: INTRO SEQUENCE
-+screen03:
++nextScreen:
     CMP #$03
-    BNE +screen04
+    BNE +nextScreen
 
     LDA #$21
     STA introPPU
@@ -44,7 +44,9 @@
     JMP +done
 
 
-+screen04:
+
+;; Next screen: [tba]
++nextScreen:
 
 
 +done:

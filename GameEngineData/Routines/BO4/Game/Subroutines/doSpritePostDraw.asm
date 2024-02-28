@@ -1,12 +1,15 @@
+
+;; Screen 0: (default screens)
     LDA screenType
-    BNE +screen01
+    BNE +nextScreen
         JMP +done
 
 
-+screen01:    
+;; Screen 1: KEVIN81
++nextScreen:    
     CMP #$01
     BEQ +
-        JMP +screen02
+        JMP +nextScreen
     +
     
     ;; Wait 8 frames, then load the new colors
@@ -16,7 +19,6 @@
     LDA #$0A
     STA bckPal+15
     JSR doUpdateBackgroundPalette
-
 
     ;; Wait 8 frames, then load the new colors
     LDX #$08
@@ -52,7 +54,7 @@
     STA bckPal+15
     JSR doUpdateBackgroundPalette
 
-   ;; Wait 8 frames, then load the new colors
+    ;; Wait 8 frames, then load the new colors
     LDX #$08
     JSR doWaitXFrames
 
@@ -62,7 +64,7 @@
     STA bckPal+15
     JSR doUpdateBackgroundPalette
 
-   ;; Wait 8 frames, then warp to the next screen
+    ;; Wait 8 frames, then warp to the next screen
     LDX #$08
     JSR doWaitXFrames
     
@@ -77,11 +79,11 @@
     JMP +done
 
     
-    
-+screen02:
+;; Screen 2: BYTE OFF 4
++nextScreen:
     CMP #$02
     BEQ +
-        JMP +screen03
+        JMP +nextScreen
     +
     
     LDX #$08
@@ -152,9 +154,45 @@
     WarpToScreen #$00, #$E2, #$01
     JMP +done
 
-
-+screen03:
+;; Screen 3: ZAPHYROX-B04 INTRODUCTION
++nextScreen:
+    CMP #$03
+    BEQ +
+        JMP +nextScreen
+    +
+    
     .include "Routines/BO4/Game/IntroHandler.asm"
+    JMP +done
 
 
+;; Screen 4: END SCREEN
++nextScreen:
+    CMP #$04
+    BEQ +
+        JMP +nextScreen
+    +
+
+    ;; Draw robo sprites on screen
+    DrawSprite #$89, #$6D, #$82, #$02
+    DrawSprite #$91, #$6D, #$83, #$02
+    DrawSprite #$99, #$6D, #$84, #$02
+
+    DrawSprite #$89, #$75, #$92, #$00
+    DrawSprite #$91, #$75, #$93, #$00
+    DrawSprite #$99, #$75, #$94, #$00
+
+    DrawSprite #$89, #$7D, #$A2, #$00
+    DrawSprite #$91, #$7D, #$A3, #$00
+    DrawSprite #$99, #$7D, #$A4, #$00
+    
+    ;; Draw disco ball on screen
+    DrawSprite #$9F, #$7C, #$90, #$01
+    DrawSprite #$A7, #$7C, #$91, #$01
+    DrawSprite #$9F, #$84, #$A0, #$01
+    DrawSprite #$A7, #$84, #$A1, #$01
+
+    ;; Draw eyes on face
+    DrawSprite #$6D, #$65, #$80, #$00
+    DrawSprite #$79, #$65, #$81, #$00
+    ;rawSprite Xpos, Ypos, Chr#, Attr
 +done:

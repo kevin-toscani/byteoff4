@@ -48,7 +48,7 @@ BckSSChr28	(free)
 BckSSChr29	(free)
 GameObjectTiles	Game object tiles
 Hud		Hud tiles
-Monster_0_00	(free)
+Monster_0_00	End screen sprites
 Monster_0_01	(free)
 Monster_0_02	(free)
 Monster_0_03	(free)

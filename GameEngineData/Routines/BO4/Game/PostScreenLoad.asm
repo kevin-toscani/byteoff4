@@ -37,9 +37,12 @@
     CMP #$03
     BNE +nextScreen
 
+    STA speakTimer
+    LDA #$01
+    STA introTimer
     LDA #$21
     STA introPPU
-    LDA #$4E
+    LDA #$6E
     STA introPPU+1
     JMP +done
 

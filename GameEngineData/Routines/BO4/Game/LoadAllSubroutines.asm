@@ -34,6 +34,7 @@
 
     .include "Routines\BO4\Game\Subroutines\doWaitXFrames.asm"
     .include "Routines\BO4\Game\Subroutines\doUpdateBackgroundPalette.asm"
+    .include "Routines\BO4\Game\Subroutines\doDrawCharacter.asm"
 
 
 	.include SCR_HANDLE_SCREEN_UPDATE

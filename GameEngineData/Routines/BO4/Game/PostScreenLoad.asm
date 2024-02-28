@@ -38,6 +38,8 @@
     BNE +nextScreen
 
     STA speakTimer
+    LDA #$00
+    STA introTimer+1
     LDA #$01
     STA introTimer
     LDA #$21

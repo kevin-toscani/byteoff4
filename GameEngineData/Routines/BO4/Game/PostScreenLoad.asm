@@ -6,6 +6,10 @@
     
 ;; Screen 1: KEVIN81
 +nextScreen:
+
+    ; Disabled Raw PCM test
+    ; .include "Routines/BO4/Sound/pcm_test.asm"
+
     CMP #$01
     BNE +nextScreen
 

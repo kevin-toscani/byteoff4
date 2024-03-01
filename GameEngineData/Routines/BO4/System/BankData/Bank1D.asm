@@ -1,5 +1,5 @@
 pcmTestStart:
-.incbin "Routines/BO4/Sound/pcm_test.bin"
+    .incbin "Routines/BO4/Sound/sample.bin"
 pcmTestEnd:
 
 .org $BFFE

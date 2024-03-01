@@ -19,7 +19,7 @@
 	.include ROOT\Game\Subroutines\doLoadNametableDataFull.asm
 	.include ROOT\Game\Subroutines\doHandleCreateState.asm
 	.include ROOT\Game\Subroutines\doChangeActionStep.asm
-	.include ROOT\Game\Subroutines\doGetRandomNumber.asm
+	.include "Routines\BO4\Game\Subroutines\doGetRandomNumber.asm"
 	.include ROOT\Game\Subroutines\updateAction.asm
 	.include ROOT\Game\Subroutines\doClearAllMonsters.asm
 	.include ROOT\Game\Subroutines\doDrawText.asm

@@ -1,5 +1,6 @@
 ;; zero page
 gameMode .dsb 1
+disableInput .dsb 1
 
 
 ;; input script: press DOWN or SELECT on menu screen for cursor object
@@ -7,8 +8,8 @@ gameMode .dsb 1
 ;; [@TODO]: add DEX variation for UP press (wishlist)
 ;;
 	;; if input disabled, skip
-	LDA disableInput
-	BEQ +
+	BIT bo4Flags
+	BPL +
 		RTS
 	+
 
@@ -31,8 +32,8 @@ gameMode .dsb 1
 
 ;; input script: press A or START on menu screen for cursor object
 	;; if input disabled, skip
-	LDA disableInput
-	BEQ +
+	BIT bo4Flags
+	BPL +
 		RTS
 	+
 

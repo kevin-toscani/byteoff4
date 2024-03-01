@@ -8,11 +8,28 @@ https://nesmakers.com/index.php?threads/4-5-x-move-doloadscreen-to-bank-16.7019/
 SciNEStist - Let's improve scrolling together! [4.5.9] (dohandlecamera updates/fixes)  
 https://nesmakers.com/index.php?threads/lets-improve-scrolling-together-4-5-9-dohandlecamera-updates-fixes.7929/
 
-## zapper
+## Zapper support
 [4.5.9] Adding zapper support
 https://www.nesmakers.com/index.php?threads/4-5-9-adding-zapper-support.8362/#post-49718
 
-## To do
+## Raw PCM
+Michael C. Martin - conv_nes_pcm.c
+https://github.com/michaelcmartin/bumbershoot/blob/master/sound/conv_nes_pcm.c
+
+## Sound driver
+CutterCross - Sabre
+https://github.com/CutterCross/Sabre
+
+## Don't draw blanks
+CutterCross - [4.5.6] Combating Sprite Limits - Forcing Blank Sprites to Not Draw
+https://www.nesmakers.com/index.php?threads/4-5-6-combating-sprite-limits-forcing-blank-sprites-to-not-draw.5938/
+
+## Better RNG
+TakuikaNinja - Improving doGetRandomNumber
+https://www.nesmakers.com/index.php?threads/improving-dogetrandomnumber.7927/#post-50195
+
+
+# To do?
 JamesNES - [4.5.9] Move your Inputs out of the Static Bank  
 https://nesmakers.com/index.php?threads/4-5-9-move-your-inputs-out-of-the-static-bank.7730/
 

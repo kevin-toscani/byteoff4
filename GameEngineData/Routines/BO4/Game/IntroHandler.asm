@@ -311,7 +311,8 @@ doDrawEyes:
     +
 
     ;; Draw eyes
-    LDY spriteRamPointer
+    ;LDY spriteRamPointer
+    LDY #$00
     TAX
     
     ;; Set sprite X
@@ -381,16 +382,6 @@ doDrawEyes:
     STA spriteRamPointer
     RTS
 
-
-doGetRandomNumberToo:
-    lda randomSeed1
-    beq +doEor
-    asl
-    beq +noEor
-    bcc +noEor
-    +doEor: eor #$1d
-    +noEor: sta randomSeed1
-    rts
 
 
 +drawEyes:

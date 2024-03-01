@@ -7,9 +7,6 @@
 ;; Screen 1: KEVIN81
 +nextScreen:
 
-    ; Disabled Raw PCM test
-    ; .include "Routines/BO4/Sound/pcm_test.asm"
-
     CMP #$01
     BNE +nextScreen
 
@@ -54,8 +51,68 @@
 
 
 
+;; Screen 4: END GAME
++nextScreen:
+    CMP #$04
+    BNE +nextScreen
+
+    .include "Routines/BO4/Sound/play_sample.asm"
+
+
+
+;; Screen 5: MAIN MENU
++nextScreen:
+    CMP #$05
+    BEQ +
+        JMP +nextScreen
+    +
+
+	LDA #$00
+	STA gameMode
+	STA channelMuteStatus+CHANNEL_TRACK_PULSE2
+	CreateObject #$50, tblCursorYPosition, #$08, #$00
+
+    LDX #$06
+    -objectLoop:
+        TXA
+        PHA
+
+        JSR doGetRandomNumberToo
+        AND #$01
+        ORA #$10
+        STA temp
+        
+        -
+            JSR doGetRandomNumberToo
+            CMP #$B0
+        BCS -
+        ADC #$20
+        STA tempx
+
+        -
+            JSR doGetRandomNumberToo
+            AND #$3F
+            CMP #$30
+        BCS -
+        CLC
+        ADC #$2C
+        STA tempy
+       
+        CreateObject tempx, tempy, temp, #$00
+
+        PLA
+        TAX
+        
+        DEX
+    BNE -objectLoop
+
+    JMP +done
+
+
+
 ;; Next screen: [tba]
 +nextScreen:
+
 
 
 +done:

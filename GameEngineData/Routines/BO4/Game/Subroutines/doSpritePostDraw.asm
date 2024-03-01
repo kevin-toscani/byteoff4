@@ -195,4 +195,53 @@
     DrawSprite #$6D, #$65, #$80, #$00
     DrawSprite #$79, #$65, #$81, #$00
     ;rawSprite Xpos, Ypos, Chr#, Attr
+    
+    JMP +done
+
+    
+;; Screen 5: MENU SCREEN
++nextScreen:
+    CMP #$05
+    BEQ +
+        JMP +nextScreen
+    +
+
+    LDA introTimer
+    BEQ +
+        ; [@TODO] fadeout sequence?
+
+        CMP #1
+        BNE ++
+            WarpToScreen #$00, #$E4, #$01
+        ++
+        DEC introTimer
+    +
+    
+    ;; Each object: if xPos > $D8, xPos = $20
+    LDX #$00
+    -objectLoop:
+        LDA Object_x_hi,x
+        CMP #$D0
+        BCC +
+            LDA #$20
+            STA Object_x_hi,x
+            -
+                JSR doGetRandomNumberToo
+                AND #$3F
+                CMP #$30
+            BCS -
+            CLC
+            ADC #$2C
+            STA Object_y_hi,x
+        +
+        INX
+        CPX #TOTAL_MAX_OBJECTS
+    BNE -objectLoop
+    
+    ;JMP +done
+    
+
+;; Future screens go here
++nextScreen:
+
 +done:

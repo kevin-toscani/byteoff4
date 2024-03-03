@@ -3,8 +3,8 @@
     LDA screenType
     BNE +nextScreen
         JMP +done
-
-
+    
+    
 ;; Screen 1: KEVIN81
 +nextScreen:    
     CMP #$01

@@ -9,6 +9,61 @@
 	JMP doneDrawingThisSprite
 doDrawThisSprite:
 	
+    
+    ;; If player, draw face
+    CPX player1_object
+    BNE +faceDone
+
+        LDA Object_direction,x
+        AND #%00000100
+        BNE +
+            ;; facing right
+            LDA #$01
+            STA temp
+            LDA Object_x_hi,x
+            CLC
+            ADC #$0A
+            JMP +storeTempX
+        +
+
+        ;facing left
+        LDA #$41
+        STA temp
+        LDA Object_x_hi,x
+        SEC
+        SBC #$02
+        
+        +storeTempX:
+        SEC
+        SBC camX
+        STA tempx
+
+        LDA Object_frame,x
+        CLC
+        ADC #$01
+        AND #%00000010
+        BEQ +
+            ;; high frame
+            LDA Object_y_hi,x
+            CLC
+            ADC #$04
+            JMP +storeTempY
+        +
+
+        ;; low frame
+        LDA Object_y_hi,x
+        CLC
+        ADC #$05
+        
+        +storeTempY:
+        STA tempy
+        DrawSprite tempx, tempy, #$10, temp
+
+        ;; [@TODO] position screen on Zapp, mirror on left
+
+    +faceDone:
+
+
 ;; This routine will work together with the luts created by the old object animation tool.
 ;; Due to that, it must be included in the same bank with luts. 
 

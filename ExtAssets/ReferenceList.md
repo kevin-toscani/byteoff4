@@ -28,10 +28,15 @@ https://www.nesmakers.com/index.php?threads/4-5-6-combating-sprite-limits-forcin
 TakuikaNinja - Improving doGetRandomNumber
 https://www.nesmakers.com/index.php?threads/improving-dogetrandomnumber.7927/#post-50195
 
+## Input scripts
+baardbi - Simplified Input Scripts (platform games) 4.5.9  
+https://nesmakers.com/index.php?threads/simplified-input-scripts-platform-games-4-5-9.8419/
+
+## Seam collision fix
+TakuikaNinja - Scrolling Platformer seam collision fix [4.5.9]
+https://www.nesmakers.com/index.php?threads/scrolling-platformer-seam-collision-fix-4-5-9.7266/
 
 # To do?
 JamesNES - [4.5.9] Move your Inputs out of the Static Bank  
 https://nesmakers.com/index.php?threads/4-5-9-move-your-inputs-out-of-the-static-bank.7730/
 
-baardbi - Simplified Input Scripts (platform games) 4.5.9  
-https://nesmakers.com/index.php?threads/simplified-input-scripts-platform-games-4-5-9.8419/

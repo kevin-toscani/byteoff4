@@ -4,7 +4,7 @@ BckCHR_02	Byte Off 4 (1)
 BckCHR_03	Byte Off 4 (2)
 BckCHR_04	End Screen (1)
 BckCHR_05	End Screen (2)
-BckCHR_06	(free)
+BckCHR_06	Main tileset
 BckCHR_07	(free)
 BckCHR_08	(free)
 BckCHR_09	(free)

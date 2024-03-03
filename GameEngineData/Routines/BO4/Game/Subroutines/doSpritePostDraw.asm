@@ -212,7 +212,7 @@
 
         CMP #1
         BNE ++
-            WarpToScreen #$00, #$E4, #$01
+            WarpToScreen #$00, #$DF, #$01
         ++
         DEC introTimer
     +
@@ -238,7 +238,17 @@
         CPX #TOTAL_MAX_OBJECTS
     BNE -objectLoop
     
-    ;JMP +done
+    JMP +done
+
+
+;; Screen 6: 16x16 BUFFER SCREEN
++nextScreen:    
+    CMP #$06
+    BEQ +
+        JMP +nextScreen
+    +
+    WarpToScreen #$00, #$00, #$01
+    JMP +done
     
 
 ;; Future screens go here

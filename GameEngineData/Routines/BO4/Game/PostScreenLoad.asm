@@ -2,6 +2,8 @@
 ;; Screen 0: by default, do not take any extra actions post screen load
     LDA screenType
     BNE +nextScreen
+    
+        ChangeActionStep player1_object, #$00
         JMP +done
     
 ;; Screen 1: KEVIN81
@@ -69,6 +71,8 @@
 
 	LDA #$00
 	STA gameMode
+    STA introTimer
+    STA introTimer+1
 	STA channelMuteStatus+CHANNEL_TRACK_PULSE2
 	CreateObject #$50, tblCursorYPosition, #$08, #$00
 

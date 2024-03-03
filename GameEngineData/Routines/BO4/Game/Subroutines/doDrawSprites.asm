@@ -13,6 +13,13 @@ doDrawThisSprite:
     ;; If player, draw face
     CPX player1_object
     BNE +faceDone
+    
+        ;; Check player sprite drawing bit
+        LDA ScreenFlags00
+        AND #$01
+        BEQ +
+            JMP doneDrawingThisSprite
+        +
 
         LDA Object_direction,x
         AND #%00000100

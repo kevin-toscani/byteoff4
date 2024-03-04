@@ -641,14 +641,30 @@ isSolidSoLand:
 	;; move to position
 	;;; load the top of the tile that is being run into.
 	;;check if in a jumping state.
+    
+    CPX player1_object
+    BEQ +checkPlayerJump
+    
+    ;; If "not-player" (e.g. enemy) is in action step 4,
+    ;; change it to action step 0 here.
+    LDA Object_frame,x
+    AND #%00111000
+    CMP #%00100000
+    BNE +dontChangeToIdle
+    STX temp
+    LDA #0
+    STA temp1
+    JMP +gotLandingState
+
+    +checkPlayerJump:
 	TXA
 	STA temp
 	GetActionStep temp
-	CMP #$02 ;; presums jump is in state 2
+	CMP temp2 ;; temp2 holds the jump state (player:2, enemy:4)
 	BNE +dontChangeToIdle
-		LDA gamepad
+    		LDA gamepad
         AND #%11110000
-		BNE +isRunningWhenLanding
+		BEQ +isRunningWhenLanding
 			;; is idle when landing
 			LDA #$00
 			STA temp1

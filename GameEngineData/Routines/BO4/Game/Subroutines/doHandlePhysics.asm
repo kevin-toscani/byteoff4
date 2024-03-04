@@ -652,7 +652,7 @@ isSolidSoLand:
     CMP #%00100000
     BNE +dontChangeToIdle
     STX temp
-    LDA #0
+    LDA #$00
     STA temp1
     JMP +gotLandingState
 
@@ -660,7 +660,7 @@ isSolidSoLand:
 	TXA
 	STA temp
 	GetActionStep temp
-	CMP temp2 ;; temp2 holds the jump state (player:2, enemy:4)
+	CMP #$02
 	BNE +dontChangeToIdle
     		LDA gamepad
         AND #%11110000

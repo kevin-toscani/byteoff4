@@ -29,7 +29,7 @@
         
         LDA #$80
         STA Object_v_speed_lo,x
-        LDA #$FE
+        LDA #$FD
         STA Object_v_speed_hi,x
         LDA #$1E
         STA disabledTimer

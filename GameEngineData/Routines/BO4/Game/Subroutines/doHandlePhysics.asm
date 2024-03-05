@@ -541,7 +541,10 @@ GRAVITY_HI = #$00
 		GetCollisionPoint temp, tempy, tempB ;; is it a solid
 			BEQ +checkForSecondPoint
 			CMP #$0A
-			BEQ +notSolid
+            BNE +
+                JMP +notSolid
+            +
+
 		GetCollisionPoint temp3, tempy, tempA ;; is it a solid?	
 			BEQ +checkForFirstPoint
 			CMP #$0A
@@ -573,8 +576,12 @@ GRAVITY_HI = #$00
 			
 	+isSolid
 
-		JMP isSolidSoLand
-	
+        ;; If "launcher projectile" (e.g. object type $14), ignore solid ground.
+        LDA Object_type,x
+        CMP #$14
+        BEQ +
+            JMP isSolidSoLand
+        +
 	
 	
 		+notSolid:
@@ -644,9 +651,15 @@ isSolidSoLand:
     
     CPX player1_object
     BEQ +checkPlayerJump
-    
+
+    ;; If "launcher" (e.g. object type $13), don't change to idle.
+    LDA Object_type,x
+    CMP #$13
+    BEQ +dontChangeToIdle
+
+
     ;; If "not-player" (e.g. enemy) is in action step 4,
-    ;; change it to action step 0 here.
+    ;; change it to action step 0 here.    
     LDA Object_frame,x
     AND #%00111000
     CMP #%00100000

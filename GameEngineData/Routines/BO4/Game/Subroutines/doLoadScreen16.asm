@@ -1,6 +1,8 @@
 
 doLoadScreen16:
 
+    SwitchCHRBank #$00
+
 	LoadBackgroundPalettes newPal
 	JSR doWaitFrame
 		;; We wait this frame because the LoadBackgroundPalettes routine
@@ -123,6 +125,11 @@ notMM:
 	BEQ LOAD_MSSS
 	JMP notMSSS
 LOAD_MSSS:
+
+    LDA #$00
+    STA tempChr
+    MSSS_CHR_LOAD_LOOP:
+
 	LDA backgroundTilesToLoad
 	LSR 
 	LSR
@@ -182,7 +189,16 @@ LOAD_MSSS:
 	;; Load Hud
 	LoadChrData #$1E, #$1C, #$00, #$40, OtherChrTiles_Lo, OtherChrTiles_Hi, #$00
 	
-	
+    LDA userScreenByte0
+    BEQ +noAnimatedTiles
+        INC tempChr
+        LDA tempChr
+        CMP #$03
+        BEQ +noAnimatedTiles
+            SwitchCHRBank tempChr
+            JMP MSSS_CHR_LOAD_LOOP
+    +noAnimatedTiles
+
 	JMP doneLoadingChrs
 notMSSS:
 	CMP #%01111100
@@ -334,7 +350,11 @@ doMMSS:
 notMMSS:
 doneLoadingChrs:
 		
-		
+    SwitchCHRBank #$00
+    LDA #$00
+    STA tempChr
+      
+    Load_Sprite_CHR_Loop:		
 		
 		
 	LoadChrData #$15, #$00, #$00, #$80, GameObjectCHRAddLo, GameObjectCHRAddHi, #$00
@@ -367,4 +387,28 @@ doneLoadingChrs:
 		;arg6 - Bank 16 table offset
 			JSR doWaitFrame
 
+    LDA userScreenByte0
+    BNE +hasAnimatedTiles
+            JMP +noAnimatedTiles
+        +hasAnimatedTiles
+        INC tempChr
+        LDA tempChr
+        CMP #$03
+        BEQ +loadAnimatedTiles
+            SwitchCHRBank tempChr
+            JMP Load_Sprite_CHR_Loop
+        +loadAnimatedTiles
+      
+        SwitchCHRBank #$01
+        LoadChrData #$17, #$16, #$00, #$20, BckSSChr04_Lo, BckSSChr04_Hi, userScreenByte0
+        JSR doWaitFrame
+      
+        INC userScreenByte0
+      
+        SwitchCHRBank #$02
+        LoadChrData #$17, #$16, #$00, #$20, BckSSChr04_Lo, BckSSChr04_Hi, userScreenByte0
+        JSR doWaitFrame
+
+    +noAnimatedTiles  
+     SwitchCHRBank #$00
     RTS

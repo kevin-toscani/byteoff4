@@ -36,6 +36,14 @@ https://nesmakers.com/index.php?threads/simplified-input-scripts-platform-games-
 TakuikaNinja - Scrolling Platformer seam collision fix [4.5.9]
 https://www.nesmakers.com/index.php?threads/scrolling-platformer-seam-collision-fix-4-5-9.7266/
 
+## Implementing userScreenBytes
+Chronicleroflegends - Making userScreenByte0-7 work! (Plus Bonus!)
+https://www.nesmakers.com/index.php?threads/making-userscreenbyte0-7-work-plus-bonus.5842/
+
+## Animated backgroud tiles
+JamesNES - [4.5.x] Animated Tiles with CHR-RAM Switching
+https://www.nesmakers.com/index.php?threads/4-5-x-animated-tiles-with-chr-ram-switching.7028/
+
 # To do?
 JamesNES - [4.5.9] Move your Inputs out of the Static Bank  
 https://nesmakers.com/index.php?threads/4-5-9-move-your-inputs-out-of-the-static-bank.7730/

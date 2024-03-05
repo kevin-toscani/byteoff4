@@ -473,6 +473,14 @@ GRAVITY_LO = #$40
 GRAVITY_HI = #$00
 
 
+    ;; If "launcher projectile" (e.g. object type $14), ignore solid ground.
+    ;; (possibly @TODO: change to object flag "ignore solid ground")
+    LDA Object_type,x
+    CMP #$14
+    BNE +
+        JMP +notSolid
+    +
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -576,12 +584,7 @@ GRAVITY_HI = #$00
 			
 	+isSolid
 
-        ;; If "launcher projectile" (e.g. object type $14), ignore solid ground.
-        LDA Object_type,x
-        CMP #$14
-        BEQ +
             JMP isSolidSoLand
-        +
 	
 	
 		+notSolid:

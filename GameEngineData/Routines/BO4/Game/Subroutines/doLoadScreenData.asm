@@ -171,6 +171,33 @@ skipSettingWarpInXY:
 	STA ScreenFlags01
 
 
+;; Add in userScreenBytes
+	LDY #187
+	LDA (collisionPointer),y
+	STA userScreenByte0
+;	INY
+;	LDA (collisionPointer),y
+;	STA userScreenByte1
+;	INY
+;	LDA (collisionPointer),y
+;	STA userScreenByte2
+;	INY
+;	LDA (collisionPointer),y
+;	STA userScreenByte3
+;	INY
+;	LDA (collisionPointer),y
+;	STA userScreenByte4
+;	INY
+;	LDA (collisionPointer),y
+;	STA userScreenByte5
+;	INY
+;	LDA (collisionPointer),y
+;	STA userScreenByte6
+;	INY
+;	LDA (collisionPointer),y
+;	STA userScreenByte7
+
+
 
 	LDY #196
 	LDA (collisionPointer),y

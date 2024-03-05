@@ -1,3 +1,6 @@
+.include "Routines\BO4\Macros\SwitchCHRBank.asm"
+BckSSChr04_Lo: .db #$00, #<BckSSChr0401, #<BckSSChr0402
+BckSSChr04_Hi: .db #$00, #>BckSSChr0401, #>BckSSChr0402
 
 ;; Add the Bank16 part of doLoadScreen 
 .include Routines\BO4\Game\Subroutines\doLoadScreen16.asm

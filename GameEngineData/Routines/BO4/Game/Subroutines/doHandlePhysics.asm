@@ -168,23 +168,23 @@ doHandlePhysics:
 	HURT_DURATION = #$01
 	
 	
-		TXA
-		STA temp
-		GetActionStep temp
-		CMP #$07
-		BNE +notHurt
+;		TXA
+;		STA temp
+;		GetActionStep temp
+;		CMP #$07
+;		BNE +notHurt
 			;;; this object is hurt.
 			;;; so it's speed will be determined by the recoil speed above.
 			;;; any caveats to that, put here.  For instance, if there is a monster bit
 			;;; that prevents recoil.
 			
-					LDA #RECOIL_SPEED_LO 
-					STA Object_h_speed_lo,x
-					LDA #RECOIL_SPEED_HI
-					STA Object_h_speed_hi,x
-					
-					JMP gotHandVspeeds
-		+notHurt
+;					LDA #RECOIL_SPEED_LO 
+;					STA Object_h_speed_lo,x
+;					LDA #RECOIL_SPEED_HI
+;					STA Object_h_speed_hi,x
+;					
+;					JMP gotHandVspeeds
+;		+notHurt
 	
 ;	ReturnBank
 	;;;; deal with acceleration / deceleration

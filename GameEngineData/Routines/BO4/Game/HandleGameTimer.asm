@@ -16,3 +16,20 @@
         STA animFrame
         SwitchCHRBank #$00
     +dontUpdateAnimatedTiles
+    
+    LDA disabledTimer
+    BEQ +
+        AND #%11111000
+        BNE ++
+        LDX player1_object
+        LDA Object_direction,x
+        BPL ++
+            AND #%01111111
+            STA Object_direction,x
+        ++
+        DEC disabledTimer
+        BNE +
+        LDA bo4Flags
+        AND #%01111111
+        STA bo4Flags
+    +

@@ -1,6 +1,8 @@
-;;;; 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    BIT bo4Flags
+    BPL +
+        RTS
+    +
+
 ;; Only can jump if the place below feet is free.
     SwitchBank #$1C
     LDY Object_type,x

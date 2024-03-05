@@ -66,8 +66,6 @@ doDrawThisSprite:
         STA tempy
         DrawSprite tempx, tempy, #$10, temp
 
-        ;; [@TODO] position screen on Zapp, mirror on left
-
     +faceDone:
 
 

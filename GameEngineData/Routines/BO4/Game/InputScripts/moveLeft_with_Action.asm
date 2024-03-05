@@ -1,11 +1,14 @@
-;;;; 
+    BIT bo4Flags
+    BPL +
+        RTS
+    +
     
     STX temp ;; assumes the object we want to move is in x.
-	GetActionStep temp
-    CMP #$07
-    BNE +notHurt
-        RTS
-    +notHurt
+;	GetActionStep temp
+;    CMP #$07
+;    BNE +notHurt
+;        RTS
+;    +notHurt
    
         StartMoving temp, #LEFT
         STX temp ;; assumes the object we want to move is in x.

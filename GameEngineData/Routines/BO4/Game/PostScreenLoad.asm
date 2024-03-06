@@ -59,6 +59,12 @@
     BNE +nextScreen
 
     .include "Routines/BO4/Sound/play_sample.asm"
+    TXA
+    PHA
+    LDX player1_object
+    DestroyObject
+    PLA
+    TAX
 
 
 

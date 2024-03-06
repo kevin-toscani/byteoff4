@@ -36,6 +36,12 @@
     .include "Routines\BO4\Game\Subroutines\doUpdateBackgroundPalette.asm"
     .include "Routines\BO4\Game\Subroutines\doDrawCharacter.asm"
 
+doHandleUpdateMusic_safe:
+    SwitchBank #$1B
+    JSR doHandleUpdateMusic
+    ReturnBank
+    RTS
+
 
 	.include SCR_HANDLE_SCREEN_UPDATE
 	.include SCR_DRAW_BOX

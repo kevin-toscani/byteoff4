@@ -620,7 +620,7 @@ _default_Stage_noise_pattern11:
 _default_Transmission_header:
 	.byte 6
 	.byte 150
-	.byte 1
+	.byte 2
 	.word _default_Transmission_pulse1
 	.word _default_Transmission_pulse2
 	.word _default_Transmission_triangle
@@ -629,23 +629,31 @@ _default_Transmission_header:
 
 _default_Transmission_pulse1:
 	.word _default_Transmission_pulse1_pattern0
+	.word _default_Transmission_pulse1_pattern0
 _default_Transmission_pulse1_pattern0:
-	.byte NL64,INST|CONT|1,C2,D00
+	.byte NL64,INST|CONT|1,C2,BXX,$01
 
 _default_Transmission_pulse2:
 	.word _default_Transmission_pulse2_pattern0
+	.word _default_Transmission_pulse2_pattern0
 _default_Transmission_pulse2_pattern0:
-	.byte NL64,INST|CONT|1,C2,D00
+	.byte NL64,INST|CONT|1,C2,BXX,$01
 
 _default_Transmission_triangle:
 	.word _default_Transmission_triangle_pattern0
+	.word _default_Transmission_triangle_pattern1
 _default_Transmission_triangle_pattern0:
-	.byte NL64,INST|CONT|1,C2,D00
+	.byte NL4,INST|CONT|1,AS0,NLC,60,INST|6,D00
+_default_Transmission_triangle_pattern1:
+	.byte NL64,INST|CONT|6,AS0,BXX,$01
 
 _default_Transmission_noise:
 	.word _default_Transmission_noise_pattern0
+	.word _default_Transmission_noise_pattern1
 _default_Transmission_noise_pattern0:
-	.byte NL64,INST|CONT|1,$8,D00
+	.byte NL4,INST|CONT|1,$E,NLC,60,INST|5,D00
+_default_Transmission_noise_pattern1:
+	.byte NL64,INST|CONT|5,$E,BXX,$01
 
 _default_Boss_header:
 	.byte 3

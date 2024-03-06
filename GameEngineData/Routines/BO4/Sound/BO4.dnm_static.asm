@@ -1,7 +1,7 @@
 sabre_maxTracks:
 	.byte 8
 sabre_maxSFX:
-	.byte 11
+	.byte 12
 
 trackHeaderTable_lo:
 	.byte <_default_Intro_header
@@ -36,6 +36,7 @@ sfxHeaderTable_lo:
 	.byte <_sfx_speakB_header
 	.byte <_sfx_speakC_header
 	.byte <_sfx_speakD_header
+	.byte <_sfx_shake_header
 sfxHeaderTable_hi:
 	.byte >_sfx_zap_header
 	.byte >_sfx_jump_header
@@ -48,6 +49,7 @@ sfxHeaderTable_hi:
 	.byte >_sfx_speakB_header
 	.byte >_sfx_speakC_header
 	.byte >_sfx_speakD_header
+	.byte >_sfx_shake_header
 
 ;;;; Track index constants
 	_default_Intro        = 0
@@ -70,6 +72,7 @@ sfxHeaderTable_hi:
 	_sfx_speakB  = 8
 	_sfx_speakC  = 9
 	_sfx_speakD  = 10
+	_sfx_shake   = 11
 
 env0:
 	.byte 0,ENV_LOOP,0
@@ -414,17 +417,17 @@ inst_P16_Arp037_hit:
 	.word env17
 	.word env42
 	.word env0
-	.word env0
+	.word env55
 inst_P16_Arp37C_in:
 	.word env18
 	.word env43
 	.word env0
-	.word env0
+	.word env55
 inst_P16_Arp37C_out:
 	.word env19
 	.word env43
 	.word env0
-	.word env0
+	.word env55
 inst_N08_Kick_drum_0:
 	.word env20
 	.word env44
@@ -652,4 +655,18 @@ _sfx_speakD_header:
 	.word NULL_noise
 _sfx_speakD_pulse2:
 	.byte NL16,INST|CONT|3,DS3,NL1,INST|1,END_SFX
+
+_sfx_shake_header:
+	.byte 3
+	.byte 150
+	.word NULL_pulse1
+	.word NULL_pulse2
+	.word _sfx_shake_triangle
+	.word _sfx_shake_noise
+_sfx_shake_triangle:
+	.byte NLC,25,INST|CONT|6,AS0,END_SFX
+_sfx_shake_noise:
+	.byte NL3,INST|CONT|3,$9,NL5,INST|CONT|20,$5,NL1,$E,NL3,INST|CONT|3
+	.byte $9,NL2,$9,NL1,INST|CONT|20,$4,NL3,$B,NL2,INST|23
+	.byte NL3,INST|40,NL1,INST|CONT|1,$F,INST|SLNT,END_SFX
 

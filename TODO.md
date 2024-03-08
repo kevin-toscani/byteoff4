@@ -2,43 +2,48 @@
 Here's a to-do list for BO4. Optional / would like to haves are italic. Done items are crossed out.
 
 ## Scenes
-- intro scene
-- title screen
+- ~~intro scene~~
+- ~~title screen~~
 - stage section
 - boss fight
-- _intermission_
-- _end of demo_
+- ~~intermission~~
+- ~~end of demo~~
 
 ## Interaction
-- Move left/right
-- Jump
+- ~~Move left/right~~
+- ~~Jump~~
 - Shoot
 - Zap
 - _Charge_
 
 ## Game / monster objects
-- Player
-- Ground enemy 1
-- Ground enemy 2
+- ~~Player~~
+- ~~Ground enemy 1~~
+- ~~Ground enemy 2~~
 - Sky enemy 1
 - Sky enemy 2
 - Boss fight sprites
 - Health power up
-- _Ground enemy 3_
+- ~~_Ground enemy 3_~~
+- Hazard tile 1
+- Hazard tile 2
+- _Disappearing tiles_
 
 ## Behind-the-scenes custom assembly
 - 1p/2p handler  
-- _face overlay sprite_
-- _fancy transmission screens_
+- ~~face overlay sprite~~
+- ~~fancy transmission screens~~
 
 ## Music
 - ~~Intro~~
-- Title
-- Stage
-- Intermission
+- ~~Title~~
+- ~~Stage~~
 - Boss
-- Win
-- End
+- ~~Win~~
+- ~~End~~
+- Death
+- Game over
+
 
 ## Sound effects
 - ~~Bleep~~
@@ -46,18 +51,20 @@ Here's a to-do list for BO4. Optional / would like to haves are italic. Done ite
 - Jump
 - Zap
 - Shoot
-- Charged
-- Powershoot
+- _Charged_
+- _Powershoot_
 - Explode
+- Woof
+- Fire
 
 ## Graphics
 - ~~HUD font~~
 - ~~Intro character (background)~~
-- Intro character (eyes)
+- ~~Intro character (eyes)~~
 - Stage tileset
 - Boss tileset
 - Monster set(s)
-- _Transmission font_
 
 ## Addendum
-- ~~None yet~~
+- Sprite HUD
+- What to do for game over?

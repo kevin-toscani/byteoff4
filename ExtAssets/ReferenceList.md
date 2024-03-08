@@ -44,6 +44,10 @@ https://www.nesmakers.com/index.php?threads/making-userscreenbyte0-7-work-plus-b
 JamesNES - [4.5.x] Animated Tiles with CHR-RAM Switching
 https://www.nesmakers.com/index.php?threads/4-5-x-animated-tiles-with-chr-ram-switching.7028/
 
+## Reduce slowdown on title screen
+Panzer - [4.5.9] Simple light-weight Rain
+https://www.nesmakers.com/index.php?threads/4-5-9-simple-light-weight-rain.8083/
+
 # To do?
 JamesNES - [4.5.9] Move your Inputs out of the Static Bank  
 https://nesmakers.com/index.php?threads/4-5-9-move-your-inputs-out-of-the-static-bank.7730/

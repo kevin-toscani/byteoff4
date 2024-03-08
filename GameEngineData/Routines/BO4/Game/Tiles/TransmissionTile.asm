@@ -37,6 +37,8 @@ TRANSMISSION_SPEAK_TICK = $01
         LDA #$02
         STA $0202
         LDA #$80
+        SEC
+        SBC camX
         STA $0203
         
         ;; Clear other sprites

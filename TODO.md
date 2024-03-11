@@ -4,7 +4,7 @@ Here's a to-do list for BO4. Optional / would like to haves are italic. Done ite
 ## Scenes
 - ~~intro scene~~
 - ~~title screen~~
-- stage section
+- ~~stage section~~
 - boss fight
 - ~~intermission~~
 - ~~end of demo~~
@@ -13,24 +13,24 @@ Here's a to-do list for BO4. Optional / would like to haves are italic. Done ite
 - ~~Move left/right~~
 - ~~Jump~~
 - Shoot
-- Zap
+- ~~Zap~~
 - _Charge_
 
 ## Game / monster objects
 - ~~Player~~
 - ~~Ground enemy 1~~
 - ~~Ground enemy 2~~
-- Sky enemy 1
-- Sky enemy 2
+- ~~Sky enemy 1~~
+- ~~Sky enemy 2~~
 - Boss fight sprites
 - Health power up
 - ~~_Ground enemy 3_~~
-- Hazard tile 1
-- Hazard tile 2
-- _Disappearing tiles_
+- ~~Hazard tile 1~~
+- ~~Hazard tile 2~~
+- ~~Disappearing tiles~~
 
 ## Behind-the-scenes custom assembly
-- 1p/2p handler  
+- ~~1p/2p handler~~ 
 - ~~face overlay sprite~~
 - ~~fancy transmission screens~~
 
@@ -66,5 +66,7 @@ Here's a to-do list for BO4. Optional / would like to haves are italic. Done ite
 - Monster set(s)
 
 ## Addendum
-- Sprite HUD
+- ~~Sprite HUD~~
+- Shuttle drops health
+- Plane drops bomb
 - What to do for game over?

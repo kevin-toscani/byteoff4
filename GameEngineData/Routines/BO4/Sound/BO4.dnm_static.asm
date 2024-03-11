@@ -1,7 +1,7 @@
 sabre_maxTracks:
 	.byte 8
 sabre_maxSFX:
-	.byte 12
+	.byte 13
 
 trackHeaderTable_lo:
 	.byte <_default_Intro_header
@@ -26,7 +26,7 @@ trackTable_PRGbank:
 
 sfxHeaderTable_lo:
 	.byte <_sfx_zap_header
-	.byte <_sfx_jump_header
+	.byte <_sfx_hit_header
 	.byte <_sfx_powerup_header
 	.byte <_sfx_rumble_header
 	.byte <_sfx_select_header
@@ -37,9 +37,10 @@ sfxHeaderTable_lo:
 	.byte <_sfx_speakC_header
 	.byte <_sfx_speakD_header
 	.byte <_sfx_shake_header
+	.byte <_sfx_zapp_header
 sfxHeaderTable_hi:
 	.byte >_sfx_zap_header
-	.byte >_sfx_jump_header
+	.byte >_sfx_hit_header
 	.byte >_sfx_powerup_header
 	.byte >_sfx_rumble_header
 	.byte >_sfx_select_header
@@ -50,6 +51,7 @@ sfxHeaderTable_hi:
 	.byte >_sfx_speakC_header
 	.byte >_sfx_speakD_header
 	.byte >_sfx_shake_header
+	.byte >_sfx_zapp_header
 
 ;;;; Track index constants
 	_default_Intro        = 0
@@ -62,7 +64,7 @@ sfxHeaderTable_hi:
 	_default_End          = 7
 ;;;; SFX index constants
 	_sfx_zap     = 0
-	_sfx_jump    = 1
+	_sfx_hit     = 1
 	_sfx_powerup = 2
 	_sfx_rumble  = 3
 	_sfx_select  = 4
@@ -73,6 +75,7 @@ sfxHeaderTable_hi:
 	_sfx_speakC  = 9
 	_sfx_speakD  = 10
 	_sfx_shake   = 11
+	_sfx_zapp    = 12
 
 env0:
 	.byte 0,ENV_LOOP,0
@@ -141,54 +144,58 @@ env31:
 env32:
 	.byte 14,ENV_LOOP,0
 env33:
-	.byte 0,0,0,0,1,1,ENV_LOOP,0
+	.byte 14,14,14,14,8,6,4,3,3,2,2,1,ENV_LOOP,11
 env34:
-	.byte 0,0,0,0,0,0,0,0,0,255,255,ENV_LOOP,0
+	.byte 0,0,0,0,1,1,ENV_LOOP,0
 env35:
-	.byte 255,255,0,ENV_LOOP,2
+	.byte 0,0,0,0,0,0,0,0,0,255,255,ENV_LOOP,0
 env36:
-	.byte 0,0,12,12,3,3,15,15,7,7,19,19,ENV_LOOP,0
+	.byte 255,255,0,ENV_LOOP,2
 env37:
-	.byte 0,0,12,12,4,4,16,16,7,7,19,19,ENV_LOOP,0
+	.byte 0,0,12,12,3,3,15,15,7,7,19,19,ENV_LOOP,0
 env38:
-	.byte 254,254,0,ENV_LOOP,2
+	.byte 0,0,12,12,4,4,16,16,7,7,19,19,ENV_LOOP,0
 env39:
-	.byte 255,1,2,4,0,4,4,4,5,5,5,5,6,6,6,6,7,ENV_LOOP,16
+	.byte 254,254,0,ENV_LOOP,2
 env40:
-	.byte 0,255,255,254,ENV_LOOP,3
+	.byte 255,1,2,4,0,4,4,4,5,5,5,5,6,6,6,6,7,ENV_LOOP,16
 env41:
-	.byte 0,1,2,2,3,ENV_LOOP,4
+	.byte 0,255,255,254,ENV_LOOP,3
 env42:
-	.byte 0,0,3,3,7,7,ENV_LOOP,0
+	.byte 0,1,2,2,3,ENV_LOOP,4
 env43:
-	.byte 3,3,7,7,12,12,ENV_LOOP,0
+	.byte 0,0,3,3,7,7,ENV_LOOP,0
 env44:
-	.byte 2,1,0,ENV_LOOP,2
+	.byte 3,3,7,7,12,12,ENV_LOOP,0
 env45:
-	.byte 0,2,3,4,4,5,3,4,ENV_LOOP,7
+	.byte 2,1,0,ENV_LOOP,2
 env46:
-	.byte 24,249,249,249,ENV_LOOP,3
+	.byte 0,2,3,4,4,5,3,4,ENV_LOOP,7
 env47:
-	.byte 232,7,7,7,ENV_LOOP,3
+	.byte 24,249,249,249,ENV_LOOP,3
 env48:
-	.byte 2,0,ENV_LOOP,1
+	.byte 232,7,7,7,ENV_LOOP,3
 env49:
-	.byte 12,ENV_LOOP,0
+	.byte 2,0,ENV_LOOP,1
 env50:
-	.byte 254,0,0,0,4,0,0,0,252,ENV_LOOP,1
+	.byte 12,ENV_LOOP,0
 env51:
-	.byte 62,0,0,250,ENV_LOOP,1
+	.byte 254,0,0,0,4,0,0,0,252,ENV_LOOP,1
 env52:
-	.byte 22,ENV_LOOP,0
+	.byte 62,0,0,250,ENV_LOOP,1
 env53:
-	.byte 251,0,5,0,5,0,251,0,251,ENV_LOOP,1
+	.byte 22,ENV_LOOP,0
 env54:
-	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,254,ENV_LOOP,12
+	.byte 251,0,5,0,5,0,251,0,251,ENV_LOOP,1
 env55:
-	.byte 32,ENV_LOOP,0
+	.byte 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,254,ENV_LOOP,12
 env56:
-	.byte 64,ENV_LOOP,0
+	.byte 10,20,30,40,ENV_LOOP,0
 env57:
+	.byte 32,ENV_LOOP,0
+env58:
+	.byte 64,ENV_LOOP,0
+env59:
 	.byte 64,32,0,64,ENV_LOOP,3
 
 instrumentHeaderTable:
@@ -247,6 +254,8 @@ instrumentHeaderTable:
 	.word inst_P26_bell_dip
 	.word inst_P23_bell_dip_half
 	.word inst_P2E_SFX
+	.word inst_X1E_Laser
+	.word inst_P1E_SFX
 
 inst_silent:
 	.word env0
@@ -261,26 +270,26 @@ inst_X00_Silence:
 inst_P1C_Speak_up:
 	.word env1
 	.word env0
-	.word env46
-	.word env55
+	.word env47
+	.word env57
 inst_P1C_Speak_down:
 	.word env1
 	.word env0
-	.word env47
-	.word env55
+	.word env48
+	.word env57
 inst_P28_Bip:
 	.word env2
 	.word env0
-	.word env48
-	.word env56
+	.word env49
+	.word env58
 inst_N02_Rumble:
 	.word env3
-	.word env33
+	.word env34
 	.word env0
 	.word env0
 inst_T0X_Rumble_bass:
 	.word env3
-	.word env34
+	.word env35
 	.word env0
 	.word env0
 inst_P05_Bass:
@@ -295,7 +304,7 @@ inst_P01_Bass_end:
 	.word env0
 inst_P05_Bass_up:
 	.word env4
-	.word env35
+	.word env36
 	.word env0
 	.word env0
 inst_P08_Lead:
@@ -306,42 +315,42 @@ inst_P08_Lead:
 inst_P08_Lead_vibe:
 	.word env6
 	.word env0
-	.word env50
+	.word env51
 	.word env0
 inst_P04_Lead_fall:
 	.word env7
 	.word env0
-	.word env49
+	.word env50
 	.word env0
 inst_P04_Lead_half_vibe:
 	.word env7
 	.word env0
-	.word env50
+	.word env51
 	.word env0
 inst_P02_Lead_half_fall:
 	.word env3
 	.word env0
-	.word env49
+	.word env50
 	.word env0
 inst_P02_Lead_qt_vibe:
 	.word env3
 	.word env0
-	.word env50
+	.word env51
 	.word env0
 inst_P01_Lead_qt_fall:
 	.word env5
 	.word env0
-	.word env49
+	.word env50
 	.word env0
 inst_P01_Lead_8th_vibe:
 	.word env5
 	.word env0
-	.word env50
+	.word env51
 	.word env0
 inst_P08_Lead_climb:
 	.word env6
 	.word env0
-	.word env51
+	.word env52
 	.word env0
 inst_P06_Main_backing:
 	.word env15
@@ -356,12 +365,12 @@ inst_P08_Main:
 inst_P08_Main_vibe:
 	.word env6
 	.word env0
-	.word env50
+	.word env51
 	.word env0
 inst_P04_Main_fall:
 	.word env7
 	.word env0
-	.word env52
+	.word env53
 	.word env0
 inst_P04_Main_half:
 	.word env7
@@ -375,17 +384,17 @@ inst_P08_Main_dip:
 	.word env0
 inst_P08_Main_climb_halfstep:
 	.word env6
-	.word env35
+	.word env36
 	.word env0
 	.word env0
 inst_P08_Main_climb_wholestep:
 	.word env6
-	.word env38
+	.word env39
 	.word env0
 	.word env0
 inst_N05_Crash:
 	.word env11
-	.word env39
+	.word env40
 	.word env0
 	.word env0
 inst_N03_Tick:
@@ -395,47 +404,47 @@ inst_N03_Tick:
 	.word env0
 inst_N05_Kick:
 	.word env13
-	.word env40
+	.word env41
 	.word env0
 	.word env0
 inst_N05_Hat:
 	.word env14
-	.word env41
+	.word env42
 	.word env0
 	.word env0
 inst_P06_Main_backing_hit_off:
 	.word env16
 	.word env0
-	.word env48
+	.word env49
 	.word env0
 inst_T0X_Bass_vibe:
 	.word env3
 	.word env0
-	.word env53
+	.word env54
 	.word env0
 inst_P16_Arp037_hit:
 	.word env17
-	.word env42
+	.word env43
 	.word env0
-	.word env55
+	.word env57
 inst_P16_Arp37C_in:
 	.word env18
-	.word env43
+	.word env44
 	.word env0
-	.word env55
+	.word env57
 inst_P16_Arp37C_out:
 	.word env19
-	.word env43
+	.word env44
 	.word env0
-	.word env55
+	.word env57
 inst_N08_Kick_drum_0:
 	.word env20
-	.word env44
+	.word env45
 	.word env0
 	.word env0
 inst_N0D_Snare_drum_8:
 	.word env21
-	.word env45
+	.word env46
 	.word env0
 	.word env0
 inst_T0X_Bass_down:
@@ -475,54 +484,64 @@ inst_P06_Main_backing_hit_copy:
 	.word env0
 inst_N06_Snare_drum_8:
 	.word env23
-	.word env45
+	.word env46
 	.word env0
 	.word env0
 inst_P28_Win_out:
 	.word env24
 	.word env0
 	.word env0
-	.word env57
+	.word env59
 inst_P24_Win_out_half:
 	.word env25
 	.word env0
 	.word env0
-	.word env57
+	.word env59
 inst_P22_Win_out_qt:
 	.word env26
 	.word env0
 	.word env0
-	.word env57
+	.word env59
 inst_P21_Win_out_8th:
 	.word env27
 	.word env0
 	.word env0
-	.word env57
+	.word env59
 inst_P24_Bip_half:
 	.word env28
 	.word env0
-	.word env48
-	.word env56
+	.word env49
+	.word env58
 inst_P2A_bell:
 	.word env29
 	.word env0
-	.word env54
-	.word env56
+	.word env55
+	.word env58
 inst_P26_bell_dip:
 	.word env30
 	.word env0
 	.word env0
-	.word env56
+	.word env58
 inst_P23_bell_dip_half:
 	.word env31
 	.word env0
 	.word env0
-	.word env56
+	.word env58
 inst_P2E_SFX:
 	.word env32
 	.word env0
 	.word env0
+	.word env58
+inst_X1E_Laser:
+	.word env33
+	.word env0
 	.word env56
+	.word env57
+inst_P1E_SFX:
+	.word env32
+	.word env0
+	.word env0
+	.word env57
 
 dpcm_sampleAddressTable:
 	.byte <(dpcm_sample_F2 >> 6)
@@ -550,34 +569,39 @@ _sfx_zap_header:
 	.byte 1
 	.byte 150
 	.word NULL_pulse1
-	.word _sfx_zap_pulse2
-	.word NULL_triangle
+	.word NULL_pulse2
+	.word _sfx_zap_triangle
 	.word NULL_noise
-_sfx_zap_pulse2:
-	.byte NL8,INST|CONT|1,C2,END_SFX
+_sfx_zap_triangle:
+	.byte NL11,INST|CONT|55,F6,NL1,INST|CONT|1,CS2,END_SFX
 
-_sfx_jump_header:
+_sfx_hit_header:
 	.byte 1
-	.byte 150
+	.byte 151
 	.word NULL_pulse1
-	.word _sfx_jump_pulse2
+	.word NULL_pulse2
 	.word NULL_triangle
-	.word NULL_noise
-_sfx_jump_pulse2:
-	.byte NL8,INST|CONT|1,C2,END_SFX
+	.word _sfx_hit_noise
+_sfx_hit_noise:
+	.byte NL3,INST|CONT|56,$7,NL1,INST|33,INST|CONT|10,$E,NL5,INST|CONT|56,$5
+	.byte NL1,INST|33,NL2,INST|CONT|10,$E,NL1,$F,INST|1,END_SFX
 
 _sfx_powerup_header:
-	.byte 1
+	.byte 2
 	.byte 150
 	.word NULL_pulse1
 	.word _sfx_powerup_pulse2
 	.word NULL_triangle
 	.word NULL_noise
 _sfx_powerup_pulse2:
-	.byte NL8,INST|CONT|1,C2,END_SFX
+	.byte NL1,INST|CONT|56,E4,INST|CONT|8,E3,INST|CONT|56,A4,INST|CONT|8,A3,INST|CONT|56
+	.byte D5,INST|CONT|8,C4,INST|CONT|56,FS5,INST|CONT|8,F4,INST|CONT|33,A4,INST|CONT|8
+	.byte A3,INST|CONT|33,D5,INST|CONT|8,C4,INST|CONT|33,FS5,INST|CONT|8,F4,INST|CONT|48
+	.byte A4,INST|CONT|8,A3,INST|CONT|48,D5,INST|CONT|8,C4,INST|CONT|48,FS5,INST|CONT|8
+	.byte F4,INST|1,END_SFX
 
 _sfx_rumble_header:
-	.byte 1
+	.byte 2
 	.byte 150
 	.word NULL_pulse1
 	.word _sfx_rumble_pulse2
@@ -669,4 +693,14 @@ _sfx_shake_noise:
 	.byte NL3,INST|CONT|3,$9,NL5,INST|CONT|20,$5,NL1,$E,NL3,INST|CONT|3
 	.byte $9,NL2,$9,NL1,INST|CONT|20,$4,NL3,$B,NL2,INST|23
 	.byte NL3,INST|40,NL1,INST|CONT|1,$F,INST|SLNT,END_SFX
+
+_sfx_zapp_header:
+	.byte 1
+	.byte 150
+	.word NULL_pulse1
+	.word _sfx_zapp_pulse2
+	.word NULL_triangle
+	.word NULL_noise
+_sfx_zapp_pulse2:
+	.byte NL15,INST|CONT|55,B5,NL1,INST|CONT|1,D5,END_SFX
 

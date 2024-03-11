@@ -89,6 +89,9 @@ OBJECT_IS_ZAPPABLE = $80   ; Use object flag Bit-7 for zappability.
 ;; Step 2: Black out the entire screen
 ;;
 
+    ;; (also, play zap sound)
+    PlaySound #_sfx_zap
+
     ;; 2a. Hide all objects
     LDA #$00               ; By resetting the sprite RAM pointer, and then
     STA spriteRamPointer   ; cleaning up sprite RAM altogether, the NMI won't

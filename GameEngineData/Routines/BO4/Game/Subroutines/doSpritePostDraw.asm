@@ -254,4 +254,33 @@
 ;; Future screens go here
 +nextScreen:
 
+
++done:
+
+    ;; Draw sprite HUD
+    LDA ScreenFlags00
+    AND #%01000000
+    BEQ +
+        JMP +done
+    +
+    
+    LDX myHealth
+    LDA tblTopHud,x
+    STA temp
+    DrawSprite #$18, #$20, temp, #$00
+    
+    LDA tblMidHud,x
+    STA temp
+    DrawSprite #$18, #$28, temp, #$00
+
+    LDA tblBotHud,x
+    STA temp
+    DrawSprite #$18, #$30, temp, #$00
+
+    JMP +done
+    
+tblTopHud: .db #$32, #$32, #$32, #$32, #$32, #$31, #$30
+tblMidHud: .db #$42, #$42, #$42, #$41, #$40, #$40, #$40
+tblBotHud: .db #$52, #$51, #$50, #$50, #$50, #$50, #$50
+
 +done:

@@ -1,6 +1,23 @@
 
     CPX player1_object
     BNE +done
+        
+        ;; Check if we're not hurting yet
+        GetActionStep player1_object
+        CMP #$07
+        BEQ +done
+
+        ;; Take a hit point away (if there's any left)
+        LDA myHealth
+        BEQ +
+            DEC myHealth
+            BNE +
+            ;; We're dead - do something here probably
+            ; CreateObject #obj_short_circuited
+            ; or ChangeActionStep 6
+            ; or DestroyObject
+            ; or... we'll see
+        +
     
         ;; Temporarily disable inputs
         LDA bo4Flags

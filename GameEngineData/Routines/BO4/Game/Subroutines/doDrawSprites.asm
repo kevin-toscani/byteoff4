@@ -14,9 +14,9 @@ doDrawThisSprite:
     CPX player1_object
     BNE +faceDone
     
-        ;; Check player sprite drawing bit
+        ;; Check (player and global) sprite drawing bit
         LDA ScreenFlags00
-        AND #$01
+        AND #$81
         BEQ +
             JMP doneDrawingThisSprite
         +

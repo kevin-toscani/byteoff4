@@ -33,7 +33,12 @@
     CheckCollisionPoint temp, temp1, #$07, tempA ;; check below feet to see if it is jumpthrough platform.
                                         ;;; if it is (equal), can jump.
                                         ;;; if not, skips jumping.
-    BNE +checkMore 
+    BNE +checkMore
+
+        LDA platformTimer
+        CMP #$C0
+        BCS +dontDoJump
+
         JMP +doJump
     +checkMore
      CheckCollisionPoint temp, temp1, #$09, tempA ;; check below feet to see if it is prize block .

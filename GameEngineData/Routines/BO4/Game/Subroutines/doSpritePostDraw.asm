@@ -326,7 +326,7 @@
 
 ;; Screen 6: 16x16 BUFFER SCREEN
 +nextScreen:    
-    CMP #$0C
+    CMP #$06
     BEQ +
         JMP +nextScreen
     +

@@ -48,6 +48,11 @@ COLOR_WHITE        = $30   ; $30 is the palette value for white.
 OBJECT_IS_ZAPPABLE = $80   ; Use object flag Bit-7 for zappability.
 
 
+;; Check zapper cooldown timer
+    LDA zapperTimer
+    BEQ +
+        JMP +zap_done
+    +
 
 ;;
 ;; Step 1: check trigger pull
@@ -251,6 +256,11 @@ OBJECT_IS_ZAPPABLE = $80   ; Use object flag Bit-7 for zappability.
 ;;
 
 +zap_restore:
+
+    ;; Set zapper cooldown timer
+    LDA #$6F
+    STA zapperTimer
+
     LDX #$00
     -
         LDA palBackup,x    ; Restore the original background color
@@ -263,9 +273,7 @@ OBJECT_IS_ZAPPABLE = $80   ; Use object flag Bit-7 for zappability.
     STA sprPal+3           ;
 
     LDA #$03               ; Tell NESmaker to update the background palettes
-    STA updateScreenData   ; (ideally, this would also update the sprite
-                           ; palettes, but that requires line 137 of NMI.asm
-                           ; to be removed).
+    STA updateScreenData   ;
     JSR doWaitFrame        ; Wait for NMI to update the screen
 
 

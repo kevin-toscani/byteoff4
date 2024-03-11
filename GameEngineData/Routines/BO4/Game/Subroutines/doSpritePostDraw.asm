@@ -277,10 +277,43 @@
     STA temp
     DrawSprite #$18, #$30, temp, #$00
 
-    JMP +done
+    JMP +drawZapperHud
     
-tblTopHud: .db #$32, #$32, #$32, #$32, #$32, #$31, #$30
-tblMidHud: .db #$42, #$42, #$42, #$41, #$40, #$40, #$40
-tblBotHud: .db #$52, #$51, #$50, #$50, #$50, #$50, #$50
+tblTopHud:    .db #$32, #$32, #$32, #$32, #$32, #$31, #$30
+tblMidHud:    .db #$42, #$42, #$42, #$41, #$40, #$40, #$40
+tblBotHud:    .db #$52, #$51, #$50, #$50, #$50, #$50, #$50
 
+tblTopZapHud: .db #$33, #$34, #$35, #$35, #$35, #$35, #$35
+tblMidZapHud: .db #$43, #$43, #$43, #$44, #$45, #$45, #$45
+tblBotZapHud: .db #$53, #$53, #$53, #$53, #$53, #$54, #$55
+
++drawZapperHud:
+    
+    ;; Check for 2 player mode
+    LDA gameMode
+    AND #$01
+    BNE +
+        JMP +done
+    +
+    
+    ;; Draw zapper HUD
+    LDA zapperTimer  ; $6F max
+    LSR
+    LSR
+    LSR
+    LSR
+    TAX
+
+    LDA tblTopZapHud,x
+    STA temp
+    DrawSprite #$D8, #$20, temp, #$00
+    
+    LDA tblMidZapHud,x
+    STA temp
+    DrawSprite #$D8, #$28, temp, #$00
+
+    LDA tblBotZapHud,x
+    STA temp
+    DrawSprite #$D8, #$30, temp, #$00
+    
 +done:

@@ -33,3 +33,15 @@
         AND #%01111111
         STA bo4Flags
     +
+    
+    ;; Handle zapper timer
+    LDA zapperTimer
+    BEQ +
+        DEC zapperTimer
+        BNE +
+        
+        LDA bo4Flags
+        AND #%10111111
+        STA bo4Flags
+    +
+        

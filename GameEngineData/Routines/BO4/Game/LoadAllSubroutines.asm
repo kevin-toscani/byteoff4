@@ -143,6 +143,7 @@ DATABANK1 = #$18
 
 MonsterBits:
    .include "ScreenData\ObjectData\MonsterBits.dat"
+
 ifdef ZAP_WHITE_TILE
     doHandleZap:
         ;JMP RESET

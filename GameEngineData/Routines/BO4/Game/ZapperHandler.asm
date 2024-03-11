@@ -48,7 +48,15 @@ COLOR_WHITE        = $30   ; $30 is the palette value for white.
 OBJECT_IS_ZAPPABLE = $80   ; Use object flag Bit-7 for zappability.
 
 
-;; Check zapper cooldown timer
+
+    ;; Check 2P mode
+    LDA gameMode
+    AND #$01
+    BNE +
+        JMP +zap_done
+    +
+
+    ;; Check zapper cooldown timer
     LDA zapperTimer
     BEQ +
         JMP +zap_done

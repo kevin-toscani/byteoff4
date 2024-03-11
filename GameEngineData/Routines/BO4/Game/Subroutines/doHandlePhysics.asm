@@ -569,6 +569,11 @@ GRAVITY_HI = #$00
 					
 					
 	+isOneWaySolid
+        ;; an extra special kind of solid
+        LDA platformTimer
+        CMP #$C0
+        BCS +notSolid
+        
 		;; a special kind of solid
 		LDA Object_v_speed_hi,x
 		BMI +notSolid ;; a jumpthrough platform is definitely not solid if moving up through it.

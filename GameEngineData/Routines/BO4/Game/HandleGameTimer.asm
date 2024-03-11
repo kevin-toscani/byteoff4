@@ -1,5 +1,12 @@
     LDA userScreenByte0
-    BEQ +dontUpdateAnimatedTiles ;;making sure that this screen actually has animated tiles set up - thanks CGT
+    BNE +
+        JMP +dontUpdateAnimatedTiles ;;making sure that this screen actually has animated tiles set up - thanks CGT
+    +
+    
+    BPL +
+        JMP +disappearingPlatforms
+    +
+    
     DEC animTimer
     LDA animTimer
     BNE +dontUpdateAnimatedTiles
@@ -15,8 +22,42 @@
         LDA #$00
         STA animFrame
         SwitchCHRBank #$00
-    +dontUpdateAnimatedTiles
+        JMP +dontUpdateAnimatedTiles
+
+
+;; 00-1F    CHR1
+;; 20-9F    CHR0
+;; A0-BF    CHR1
+;; C0-FF    CHR2
+
++disappearingPlatforms:
+    DEC platformTimer
+    LDA platformTimer
+    CMP #$20
+    BCC +loadChr01
     
+    CMP #$A0
+    BCC +loadChr00
+    
+    CMP #$C0
+    BCC +loadChr01
+    
+    +loadChr02:
+    LDA #$02
+    JMP +staTemp
+    
+    +loadChr01:
+    LDA #$01
+    JMP +staTemp
+    
+    +loadChr00:
+    LDA #$00
+    
+    +staTemp:
+    STA temp
+    SwitchCHRBank temp
+
++dontUpdateAnimatedTiles:
     LDA disabledTimer
     BEQ +
         AND #%11111000

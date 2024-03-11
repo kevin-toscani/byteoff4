@@ -642,7 +642,11 @@ getCamSeam:
             LDY #182
             LDA (temp16),y
             STA ScreenFlags01
-            
+
+            LDY #187
+            LDA (temp16),y
+            STA userScreenByte0
+
             LDY #125 ;
             LDA (temp16),y
             AND #%00000011

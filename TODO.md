@@ -23,7 +23,7 @@ Here's a to-do list for BO4. Optional / would like to haves are italic. Done ite
 - ~~Sky enemy 1~~
 - ~~Sky enemy 2~~
 - Boss fight sprites
-- Health power up
+- ~~Health power up~~
 - ~~_Ground enemy 3_~~
 - ~~Hazard tile 1~~
 - ~~Hazard tile 2~~
@@ -69,4 +69,8 @@ Here's a to-do list for BO4. Optional / would like to haves are italic. Done ite
 - ~~Sprite HUD~~
 - Shuttle drops health
 - Plane drops bomb
-- What to do for game over?
+- Make enemies hurt you
+- Make powerups benefit you
+- Instakill blocks (for endless pits)
+- _Lives_
+- _Decide what to do for game over_

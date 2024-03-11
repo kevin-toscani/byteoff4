@@ -82,39 +82,9 @@
 	STA channelMuteStatus+CHANNEL_TRACK_PULSE2
 	CreateObject #$50, tblCursorYPosition, #$08, #$00
 
-    LDX #$06
-    -objectLoop:
-        TXA
-        PHA
-
-        JSR doGetRandomNumberToo
-        AND #$01
-        ORA #$10
-        STA temp
-        
-        -
-            JSR doGetRandomNumberToo
-            CMP #$B0
-        BCS -
-        ADC #$20
-        STA tempx
-
-        -
-            JSR doGetRandomNumberToo
-            AND #$3F
-            CMP #$30
-        BCS -
-        CLC
-        ADC #$2C
-        STA tempy
-       
-        CreateObject tempx, tempy, temp, #$00
-
-        PLA
-        TAX
-        
-        DEX
-    BNE -objectLoop
+    LDA bo4Flags
+    ORA #%00000010
+    STA bo4Flags
 
     JMP +done
 

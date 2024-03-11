@@ -217,14 +217,89 @@
         DEC introTimer
     +
     
-    ;; Each object: if xPos > $D8, xPos = $20
-    LDX #$00
+
+    LDA bo4Flags
+    AND #%00000010
+    BNE +
+        JMP +updateSprites
+    +
+
+    LDX #$0C
+    LDY spriteRamPointer
     -objectLoop:
-        LDA Object_x_hi,x
-        CMP #$D0
+        ;; Push X to stack
+        TXA
+        PHA
+
+        ;; Set Y-coordinate
+        -
+            JSR doGetRandomNumberToo
+            AND #$3F
+            CMP #$30
+        BCS -
+        CLC
+        ADC #$2C
+        STA $0200,y
+        INY
+
+        ;; Set big or small star
+        JSR doGetRandomNumberToo
+        AND #$01
+        CLC
+        ADC #$85
+        STA $0200,y
+        INY
+        
+        ;; Set attribute ($21)
+        LDA #$21
+        STA $0200,y
+        INY
+
+        ;; Set X-coordinate
+        -
+            JSR doGetRandomNumberToo
+            CMP #$B0
+        BCS -
+        ADC #$20
+        STA $0200,y
+        INY
+
+        PLA
+        TAX
+        
+        DEX
+    BNE -objectLoop
+    STY spriteRamPointer
+    
+    LDA bo4Flags
+    AND #%11111101
+    STA bo4Flags
+    JMP +done
+
+
+    +updateSprites:
+
+    LDX #$0C
+    LDY spriteRamPointer
+    -objectLoop:
+        TXA
+        PHA
+
+        LDX $0203,y
+        INX
+        INX
+        LDA $0201,y
+        CMP #$86
+        BEQ +
+            INX
+        +
+        TXA
+        STA $0203,y
+
+        CPX #$D0
         BCC +
             LDA #$20
-            STA Object_x_hi,x
+            STA $0203,y
             -
                 JSR doGetRandomNumberToo
                 AND #$3F
@@ -232,18 +307,26 @@
             BCS -
             CLC
             ADC #$2C
-            STA Object_y_hi,x
+            STA $0200,y
         +
-        INX
-        CPX #TOTAL_MAX_OBJECTS
+        
+        INY
+        INY
+        INY
+        INY
+        
+        PLA
+        TAX
+        DEX
     BNE -objectLoop
+    STY spriteRamPointer
     
     JMP +done
 
 
 ;; Screen 6: 16x16 BUFFER SCREEN
 +nextScreen:    
-    CMP #$06
+    CMP #$0C
     BEQ +
         JMP +nextScreen
     +

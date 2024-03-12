@@ -1,0 +1,19 @@
+BOSS LOOP
+  - Pause XX frames
+  - Move camera XX frames to the right, animate tiles
+  - Pause XX frames
+  - Shoot either a bullet ball or a bouncy ball
+  - Pause XX frames
+  - If (2P mode active)
+    - Launch a flying ball
+    - Pause XX frames
+  - Open eye
+  - Pause XX frames
+    (if the eye is hit in this period, have the boss take damage and skip shooting a fireball)
+  - Shoot fire ball
+    (if the eye has not been hit in this period)
+  - Pause XX frames
+  - Move camera XX frames to the left, reverse-animate tiles
+  - Drop three balls
+  - Pause XX frames
+LOOP UNTIL DEATH

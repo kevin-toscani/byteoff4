@@ -3,11 +3,24 @@
 ;;; For horizontal scrolling games, extra attention has to be taken to draw 
 ;;; sprites off screen if they are no longer in the camera render area.
 
+
+    ;; Don't use camX on screen 8 (except for the eye but we'll get there later)
+    LDA screenType
+    CMP #$08
+    BEQ +
+        LDA camX
+        JMP ++
+    +
+    LDA #$00
+    ++
+    STA tempCamX
+
+
 	LDA gameHandler
 	AND #%01000000
-	BEQ doDrawThisSprite
-	JMP doneDrawingThisSprite
-doDrawThisSprite:
+	BEQ +
+        JMP doneDrawingThisSprite
+    +
 	
     
     ;; If player, draw face
@@ -20,14 +33,13 @@ doDrawThisSprite:
     CMP #$06
     BEQ +faceDone
     
-    
-    
         ;; Check (player and global) sprite drawing bit
         LDA ScreenFlags00
         AND #$81
         BEQ +
             JMP doneDrawingThisSprite
         +
+
 
         LDA Object_direction,x
         AND #%00000100
@@ -50,7 +62,7 @@ doDrawThisSprite:
         
         +storeTempX:
         SEC
-        SBC camX
+        SBC tempCamX
         STA tempx
 
         LDA Object_frame,x
@@ -107,7 +119,7 @@ doDrawThisSprite:
 	
 	LDA Object_x_hi,x
 	SEC
-	SBC camX ;; is using scrolling
+	SBC tempCamX ;; is using scrolling
 	STA tempA
 	LDA Object_y_hi,x
 	sec
@@ -371,7 +383,7 @@ doDrawThisSprite:
 			STA temp1
 			LDA Object_x_hi,x
 			sec
-			SBC camX
+			SBC tempCamX
 			STA tempA
 			;;; check to see if the column is finished.
 			DEC temp2
@@ -396,6 +408,14 @@ doDrawThisSprite:
 	
 		
 evaluateTileAgainstCameraPosition:
+
+    ;; Do not evaluate on boss screen
+    LDA screenType
+    CMP #$08
+    BNE +
+        LDA #$00
+        RTS
+    +
 
 	LDA Object_x_hi,x
 	STA pointer

@@ -1,3 +1,4 @@
+
 ;; do handle physics.
 
 
@@ -481,15 +482,16 @@ GRAVITY_HI = #$00
         JMP +notSolid
     +
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	LDA Object_x_hi,x
 	CLC
 	ADC self_left
 	STA temp
-		JSR getPointColTable
-	STA tempB
+	
+    JSR getPointColTable
+	
+    STA tempB
 	LDA Object_x_hi,x
 	CLC
 	ADC self_right
@@ -536,6 +538,7 @@ GRAVITY_HI = #$00
 		BNE +isNotSolid
 			JMP +isSolid
 		+isNotSolid
+
 		CMP #$0A
 		BEQ +isLadderSolid
 			JMP +notSolid
@@ -555,9 +558,9 @@ GRAVITY_HI = #$00
 		GetCollisionPoint temp, tempy, tempB ;; is it a solid
 			BEQ +checkForSecondPoint
 			CMP #$0A
-            BNE +
-                JMP +notSolid
-            +
+           BNE +
+               JMP +notSolid
+           +
 
 		GetCollisionPoint temp3, tempy, tempA ;; is it a solid?	
 			BEQ +checkForFirstPoint

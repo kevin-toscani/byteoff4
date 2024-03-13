@@ -51,14 +51,18 @@ subBossEnd:
     STA bossPhase
     RTS
 
+TEST_SPEED   = $10
+TEST_HISPEED = $01
+TEST_LOSPEED = $70
+
 tblBossPhaseTimer:
-    .db $80, $80, $80
-    .db $80, $80, $80
-    .db $80, $80, $80
-    .db $80, $80, $80
-    .db $80, $80
-    .db $80, $80, $80
-    .db $80
+    .db TEST_SPEED, TEST_LOSPEED, TEST_SPEED
+    .db TEST_SPEED, TEST_SPEED, TEST_SPEED
+    .db TEST_SPEED, TEST_SPEED, TEST_SPEED
+    .db TEST_SPEED, TEST_SPEED, TEST_SPEED
+    .db TEST_LOSPEED, TEST_SPEED
+    .db TEST_SPEED, TEST_SPEED, TEST_SPEED
+    .db TEST_SPEED
 
 tblBossPhaseActionLo:
     .db #<subBossIdle,  #<subBossScrollIn, #<subBossIdle

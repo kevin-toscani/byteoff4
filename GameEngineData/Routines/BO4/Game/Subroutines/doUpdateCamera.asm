@@ -1,72 +1,89 @@
-RIGHT_SCROLL_PAD = #$90
-LEFT_SCROLL_PAD  = #$60
+RIGHT_SCROLL_PAD  = #$90
+LEFT_SCROLL_PAD   = #$60
+
+BOSS_SCROLL_RIGHT = #$01
+BOSS_SCROLL_LEFT  = #$0C
+
+
+    ;; Screen 08 (boss) has a different type of scrolling
+    LDA screenType
+    CMP #$08
+    BEQ +bossScrolling
+        JMP +defaultScrolling
 
 
 
-;; Screen 08 (boss) has a different type of scrolling
-LDA screenType
-AND #$08
-BEQ +bossScroll
-    JMP +scrollfollowsplayer
-
-+bossScroll:
-    ;; [@TODO] Apply boss scrolling
-    ;; For now, just do default scrolling
-
-
-
-;   ;; Autoscroll is checked, so first we get the speed
-;   LDA screenSpeed
-;   
-;   CMP #$01 ;;; PRETTY SLOW SPEED
-;   BNE +
-;   LDA #$44 ; LO
-;       STA tempA
-;       LDA #$00 ; HI
-;       STA tempB
-;       JMP ++
-;   +    
-;   CMP #$02 ;; FAST/MEDIUM SPEED
-;   BNE +
-;       LDA #$88 ; LO
-;       STA tempA
-;       LDA #$00 ; HI
-;       STA tempB
-;       JMP ++
-;   +
-;   CMP #$03 ;;FASTEST SPEED
-;   BNE +
-;       LDA #$00 ; LO
-;       STA tempA
-;       LDA #$01 ; HI
-;       STA tempB
-;       JMP ++
-;   +  ;;SLOWEST SPEED
-;       LDA #$22 ; LO
-;       STA tempA
-;       LDA #$00 ; HI
-;       STA tempB
-;   ++
-;   ;; Now we get the direction.
-;   ;; If left edge is checked, we go right.
-;   ;; If right edge is checked, we go left.
-;
-;   LDA ScreenFlags00
-;   AND #%00010000
-;   BNE +
-;      JMP +rightautoscroll ; autoscroll right
-;   +
-;   LDA ScreenFlags00
-;   AND #%00100000
-;   BNE +
-;       JMP +leftautoscroll ; autoscroll left
-;   +
-;
-;   RTS
++bossScrolling:
+    ;; Check phase to get direction
+    LDA bossPhase
+    CMP #BOSS_SCROLL_LEFT
+    BEQ +bossScrollLeft
+    
+    CMP #BOSS_SCROLL_RIGHT
+    BEQ +bossScrollRight
 
 
 
-+scrollfollowsplayer:
+    ;; Not a scrolling phase; no scroll
+    ;LDA #$00
+    ;STA tempA
+    RTS
+
+
+
++bossScrollRight:
+    ;; Set scroll speed
+    LDA #$40
+    STA tempA
+    LDA #$01
+    STA tempB
+
+    LDA scrollByte
+    AND #%01000000
+    BNE +
+        LDA scrollByte
+        ORA #%00000010
+    +
+    AND #%00111111
+    ORA #%11000000 
+    STA scrollByte
+  
+    LDX camObject
+    LDA camX
+    AND #%11110000
+    STA tempz
+    LDA scrollByte
+    JMP +scrollEngaged
+    
+    
+    
++bossScrollLeft:
+    ;; Set scroll speed
+    LDA #$40
+    STA tempA
+    LDA #$01
+    STA tempB
+
+    LDA scrollByte
+    AND #%01000000
+    BNE +
+        LDA scrollByte
+        ORA #%00000010
+    +
+    AND #%00111111
+    ORA #%10000000 
+    STA scrollByte
+    
+    LDX camObject
+    LDA camX
+    AND #%11110000
+    STA tempz
+    LDA scrollByte
+    JMP +scrollEngaged
+
+
+
++defaultScrolling:
     LDX player1_object
     LDA Object_x_hi,x
     SEC
@@ -92,6 +109,7 @@ BEQ +bossScroll
     STA scrollByte
     
     JMP doUpdateCamera
+
 
 
 +leftscrolling:
@@ -121,53 +139,12 @@ BEQ +bossScroll
     ;;; just like movement byte of a player.
     ;;; bit 7 indicates horizontal movement of a player
     ;;; bit 6 indicates 0 for left, 1 for right.
-    
-;    JMP doUpdateCamera
-
-
-
-;+rightautoscroll
-;    LDA scrollByte
-;    AND #%01000000
-;    BNE +notChangingCamDirectionForUpdate
-;    LDA scrollByte
-;    ORA #%00000010
-; +notChangingCamDirectionForUpdate
-;    AND #%00111111
-;    ORA #%11000000 
-;    STA scrollByte
-;  
-;    LDX camObject
-;    LDA camX
-;    AND #%11110000
-;    STA tempz
-;    LDA scrollByte
-;    JMP +scrollEngaged
-;
-;    
-;    
-;+leftautoscroll
-;    LDA scrollByte
-;    AND #%01000000
-;    BNE +notChangingCamDirectionForUpdate
-;    LDA scrollByte
-;    ORA #%00000010
-; +notChangingCamDirectionForUpdate
-;    AND #%00111111
-;    ORA #%10000000 
-;    STA scrollByte
-;    
-;    LDX camObject
-;    LDA camX
-;    AND #%11110000
-;    STA tempz
-;    LDA scrollByte
-;    JMP +scrollEngaged
-
 
 
 
 ;; AFTER THIS IS JUST THE NORMAL SCROLLING STUFF, WITH A FEW MODS
+
+
 
 doUpdateCamera: 
 
@@ -186,6 +163,9 @@ doUpdateCamera:
     AND #%10100000
     BNE +scrollEngaged
         JMP skipScrollUpdate
+
+
+
 +scrollEngaged:
 
     LDA scrollByte
@@ -220,7 +200,7 @@ doUpdateCamera:
         STA camX_hi
         JSR getCamSeam
         JMP noHorizontalCameraUpdate
-    doRightCameraUpdate
+    doRightCameraUpdate:
         LDA camX_lo
         clc
         adc tempA

@@ -1,10 +1,7 @@
 OBJTYPE_EXPLOSION = #$09
 
-    ;; Make hurt tiles solid
-    LDA ObjectUpdateByte
-    ORA #%00000001
-    STA ObjectUpdateByte
 
+lblOriginalHurtTile:
     CPX player1_object
     BEQ +
         JMP +done
@@ -27,7 +24,7 @@ OBJTYPE_EXPLOSION = #$09
         ;; We're dead
         
         ;; Play death song
-        ; PlaySong #_default_death ;[@TODO]
+        PlaySong #_default_Death
         
         ;; Disable input
         LDA bo4Flags

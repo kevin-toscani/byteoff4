@@ -1,5 +1,5 @@
 sabre_maxTracks:
-	.byte 8
+	.byte 9
 sabre_maxSFX:
 	.byte 13
 
@@ -12,6 +12,7 @@ trackHeaderTable_lo:
 	.byte <_default_Boss_header
 	.byte <_default_Win_header
 	.byte <_default_End_header
+	.byte <_default_Death_header
 trackHeaderTable_hi:
 	.byte >_default_Intro_header
 	.byte >_default_Title_header
@@ -21,8 +22,9 @@ trackHeaderTable_hi:
 	.byte >_default_Boss_header
 	.byte >_default_Win_header
 	.byte >_default_End_header
+	.byte >_default_Death_header
 trackTable_PRGbank:
-	.byte $00,$00,$00,$00,$00,$00,$00,$00
+	.byte $00,$00,$00,$00,$00,$00,$00,$00,$00
 
 sfxHeaderTable_lo:
 	.byte <_sfx_zap_header
@@ -62,6 +64,7 @@ sfxHeaderTable_hi:
 	_default_Boss         = 5
 	_default_Win          = 6
 	_default_End          = 7
+	_default_Death        = 8
 ;;;; SFX index constants
 	_sfx_zap     = 0
 	_sfx_hit     = 1
@@ -256,6 +259,7 @@ instrumentHeaderTable:
 	.word inst_P2E_SFX
 	.word inst_X1E_Laser
 	.word inst_P1E_SFX
+	.word inst_P24_Bip_half_well_off
 
 inst_silent:
 	.word env0
@@ -542,6 +546,11 @@ inst_P1E_SFX:
 	.word env0
 	.word env0
 	.word env57
+inst_P24_Bip_half_well_off:
+	.word env28
+	.word env0
+	.word env8
+	.word env58
 
 dpcm_sampleAddressTable:
 	.byte <(dpcm_sample_F2 >> 6)
@@ -583,8 +592,8 @@ _sfx_hit_header:
 	.word NULL_triangle
 	.word _sfx_hit_noise
 _sfx_hit_noise:
-	.byte NL3,INST|CONT|56,$7,NL1,INST|33,INST|CONT|10,$E,NL5,INST|CONT|56,$5
-	.byte NL1,INST|33,NL2,INST|CONT|10,$E,NL1,$F,INST|1,END_SFX
+	.byte NL2,INST|CONT|56,$5,INST|33,NL1,INST|CONT|10,$E,NL2,INST|CONT|56,$5
+	.byte INST|33,INST|CONT|10,$E,NL1,$F,INST|1,END_SFX
 
 _sfx_powerup_header:
 	.byte 2

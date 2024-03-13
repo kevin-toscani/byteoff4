@@ -522,6 +522,11 @@ GRAVITY_HI = #$00
 		BNE +isNotSolid
 			JMP +isSolid
 		+isNotSolid
+
+		CMP #$04
+		BNE +isNotSolid
+			JMP +isSolid
+		+isNotSolid
         
 		CMP #$07
 		BNE +isNotSolid

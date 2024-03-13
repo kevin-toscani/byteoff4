@@ -825,3 +825,37 @@ _default_End_triangle_pattern1:
 	.byte NLC,44,INST|CONT|21,CS4,NL1,A2,INST|1,INST|21,INST|1,NL2
 	.byte INST|21,NL14,INST|1,C00
 
+_default_Death_header:
+	.byte 2
+	.byte 120
+	.byte 1
+	.word _default_Death_pulse1
+	.word _default_Death_pulse2
+	.word _default_Death_triangle
+	.word _default_Death_noise
+	.word NULL_DMC
+
+_default_Death_pulse1:
+	.word _default_Death_pulse1_pattern0
+_default_Death_pulse1_pattern0:
+	.byte NL1,INST|CONT|57,CS6,A5,DS5,AS4,F4,FS3,FS3,CS6
+	.byte A5,DS5,AS4,F4,FS3,INST|50,INST|CONT|57,CS6,A5,DS5
+	.byte AS4,F4,FS3,F3,NL11,INST|CONT|1,C3,D00
+
+_default_Death_pulse2:
+	.word _default_Death_pulse2_pattern0
+_default_Death_pulse2_pattern0:
+	.byte NL1,INST|CONT|54,CS5,A4,DS4,AS3,F3,FS2,INST|4,CS5
+	.byte A4,DS4,AS3,F3,FS2,INST|50,CS5,A4,DS4,AS3
+	.byte F3,FS2,F2,NL10,INST|CONT|1,C2,C00
+
+_default_Death_triangle:
+	.word _default_Death_triangle_pattern0
+_default_Death_triangle_pattern0:
+	.byte NL32,INST|CONT|1,C3,D00
+
+_default_Death_noise:
+	.word _default_Death_noise_pattern0
+_default_Death_noise_pattern0:
+	.byte NL32,INST|CONT|27,$6,D00
+

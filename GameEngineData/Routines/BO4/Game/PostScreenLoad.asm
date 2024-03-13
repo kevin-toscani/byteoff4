@@ -124,6 +124,22 @@
 
 
 
+;; Screen 8: BOSS SCREEN
++nextScreen:
+    CMP #$08
+    BEQ +
+        JMP +nextScreen
+    +
+
+    ;; Preset timer and phase
+    LDA #$10
+    STA bossTimer
+    LDA #$FF
+    STA bossPhase
+    JMP +done
+
+
+
 ;; Next screen: [tba]
 +nextScreen:
 

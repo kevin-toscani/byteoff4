@@ -146,6 +146,17 @@ MonsterBits:
 
 ifdef ZAP_WHITE_TILE
     doHandleZap:
-        ;JMP RESET
+        LDA Object_x_hi,x
+        STA tempx
+        LDA Object_y_hi,x
+        STA tempy
+        LDA Object_screen,x
+        STA tempC
+        CreateObjectOnScreen tempx, tempy, #OBJTYPE_EXPLOSION, #$00, tempC
+        DestroyObject
         RTS
 endif
+
+
+;; Dynamic subroutine handler
+doTemp16: JMP (temp16)

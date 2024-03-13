@@ -1,3 +1,25 @@
+BOSS PHASE
+00 - idle
+01 - per frame   camera moves right
+   - once        initiate chr animation sequence 0-1-2
+02 - once	 stop animation sequence
+03 - once        shoot a bouncy ball
+04 - once        shoot a bouncy ball
+05 - once        shoot a bouncy ball
+06 - once        launch flying ball (2P) or skip to phase 08 (1P)
+07 - idle
+08 - once        open eye
+09 - once        fire up eye
+10 - once        shoot fire ball
+11 - once        remove fire, close eye
+12 - per frame   camera moves left
+   - once        initiate chr animation sequence 2-1-0
+13 - idle
+14 - once        drop ball from sky
+15 - once        drop ball from sky
+16 - once        drop ball from sky
+17 - once        skip to phase 00
+
 BOSS LOOP
   - Pause XX frames
   - Move camera XX frames to the right, animate tiles

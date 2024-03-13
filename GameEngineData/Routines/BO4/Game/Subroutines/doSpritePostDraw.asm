@@ -333,8 +333,35 @@
     JMP +done
     
 
+;; SCREEN 8 - BOSS FIGHT
++nextScreen:
+    CMP #$08
+    BEQ +
+        JMP +nextScreen
+    +
+    
+    DEC bossTimer
+    BEQ +
+        INC bossPhase
+        LDX bossPhase
+        LDA tblBossPhaseTimer,x
+        STA bossTimer
+        
+        LDA tblBossPhaseActionLo,x
+        STA temp16
+        LDA tblBossPhaseActionHi,x
+        STA temp16+1
+        JSR doTemp16
+    +
+    JMP +done
+  
+.include "Routines\BO4\Game\BossPhases.asm"
+
+
+
 ;; Future screens go here
 +nextScreen:
+
 
 
 +done:

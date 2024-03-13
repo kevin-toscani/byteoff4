@@ -1,10 +1,16 @@
+    ;; Are we on the boss stage?
+    LDA screenType
+    CMP #$08
+    BEQ +bossScroll
+        ;; If not, do default scroll stuff
+        JMP +bossScroll
+    +
 
-;;THIS PART IS THE FLAG FOR AUTOSCROLL, CHANGE TO ANOTHER FLAG IF DESIRED
-LDA ScreenFlags00
-AND #%00000010 ; is autoscroll checked??
-BNE + 
-    JMP +scrollfollowsplayer ; if not, go to follow mode
-+
+
+    ;; We're on the boss stage, so we scroll based on
+    ;; if the boss enters or leaves the screen.
+    LDA bossPhase
+    
 
 ;;autoscroll is checked, so first we get the speed
     LDA screenSpeed

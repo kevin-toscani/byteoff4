@@ -8,6 +8,9 @@
     
 	GetActionStep temp
     BEQ +
+    
+    CMP #$06
+    BCS +
         ChangeActionStep temp, #0 ;Change to idle state
     +
 	

@@ -12,7 +12,15 @@ doDrawThisSprite:
     
     ;; If player, draw face
     CPX player1_object
-    BNE +faceDone
+    BEQ +
+        JMP +faceDone
+    +
+    
+    GetActionStep player1_object
+    CMP #$06
+    BEQ +faceDone
+    
+    
     
         ;; Check (player and global) sprite drawing bit
         LDA ScreenFlags00

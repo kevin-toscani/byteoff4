@@ -6,7 +6,8 @@
 
     LDA Object_y_hi,x
     STA tempy
+    
+    LDA Object_screen,x
+    STA tempC
 
-    ;x y obj state (screen)
-    CreateObject tempx, tempy, #$14, #$00
-    ;CreateObjectOnScreen tempx, tempy, #$14, #$00, scrollUpdateScreen
+    CreateObjectOnScreen tempx, tempy, #$14, #$00, tempC

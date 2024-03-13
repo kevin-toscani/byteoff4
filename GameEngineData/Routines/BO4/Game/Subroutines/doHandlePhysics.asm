@@ -522,6 +522,7 @@ GRAVITY_HI = #$00
 		BNE +isNotSolid
 			JMP +isSolid
 		+isNotSolid
+        
 		CMP #$07
 		BNE +isNotSolid
 			JMP +isOneWaySolid
@@ -685,15 +686,14 @@ isSolidSoLand:
 	BNE +dontChangeToIdle
     		LDA gamepad
         AND #%11110000
-		BEQ +isRunningWhenLanding
+		BNE +isRunningWhenLanding
 			;; is idle when landing
 			LDA #$00
-			STA temp1
 			JMP +gotLandingState
 		+isRunningWhenLanding
 			LDA #$01
-			STA temp1
 		+gotLandingState
+			STA temp1
 			ChangeActionStep temp, temp1 ;; changes to either idle or running depending on if a direction key is pressed.
 	+dontChangeToIdle
 	

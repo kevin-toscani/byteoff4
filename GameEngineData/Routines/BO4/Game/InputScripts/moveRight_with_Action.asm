@@ -4,11 +4,11 @@
     +
 
     STX temp ;; assumes the object we want to move is in x.
-;	GetActionStep temp
-;    CMP #$07
-;    BNE +notHurt
-;        RTS
-;    +notHurt
+	GetActionStep temp
+    CMP #$06
+    BNE +notDead
+        RTS
+    +notDead
     
         StartMoving temp, #RIGHT
         STX temp ;; assumes the object we want to move is in x.
@@ -18,6 +18,8 @@
         CMP #1 ;Walk
         BEQ +
         CMP #2 ;Jump
+        BEQ +
+        CMP #7 ;Hurt
         BEQ +
             ChangeActionStep temp, #1 ;Change to walk state
         +

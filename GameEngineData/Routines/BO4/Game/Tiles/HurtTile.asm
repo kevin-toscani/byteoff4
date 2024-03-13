@@ -1,53 +1,96 @@
+OBJTYPE_EXPLOSION = #$09
+
+    ;; Make hurt tiles solid
+    LDA ObjectUpdateByte
+    ORA #%00000001
+    STA ObjectUpdateByte
 
     CPX player1_object
-    BNE +done
-        
-        ;; Check if we're not hurting yet
-        GetActionStep player1_object
-        CMP #$07
-        BEQ +done
-
-        ;; Take a hit point away (if there's any left)
-        LDA myHealth
-        BEQ +
-            DEC myHealth
-            BNE +
-            ;; We're dead - do something here probably
-            ; CreateObject #obj_short_circuited
-            ; or ChangeActionStep 6
-            ; or DestroyObject
-            ; or... we'll see
-        +
+    BEQ +
+        JMP +done
+    +
     
-        ;; Temporarily disable inputs
-        LDA bo4Flags
-        ORA #%10000000
-        STA bo4Flags
+    ;; Check if we're not hurting or dead yet
+    GetActionStep player1_object
+    CMP #$06
+    BCC +
+        JMP +done
+    +
+        
+    PlaySound #_sfx_hit
 
-        ;; Move in non-facing direction
-		LDA Object_direction,x
-        AND #%00000111
-        CMP #%00000100
-        BCC +goRight
+    ;; Take a hit point away (if there's any left)
+    LDA myHealth
+    BEQ +
+        DEC myHealth
+        BNE +
+        ;; We're dead
         
-        +goLeft:
-            ORA #%11000000
-            JMP +goMove
+        ;; Play death song
+        ; PlaySong #_default_death ;[@TODO]
         
-        +goRight:
-            ORA #%10000000
-            AND #%10111111
+        ;; Disable input
+        LDA bo4Flags
+        ORA #$80
+        STA bo4Flags
         
-        +goMove:
-        STA Object_direction,x
+        ;; Set player invisible
+        ChangeActionStep player1_object, #$06
         
         ;; Stop moving
-        ChangeActionStep player1_object, #$07
+        StopMoving player1_object, #$FF, #$00
         
-        LDA #$80
-        STA Object_v_speed_lo,x
-        LDA #$FD
-        STA Object_v_speed_hi,x
-        LDA #$1E
-        STA disabledTimer
+        LDA Object_x_hi,x
+        ;CLC
+        ;ADC camX
+        STA tempx
+        LDA Object_y_hi,x
+        STA tempy
+        LDA Object_screen,x
+        STA tempC
+        CreateObjectOnScreen tempx, tempy, #OBJTYPE_EXPLOSION, #$00, tempC
+        
+        ;; Set warp timer
+        ;LDA #$FF
+        ;STA warpTimer
+        ;; [@TODO]
+        
+        ;; Set warp to either continue screen or game over, based on number of lives
+        ;; [@TODO]
+        
+        JMP +done
+    +
+
+    ;; Temporarily disable inputs
+    LDA bo4Flags
+    ORA #%10000000
+    STA bo4Flags
+
+    ;; Move in non-facing direction
+    LDA Object_direction,x
+    AND #%00000111
+    CMP #%00000100
+    BCC +goRight
+    
+    +goLeft:
+        ORA #%11000000
+        JMP +goMove
+    
+    +goRight:
+        ORA #%10000000
+        AND #%10111111
+    
+    +goMove:
+    STA Object_direction,x
+    
+    ;; Stop moving
+    ChangeActionStep player1_object, #$07
+    
+    LDA #$80
+    STA Object_v_speed_lo,x
+    LDA #$FD
+    STA Object_v_speed_hi,x
+    LDA #$1E
+    STA disabledTimer
+
     +done:

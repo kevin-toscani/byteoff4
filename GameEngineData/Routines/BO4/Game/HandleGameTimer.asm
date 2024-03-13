@@ -85,4 +85,10 @@
         AND #%10111111
         STA bo4Flags
     +
+    
+    ;; Zapp zapp timer
+    LDA fireTimer
+    BEQ +
+        DEC fireTimer
+    +
         

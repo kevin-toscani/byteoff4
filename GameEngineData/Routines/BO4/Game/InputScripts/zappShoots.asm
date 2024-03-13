@@ -1,15 +1,20 @@
     ;; Check if Zapp can shoot right now
-    ;; (i.e. bit 0 and 7 are unset)
+    ;; (i.e. bit 7 is unset)
 	LDA bo4Flags
-    AND #$81
-	BEQ +
+    BPL +
 		RTS
 	+
     
-    ;; Zapp can't shoot until the projectile is gone
-    LDA bo4Flags
-    ORA #$01
-    STA bo4Flags
+    ;; Check if Zapp can fire based on a timer    
+    LDA fireTimer
+    BEQ +
+        RTS
+    +
+    
+    ;; Set cooldown timer
+    LDA #$20
+    STA fireTimer
+
 
     ;; Push X&Y on stack
     TXA

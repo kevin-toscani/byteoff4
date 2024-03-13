@@ -400,13 +400,13 @@ doneLoadingChrs:
         +loadAnimatedTiles
       
         SwitchCHRBank #$01
-        LoadChrData #$17, #$16, #$00, #$20, BckSSChr04_Lo, BckSSChr04_Hi, userScreenByte0
+        LoadChrData #$17, #$16, #$00, #$20, tblAnimTilesLo, tblAnimTilesHi, userScreenByte0
         JSR doWaitFrame
       
         INC userScreenByte0
       
         SwitchCHRBank #$02
-        LoadChrData #$17, #$16, #$00, #$20, BckSSChr04_Lo, BckSSChr04_Hi, userScreenByte0
+        LoadChrData #$17, #$16, #$00, #$20, tblAnimTilesLo, tblAnimTilesHi, userScreenByte0
         JSR doWaitFrame
 
     +noAnimatedTiles  

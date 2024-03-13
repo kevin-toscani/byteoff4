@@ -4,6 +4,11 @@ BckSSChr0401:
 BckSSChr0402:
     .incbin "Routines\BO4\Graphics\BckSSChr04-02.chr"
 
+BckSSChr0501:
+    .incbin "Routines\BO4\Graphics\BckSSChr05-01.chr"
+
+BckSSChr0502:
+    .incbin "Routines\BO4\Graphics\BckSSChr05-02.chr"
 
 	.include SCR_CHANGE_AI_STEP
 	.include SCR_CHANGE_ANIMATION_STEP

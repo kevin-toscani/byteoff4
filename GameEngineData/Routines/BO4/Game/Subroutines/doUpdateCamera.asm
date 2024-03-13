@@ -1,118 +1,119 @@
-    ;; Are we on the boss stage?
-    LDA screenType
-    CMP #$08
-    BEQ +bossScroll
-        ;; If not, do default scroll stuff
-        JMP +bossScroll
-    +
-
-
-    ;; We're on the boss stage, so we scroll based on
-    ;; if the boss enters or leaves the screen.
-    LDA bossPhase
-    
-
-;;autoscroll is checked, so first we get the speed
-    LDA screenSpeed
-    
-    CMP #$01 ;;; PRETTY SLOW SPEED
-    BNE +
-    LDA #$44 ; LO
-        STA tempA
-        LDA #$00 ; HI
-        STA tempB
-        JMP ++
-    +    
-    CMP #$02 ;; FAST/MEDIUM SPEED
-    BNE +
-        LDA #$88 ; LO
-        STA tempA
-        LDA #$00 ; HI
-        STA tempB
-        JMP ++
-    +
-    CMP #$03 ;;FASTEST SPEED
-    BNE +
-        LDA #$00 ; LO
-        STA tempA
-        LDA #$01 ; HI
-        STA tempB
-        JMP ++
-    +  ;;SLOWEST SPEED
-        LDA #$22 ; LO
-        STA tempA
-        LDA #$00 ; HI
-        STA tempB
-    ++
-
-;now we get the direction. if left edge is checked, we go right. if right edge is checked, we go left.
-
-LDA ScreenFlags00
-AND #%00010000
-BNE +
-    JMP +rightautoscroll ; autoscroll right
-+
-LDA ScreenFlags00
-AND #%00100000
-BNE +
-    JMP +leftautoscroll ; autoscroll left
-+
-
-RTS
+RIGHT_SCROLL_PAD = #$90
+LEFT_SCROLL_PAD  = #$60
 
 
 
-+scrollfollowsplayer
-    RIGHT_SCROLL_PAD = #$90
+;; Screen 08 (boss) has a different type of scrolling
+LDA screenType
+AND #$08
+BEQ +bossScroll
+    JMP +scrollfollowsplayer
+
++bossScroll:
+    ;; [@TODO] Apply boss scrolling
+    ;; For now, just do default scrolling
+
+
+
+;   ;; Autoscroll is checked, so first we get the speed
+;   LDA screenSpeed
+;   
+;   CMP #$01 ;;; PRETTY SLOW SPEED
+;   BNE +
+;   LDA #$44 ; LO
+;       STA tempA
+;       LDA #$00 ; HI
+;       STA tempB
+;       JMP ++
+;   +    
+;   CMP #$02 ;; FAST/MEDIUM SPEED
+;   BNE +
+;       LDA #$88 ; LO
+;       STA tempA
+;       LDA #$00 ; HI
+;       STA tempB
+;       JMP ++
+;   +
+;   CMP #$03 ;;FASTEST SPEED
+;   BNE +
+;       LDA #$00 ; LO
+;       STA tempA
+;       LDA #$01 ; HI
+;       STA tempB
+;       JMP ++
+;   +  ;;SLOWEST SPEED
+;       LDA #$22 ; LO
+;       STA tempA
+;       LDA #$00 ; HI
+;       STA tempB
+;   ++
+;   ;; Now we get the direction.
+;   ;; If left edge is checked, we go right.
+;   ;; If right edge is checked, we go left.
+;
+;   LDA ScreenFlags00
+;   AND #%00010000
+;   BNE +
+;      JMP +rightautoscroll ; autoscroll right
+;   +
+;   LDA ScreenFlags00
+;   AND #%00100000
+;   BNE +
+;       JMP +leftautoscroll ; autoscroll left
+;   +
+;
+;   RTS
+
+
+
++scrollfollowsplayer:
     LDX player1_object
     LDA Object_x_hi,x
     SEC
     SBC camX
     CMP #RIGHT_SCROLL_PAD
-    BEQ +doActivateScrollByte
-    BCS +doActivateScrollByte
+    BEQ +
+    BCS +
         LDA scrollByte
         AND #%00111111
         STA scrollByte
         JMP +leftscrolling
-+doActivateScrollByte
+    +
+    
     LDA scrollByte
     AND #%01000000
-    BNE +notChangingCamDirectionForUpdate
-    LDA scrollByte
-    ORA #%00000010
- +notChangingCamDirectionForUpdate
+    BNE +
+        LDA scrollByte
+        ORA #%00000010
+    +
+
     AND #%00111111
     ORA #%11000000 
     STA scrollByte
-    ;;; just like movement byte of a player.
-    ;;; bit 7 indicates horizontal movement of a player
-    ;;; bit 6 indicates 0 for left, 1 for right.
     
-    ;RTS
     JMP doUpdateCamera
 
 
-+leftscrolling    
-    LEFT_SCROLL_PAD = #$60
++leftscrolling:
     LDX player1_object
     LDA Object_x_hi,x
     SEC
     SBC camX
     CMP #LEFT_SCROLL_PAD
-    BEQ +doActivateScrollByte
-    BCC +doActivateScrollByte
+    BEQ +
+    BCC +
         LDA scrollByte
         AND #%00111111
         STA scrollByte
         RTS
-+doActivateScrollByte
+    +
+    
     LDA scrollByte
     AND #%01000000
-    BEQ +notChangingCamDirectionForUpdate
-    LDA scrollByte
-    ORA #%00000010
-+notChangingCamDirectionForUpdate
+    BEQ +
+        LDA scrollByte
+        ORA #%00000010
+    +
     
     AND #%00111111
     ORA #%10000000  ;; bit one forces an update.
@@ -121,47 +122,47 @@ RTS
     ;;; bit 7 indicates horizontal movement of a player
     ;;; bit 6 indicates 0 for left, 1 for right.
     
-    JMP doUpdateCamera
+;    JMP doUpdateCamera
 
 
 
-+rightautoscroll
-    LDA scrollByte
-    AND #%01000000
-    BNE +notChangingCamDirectionForUpdate
-    LDA scrollByte
-    ORA #%00000010
- +notChangingCamDirectionForUpdate
-    AND #%00111111
-    ORA #%11000000 
-    STA scrollByte
-  
-    LDX camObject
-    LDA camX
-    AND #%11110000
-    STA tempz
-    LDA scrollByte
-    JMP +scrollEngaged
-
-    
-    
-+leftautoscroll
-    LDA scrollByte
-    AND #%01000000
-    BNE +notChangingCamDirectionForUpdate
-    LDA scrollByte
-    ORA #%00000010
- +notChangingCamDirectionForUpdate
-    AND #%00111111
-    ORA #%10000000 
-    STA scrollByte
-    
-    LDX camObject
-    LDA camX
-    AND #%11110000
-    STA tempz
-    LDA scrollByte
-    JMP +scrollEngaged
+;+rightautoscroll
+;    LDA scrollByte
+;    AND #%01000000
+;    BNE +notChangingCamDirectionForUpdate
+;    LDA scrollByte
+;    ORA #%00000010
+; +notChangingCamDirectionForUpdate
+;    AND #%00111111
+;    ORA #%11000000 
+;    STA scrollByte
+;  
+;    LDX camObject
+;    LDA camX
+;    AND #%11110000
+;    STA tempz
+;    LDA scrollByte
+;    JMP +scrollEngaged
+;
+;    
+;    
+;+leftautoscroll
+;    LDA scrollByte
+;    AND #%01000000
+;    BNE +notChangingCamDirectionForUpdate
+;    LDA scrollByte
+;    ORA #%00000010
+; +notChangingCamDirectionForUpdate
+;    AND #%00111111
+;    ORA #%10000000 
+;    STA scrollByte
+;    
+;    LDX camObject
+;    LDA camX
+;    AND #%11110000
+;    STA tempz
+;    LDA scrollByte
+;    JMP +scrollEngaged
 
 
 

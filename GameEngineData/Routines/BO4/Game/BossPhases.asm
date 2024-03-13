@@ -40,11 +40,40 @@ subBossCloseEye:
 
 subBossScrollOut:
     ;; [@TODO] Scroll boss off screen
+    RTS
     
 subBossDrop:
     ;; [@TODO] Drop a fireball from the sky
-
+    RTS
+    
 subBossEnd:
     LDA #$00
     STA bossPhase
     RTS
+
+tblBossPhaseTimer:
+    .db $80, $80, $80
+    .db $80, $80, $80
+    .db $80, $80, $80
+    .db $80, $80, $80
+    .db $80, $80
+    .db $80, $80, $80
+    .db $80
+
+tblBossPhaseActionLo:
+    .db #<subBossIdle,  #<subBossScrollIn, #<subBossIdle
+    .db #<subBossShoot, #<subBossShoot, #<subBossShoot
+    .db #<subBossLaunch, #<subBossIdle, #<subBossOpenEye
+    .db #<subBossLightEye, #<subBossFireball, #<subBossCloseEye
+    .db #<subBossScrollOut, #<subBossIdle
+    .db #<subBossDrop, #<subBossDrop, #<subBossDrop
+    .db #<subBossEnd
+
+tblBossPhaseActionHi:
+    .db #>subBossIdle,  #>subBossScrollIn, #>subBossIdle
+    .db #>subBossShoot, #>subBossShoot, #>subBossShoot
+    .db #>subBossLaunch, #>subBossIdle, #>subBossOpenEye
+    .db #>subBossLightEye, #>subBossFireball, #>subBossCloseEye
+    .db #>subBossScrollOut, #>subBossIdle
+    .db #>subBossDrop, #>subBossDrop, #>subBossDrop
+    .db #>subBossEnd

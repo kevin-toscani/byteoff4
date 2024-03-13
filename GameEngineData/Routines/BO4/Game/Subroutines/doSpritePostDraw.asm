@@ -341,7 +341,7 @@
     +
     
     DEC bossTimer
-    BEQ +
+    BNE +
         INC bossPhase
         LDX bossPhase
         LDA tblBossPhaseTimer,x

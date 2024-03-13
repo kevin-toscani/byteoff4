@@ -1,8 +1,14 @@
 
-;; Screen 0: by default, do not take any extra actions post screen load
+;; Screen 0: default screens
     LDA screenType
     BNE +nextScreen
-    
+
+        ;; Re-enable inputs
+        LDA bo4Flags
+        AND #%01111111
+        STA bo4Flags
+
+        ;; Reset player action step
         ChangeActionStep player1_object, #$00
         JMP +done
     
@@ -75,6 +81,16 @@
         JMP +nextScreen
     +
 
+    ;; Re-enable inputs
+    LDA bo4Flags
+    AND #%01111111
+    STA bo4Flags
+
+    LDA #$03
+    STA myLives
+    LDA #$06
+    STA myHealth
+
 	LDA #$00
 	STA gameMode
     STA introTimer
@@ -86,6 +102,24 @@
     ORA #%00000010
     STA bo4Flags
 
+    JMP +done
+
+
+
+;; Screen 6: 16x16 BUFFER SCREEN
+;; (no action needed)
+
+
+
+;; Screen 7: GAME OVER
++nextScreen:
+    CMP #$07
+    BEQ +
+        JMP +nextScreen
+    +
+
+    LDA #$FF
+    STA warpTimer
     JMP +done
 
 

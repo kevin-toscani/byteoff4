@@ -208,8 +208,6 @@
 
     LDA introTimer
     BEQ +
-        ; [@TODO] fadeout sequence?
-
         CMP #1
         BNE ++
             WarpToScreen #$00, #$DF, #$01
@@ -225,7 +223,8 @@
     +
 
     LDX #$0C
-    LDY spriteRamPointer
+    LDY #$08 ; instead of spriteRamPointer because NESMaker
+    
     -objectLoop:
         ;; Push X to stack
         TXA
@@ -346,6 +345,16 @@
     BEQ +
         JMP +done
     +
+    
+    LDA myLives
+    CLC
+    ADC #$27
+    STA temp
+    
+    ;DrawSprite #$10, #$16, #$17, #$00
+    ;DrawSprite #$18, #$16, #$18, #$00
+    ;DrawSprite #$20, #$16, temp, #$00
+    DrawSprite #$18, #$3A, temp, #$00
     
     LDX myHealth
     LDA tblTopHud,x

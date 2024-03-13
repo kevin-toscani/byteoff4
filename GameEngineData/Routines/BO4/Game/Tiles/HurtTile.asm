@@ -18,45 +18,58 @@ lblOriginalHurtTile:
 
     ;; Take a hit point away (if there's any left)
     LDA myHealth
-    BEQ +
-        DEC myHealth
-        BNE +
-        ;; We're dead
-        
-        ;; Play death song
-        PlaySong #_default_Death
-        
-        ;; Disable input
-        LDA bo4Flags
-        ORA #$80
-        STA bo4Flags
-        
-        ;; Set player invisible
-        ChangeActionStep player1_object, #$06
-        
-        ;; Stop moving
-        StopMoving player1_object, #$FF, #$00
-        
-        LDA Object_x_hi,x
-        ;CLC
-        ;ADC camX
-        STA tempx
-        LDA Object_y_hi,x
-        STA tempy
-        LDA Object_screen,x
-        STA tempC
-        CreateObjectOnScreen tempx, tempy, #OBJTYPE_EXPLOSION, #$00, tempC
-        
-        ;; Set warp timer
-        ;LDA #$FF
-        ;STA warpTimer
-        ;; [@TODO]
-        
-        ;; Set warp to either continue screen or game over, based on number of lives
-        ;; [@TODO]
-        
-        JMP +done
+    BNE +
+        JMP +notDead
     +
+
+    DEC myHealth
+    BEQ +
+        JMP +notDead
+    +
+
+    ;; We're dead
+    
+    ;; Play death song
+    PlaySong #_default_Death
+    
+    ;; Disable input
+    LDA bo4Flags
+    ORA #$80
+    STA bo4Flags
+    
+    ;; Set player invisible
+    ChangeActionStep player1_object, #$06
+    
+    ;; Stop moving
+    StopMoving player1_object, #$FF, #$00
+    
+    LDA Object_x_hi,x
+    STA tempx
+    LDA Object_y_hi,x
+    STA tempy
+    LDA Object_screen,x
+    STA tempC
+    CreateObjectOnScreen tempx, tempy, #OBJTYPE_EXPLOSION, #$00, tempC
+    
+    ;; Set warp timer
+    LDA #$A0
+    STA warpTimer
+    
+    ;; Set warp to either warp screen or game over, based on number of lives
+    LDA #$00
+    STA warpToMap
+
+    DEC myLives
+    BNE +
+        LDA #$E5
+        STA warpToScreen
+    +
+
+    JMP +done
+
+
+
+    +notDead:
 
     ;; Temporarily disable inputs
     LDA bo4Flags

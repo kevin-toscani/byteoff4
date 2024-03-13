@@ -1,5 +1,5 @@
 sabre_maxTracks:
-	.byte 9
+	.byte 10
 sabre_maxSFX:
 	.byte 13
 
@@ -13,6 +13,7 @@ trackHeaderTable_lo:
 	.byte <_default_Win_header
 	.byte <_default_End_header
 	.byte <_default_Death_header
+	.byte <_default_GameOver_header
 trackHeaderTable_hi:
 	.byte >_default_Intro_header
 	.byte >_default_Title_header
@@ -23,8 +24,9 @@ trackHeaderTable_hi:
 	.byte >_default_Win_header
 	.byte >_default_End_header
 	.byte >_default_Death_header
+	.byte >_default_GameOver_header
 trackTable_PRGbank:
-	.byte $00,$00,$00,$00,$00,$00,$00,$00,$00
+	.byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 
 sfxHeaderTable_lo:
 	.byte <_sfx_zap_header
@@ -65,6 +67,7 @@ sfxHeaderTable_hi:
 	_default_Win          = 6
 	_default_End          = 7
 	_default_Death        = 8
+	_default_GameOver     = 9
 ;;;; SFX index constants
 	_sfx_zap     = 0
 	_sfx_hit     = 1

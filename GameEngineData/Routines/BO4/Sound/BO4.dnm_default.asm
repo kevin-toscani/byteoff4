@@ -859,3 +859,40 @@ _default_Death_noise:
 _default_Death_noise_pattern0:
 	.byte NL32,INST|CONT|27,$6,D00
 
+_default_GameOver_header:
+	.byte 4
+	.byte 150
+	.byte 1
+	.word _default_GameOver_pulse1
+	.word _default_GameOver_pulse2
+	.word _default_GameOver_triangle
+	.word _default_GameOver_noise
+	.word NULL_DMC
+
+_default_GameOver_pulse1:
+	.word _default_GameOver_pulse1_pattern0
+_default_GameOver_pulse1_pattern0:
+	.byte NL1,INST|CONT|20,A4,INST|42,INST|CONT|20,G4,INST|42,INST|CONT|20,E4,INST|42
+	.byte INST|CONT|20,D4,INST|42,INST|CONT|20,E4,INST|42,INST|CONT|20,D4,INST|42,INST|CONT|20
+	.byte C4,INST|42,INST|CONT|20,A3,INST|42,INST|CONT|20,D4,INST|42,INST|CONT|20,C4
+	.byte INST|42,INST|CONT|20,G3,INST|42,NL4,INST|CONT|20,A3,NL1,INST|22,NL5
+	.byte A3,NL16,INST|1,C00
+
+_default_GameOver_pulse2:
+	.word _default_GameOver_pulse2_pattern0
+_default_GameOver_pulse2_pattern0:
+	.byte NL2,INST|CONT|31,E3,D3,C3,B2,C3,B2,A2,E2
+	.byte A2,G2,D2,NL4,E2,NL6,A1,NL16,INST|1,D00
+
+_default_GameOver_triangle:
+	.word _default_GameOver_triangle_pattern0
+_default_GameOver_triangle_pattern0:
+	.byte NL6,INST|CONT|32,A2,NL2,A1,NL6,B2,NL2,B1,NL4
+	.byte C3,NL2,G2,NL3,A2,NL1,INST|1,NL3,INST|CONT|32,A1
+	.byte NLC,19,INST|1,D00
+
+_default_GameOver_noise:
+	.word _default_GameOver_noise_pattern0
+_default_GameOver_noise_pattern0:
+	.byte NL6,INST|CONT|27,$6,NL28,INST|CONT|5,$E,NL14,INST|1,D00
+

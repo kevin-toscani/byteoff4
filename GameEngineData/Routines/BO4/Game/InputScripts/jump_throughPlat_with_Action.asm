@@ -89,9 +89,12 @@
     EOR #$FF
     STA Object_v_speed_hi,x
         
-    STX temp ;; assumes the object we want to move is in x.
- ;  change the object's action so that he is in jump mode.
-	ChangeActionStep temp, #2 ;Jump
+    STX temp
+    GetActionStep temp
+    CMP #$06
+    BCS +
+        ChangeActionStep temp, #2 ;Jump
+    +
 
 +skipJumping:
     ReturnBank

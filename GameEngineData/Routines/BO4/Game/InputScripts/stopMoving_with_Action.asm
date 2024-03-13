@@ -3,7 +3,7 @@
 	GetActionStep temp
     CMP #$07
     BNE +notHurt
-        RTS
+        JMP +stopPlayerMovement
     +notHurt
     
 	GetActionStep temp

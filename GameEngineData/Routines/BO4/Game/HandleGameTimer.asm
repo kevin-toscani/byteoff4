@@ -91,4 +91,23 @@
     BEQ +
         DEC fireTimer
     +
+    
+    ;; Warp timer
+    LDA warpTimer
+    BEQ +
+        DEC warpTimer
+        BNE +
+        
+        ;; Restore health
+        LDA #$06
+        STA myHealth
+        
+        ;; Re-enable inputs
+        LDA bo4Flags
+        ORA #%10000000
+        STA bo4Flags
+        
+        ;; Warp to prepared continue point
+        WarpToScreen warpToMap, warpToScreen, #$01
+    +
         

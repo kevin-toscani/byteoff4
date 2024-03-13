@@ -11,7 +11,7 @@
 
 	;; Disable user input
     LDA bo4Flags
-    AND #%01111111
+    ORA #%10000000
     STA bo4Flags
     
 	;; Set warp timer

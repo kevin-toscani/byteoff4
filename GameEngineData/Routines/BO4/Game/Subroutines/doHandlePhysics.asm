@@ -1,3 +1,4 @@
+;.include "Routines\BO4\Macros\GetCollisionPointAlt.asm"
 
 ;; do handle physics.
 
@@ -319,7 +320,19 @@ gotHmoveDirection:
 	
 	LDA directionByte
 	AND #%01000000
-	BNE doMoveRight
+	BEQ +
+        JMP doMoveRight
+    +
+    
+    LDA screenType
+    CMP #$08
+    BNE +
+        LDA Object_x_hi,x
+        CMP #$08
+        BCS +
+            JMP +leftBound8
+    +
+    
 ;;doMoveLeft:
 	LDA Object_x_lo,x
 	SEC
@@ -331,6 +344,15 @@ gotHmoveDirection:
 	LDA Object_screen,x
 	SBC #$00
 	STA xHold_screen
+
+    LDA screenType
+    CMP #$08
+    BNE +	
+        LDA #$01
+        STA screenUpdateByte
+        JMP doneWithH
+	+
+    
 	;;;;;;;;;;;;;;;;;;;;; TEST AGAINST LEFT CAMERA BOUNDS.
 	;; Get cam clip left position
 		LDA camX
@@ -353,6 +375,7 @@ gotHmoveDirection:
 			+	
 				CPX player1_object
 				BNE +notPlayerAtEdge
+                    +leftBound8
 					LDA xPrev
 					STA xHold_hi
 					STA Object_x_hi,x
@@ -372,6 +395,22 @@ gotHmoveDirection:
 	JMP doneWithH
 doMoveRight:
 	;; update x position.
+
+    LDA screenType
+    CMP #$08
+    BNE +
+        LDA camX
+        SEC
+        SBC #$2C
+        BCS +
+            LDA #$00
+        +
+        CLC
+        ADC Object_x_hi,x
+        BCS +rightBound8
+        CMP #$EC
+        BCS +rightBound8
+    +
 	
 	LDA Object_x_lo,x
 	clc
@@ -384,8 +423,14 @@ doMoveRight:
 	ADC #$00
 	STA xHold_screen
 	
-	
-	
+    LDA screenType
+    CMP #$08
+    BNE +	
+        LDA #$01
+        STA screenUpdateByte
+        JMP doneWithH
+	+
+    
 		LDA camX
 		STA temp16 ;; low left cam clip
 		LDA camX_hi
@@ -409,6 +454,7 @@ doMoveRight:
 			++	
 				CPX player1_object
 				BNE +skipStopAtEdge
+                    +rightBound8:
 					LDA xPrev
 					STA xHold_hi
 					STA Object_x_hi,x
@@ -443,6 +489,36 @@ JMP doneWithH
 			; JSR doHandleBounds
 			; JMP skipPhysics
 doneWithH:
+
+    LDA gamepad
+    AND #%01000000
+    BNE +yep
+    LDA screenType
+    CMP #$08
+    BNE +yep
+        LDA camX
+        SEC
+        SBC #$2C
+        BCS +
+            LDA #$00
+        +
+        STA temp
+        CLC
+        ADC Object_x_hi,x
+        BCS +nope
+        CMP #$E7
+        BCS +nope
+        JMP +yep
+
+    +nope:
+        LDA #$E7
+        SEC
+        SBC temp
+        STA Object_x_hi,x
+        STA xHold_hi
+        STA xPrev
+
+    +yep:
 	LDA Object_vulnerability,x
 	AND #%00000001
 	BEQ +skip
@@ -482,12 +558,26 @@ GRAVITY_HI = #$00
         JMP +notSolid
     +
 
+    ;; Set the camera offset for screen 8
+    LDA screenType
+    CMP #$08
+    BNE +
+        LDA camX
+        JMP ++
+    +
+    LDA #$00
+    ++
+    STA tempCamX
+    
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	LDA Object_x_hi,x
 	CLC
 	ADC self_left
+    CLC
+    ADC camX
 	STA temp
+
 	
     JSR getPointColTable
 	
@@ -495,6 +585,8 @@ GRAVITY_HI = #$00
 	LDA Object_x_hi,x
 	CLC
 	ADC self_right
+    CLC
+    ADC camX
 	STA temp3 ;; the right bottom collision point.
 		JSR getPointColTable
 	LDA Object_y_lo,x
@@ -513,7 +605,7 @@ GRAVITY_HI = #$00
 		;; 9 = prize block, which behaves as a solid
 		;; 10 (0A) = ladder, whose top behaves like a solid.
 		;; Here is where we handle the "landing" scenario for all of those possibilities.
-		
+    
 		
 	GetCollisionPoint temp, temp1, tempB ;; is it a solid?
 		BNE +check

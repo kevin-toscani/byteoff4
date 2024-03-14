@@ -733,6 +733,12 @@ notOnZeroScreen:
     skipCheckingThisObject_forEraseColumnLoop
         cpx player1_object
         BEQ doEraseNonPlayerObjectsInThisColumnLoop
+
+            ;; Prevent boss eye destroy at all times
+            LDA Object_type,x
+            CMP #$18
+            BEQ doEraseNonPlayerObjectsInThisColumnLoop
+
             LDA Object_status,x
             AND #%10000000
             BEQ doEraseNonPlayerObjectsInThisColumnLoop
@@ -743,7 +749,7 @@ notOnZeroScreen:
             AND #%00001111
             STA temp1
             Compare16 temp16+1, temp16, temp1, temp
-            +   
+            +
                 DestroyObject
         
                 JMP doEraseNonPlayerObjectsInThisColumnLoop

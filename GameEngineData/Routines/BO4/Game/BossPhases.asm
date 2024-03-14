@@ -1,3 +1,6 @@
+TEST_XPOS = #$7F
+TEST_YPOS = #$7F
+
 subBossIdle:
     RTS
 
@@ -7,9 +10,10 @@ subBossScrollIn:
     RTS
     
 subBossShoot:
+    ;; Show fire animation
+    CreateObject #$70, #$68, #$1F, #$00
     ;; Shoot a bouncy ball
-    CreateObject [x], [y], [OBJ_BOUNCY_BALL], #$00
-    CreateObject [x], [y], [OBJ_NOZZLE_FIRE], #$00
+    CreateObject #$82, #$74, #$1B, #$00
     RTS
     
 subBossLaunch:
@@ -17,12 +21,12 @@ subBossLaunch:
     AND #$01
     BEQ +onePlayerMode
         ;; Draw the boss hatch that'll launch a flying ball
-        CreateObject [x], [y], [OBJ_HATCH], #$00
+        ;[@TODO]
+        ;CreateObject #TEST_XPOS, #TEST_YPOS, #$20, #$00
         RTS
         
-    ;; Skip two phases
+    ;; Skip next phases
     +onePlayerMode:
-    INC bossPhase
     INC bossPhase
     RTS
 
@@ -33,7 +37,43 @@ subBossOpenEye:
     LDX #$00
     -
         LDA Object_type,x
-        CMP [OBJ_EYE]
+        CMP #$18
+        BEQ +eyeFound
+
+        INX
+        CPX #TOTAL_MAX_OBJECTS
+    BNE -
+
+    ;; No eye found, only light eye up
+    JMP +lightEyeUp
+
+    ;; Eye found, change action step to opening
+    +eyeFound:
+    STX temp
+    ChangeActionStep temp, #$01
+
+    +lightEyeUp:
+    CreateObject #TEST_XPOS, #TEST_YPOS, #$19, #$00
+    RTS
+
+
+subBossLightEye:
+    ;; Light up eye
+    RTS
+
+    
+subBossFireball:
+    ;; Shoot a fireball from the eye
+    CreateObject #TEST_XPOS, #TEST_YPOS, #$1C, #$00
+    RTS
+    
+subBossCloseEye:
+    ;; Close eye
+    ;; First, find the eye
+    LDX #$00
+    -
+        LDA Object_type,x
+        CMP #$18
         BEQ +eyeFound
 
         INX
@@ -41,31 +81,29 @@ subBossOpenEye:
     BNE -
 
     ;; No eye found, no action needed
-    +eyeNotFound:
-    RTS
+    JMP +destroyFlame
 
-    ;; Eye found, change action step to opened
+    ;; Eye found, change action step to closing
     +eyeFound:
     STX temp
-    ChangeActionStep temp, #$01
-    RTS
-
-
-subBossLightEye:
-    ;; Light up eye
-    CreateObject [X], [Y], [OBJ_EYEFIRE], #$00
-    RTS
-
+    ChangeActionStep temp, #$03
     
-subBossFireball:
-    ;; Shoot a fireball from the eye
-    CreateObject [X], [Y], [OBJ_EYEBALL], #$00
+    +destroyFlame:
+
+    LDX #$00
+    -
+        LDA Object_type,x
+        CMP #$1F
+        BNE +
+            DestroyObject
+            RTS
+        +
+
+        INX
+        CPX #TOTAL_MAX_OBJECTS
+    BNE -
     RTS
-    
-subBossCloseEye:
-    ;; Close eye
-    CreateObject [X], [Y], [OBJ_EYE], #$02
-    RTS
+
 
 subBossScrollOut:
     ;; Scroll boss off screen. Because this is a per-frame action,
@@ -74,16 +112,15 @@ subBossScrollOut:
     
 subBossDrop:
     ;; Drop a fireball from the sky
-    CreateObject [X], [Y], [OBJ_FROM_SKY], #$00
-    ;; [@TODO] check if x register holds object slot
-    JSR getRandomNumberToo
+    CreateObject #TEST_XPOS, #$03, #$1D, #$00
+    JSR doGetRandomNumberToo
     AND #$07
     LSR
     LSR
     LSR
     LSR
     LSR
-    STA Object_y_hi,x
+    STA Object_x_hi,x
     RTS
     
 subBossEnd:
@@ -94,7 +131,7 @@ subBossEnd:
 
 
 ;; Test constants to play with (or quickly test) phase speeds
-TEST_SPEED   = $10
+TEST_SPEED   = $40
 TEST_HISPEED = $01
 TEST_LOSPEED = $70
 

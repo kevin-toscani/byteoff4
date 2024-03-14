@@ -4,15 +4,40 @@
 ;;; sprites off screen if they are no longer in the camera render area.
 
 
-    ;; Don't use camX on screen 8 (except for the eye but we'll get there later)
+    ;; Don't use camX on screen 8 (except for the eye)
     LDA screenType
     CMP #$08
     BEQ +
         LDA camX
-        JMP ++
+        JMP +gotCamOffset
     +
+    
+    ;; Draw the eye of the boss in the right spot on the x-axis.
+    LDA Object_type,x
+    CMP #$18
+    BNE +skipEye
+        LDA camX
+        CMP #$43
+        BCS +
+            LDA #$00
+            STA Object_x_hi,x
+            LDA #$F7
+            STA Object_y_hi,x
+            JMP +skipEye
+        +
+        
+        LDA #$60
+        STA Object_y_hi,x
+
+        LDA #$3D
+        SEC
+        SBC camX
+        STA Object_x_hi,x
+    +skipEye:
+
     LDA #$00
-    ++
+    
+    +gotCamOffset:
     STA tempCamX
 
 
@@ -354,6 +379,8 @@
 						
             ;; If sprite is blank, do not draw
             LDA tempC
+            BEQ thisTileIsOffScreen
+            CMP #$80
             BEQ thisTileIsOffScreen
 
 			;;;;;;;;;;;; Here, we need to evaluate if this tile should be drawn

@@ -19,23 +19,23 @@ doGetRandomNumber:
 	SBC vBlankTimer
 	RTS
 
-;doGetRandomNumberToo:
-;    LDA randomSeed1
-;    ASL
-;    BCS +
-;        EOR #$9E
-;    +
-;    ADC #$81
-;    STA randomSeed1
-;    RTS
-
 doGetRandomNumberToo:
-        lda randomSeed1
-        beq +doEor
-        asl
-        beq +noEor
-        bcc +noEor
-+doEor: eor #$1d
-+noEor: sta randomSeed1
-        rts
+    LDA randomSeed1
+    ASL
+    BCS +
+        EOR #$9E
+    +
+    ADC #$81
+    STA randomSeed1
+    RTS
+
+;doGetRandomNumberToo:
+;        lda randomSeed1
+;        beq +doEor
+;        asl
+;        beq +noEor
+;        bcc +noEor
+;+doEor: eor #$1d
+;+noEor: sta randomSeed1
+;        rts
         

@@ -136,6 +136,9 @@
     STA bossTimer
     LDA #$FF
     STA bossPhase
+    
+    ;; Preload eye
+    CreateObject #$80, #$80, #$18, #$00
     JMP +done
 
 

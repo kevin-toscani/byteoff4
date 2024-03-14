@@ -373,9 +373,9 @@ gotHmoveDirection:
 		STA temp1
 		Compare16 temp16+1, temp16, temp1, temp
 			+	
+                +leftBound8
 				CPX player1_object
 				BNE +notPlayerAtEdge
-                    +leftBound8
 					LDA xPrev
 					STA xHold_hi
 					STA Object_x_hi,x
@@ -398,19 +398,24 @@ doMoveRight:
 
     LDA screenType
     CMP #$08
-    BNE +
+    BNE +notScreen8
+        CPX player1_object
+        BNE +notPlayerCheck
+        
         LDA camX
         SEC
         SBC #$2C
         BCS +
+            +notPlayerCheck:
             LDA #$00
         +
+
         CLC
         ADC Object_x_hi,x
         BCS +rightBound8
         CMP #$EC
         BCS +rightBound8
-    +
+    +notScreen8:
 	
 	LDA Object_x_lo,x
 	clc
@@ -452,9 +457,9 @@ doMoveRight:
 		Compare16 temp16+1, temp16, temp1, temp
 			JMP +
 			++	
+                +rightBound8:
 				CPX player1_object
 				BNE +skipStopAtEdge
-                    +rightBound8:
 					LDA xPrev
 					STA xHold_hi
 					STA Object_x_hi,x
@@ -465,10 +470,10 @@ doMoveRight:
 					STA screenUpdateByte
 					JSR doHandleBounds
 					
-				JMP doneWithH
+				;JMP doneWithH
 			+
 	
-JMP doneWithH
+;JMP doneWithH
 		; LDA Object_x_hi,x
 		; clc
 		; ADC Object_h_speed_hi,x
@@ -511,6 +516,18 @@ doneWithH:
         JMP +yep
 
     +nope:
+        CPX player1_object
+        BEQ +
+        
+        LDA Object_type,x
+        CMP #$18
+        BEQ +
+            LDA Object_x_hi,x
+            CMP #$E7
+            BCC +yep
+            DestroyObject
+            JMP doneWithGravity
+        +
         LDA #$E7
         SEC
         SBC temp
@@ -548,13 +565,14 @@ doneWithH:
 MAX_FALL_SPEED = #$04
 GRAVITY_LO = #$40
 GRAVITY_HI = #$00
+IGNORES_SOLID_GROUND = #$40
 
 
-    ;; If "launcher projectile" (e.g. object type $14), ignore solid ground.
-    ;; (possibly @TODO: change to object flag "ignore solid ground")
-    LDA Object_type,x
-    CMP #$14
-    BNE +
+    ;; If "Ignore solid ground" flag set, ignore solid ground.
+    LDY Object_type,x
+    LDA MonsterBits,y
+    AND #IGNORES_SOLID_GROUND
+    BEQ +
         JMP +notSolid
     +
 

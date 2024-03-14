@@ -32,6 +32,11 @@
         LDA #$3D
         SEC
         SBC camX
+        BMI +
+            LDA #$F7
+            STA Object_y_hi,x
+            LDA #$00
+        +
         STA Object_x_hi,x
     +skipEye:
 

@@ -51,9 +51,10 @@ subBossOpenEye:
     +eyeFound:
     STX temp
     ChangeActionStep temp, #$01
+    
 
     +lightEyeUp:
-    CreateObject #TEST_XPOS, #TEST_YPOS, #$19, #$00
+    CreateObject #$B5, #$62, #$19, #$00
     RTS
 
 
@@ -93,7 +94,7 @@ subBossCloseEye:
     LDX #$00
     -
         LDA Object_type,x
-        CMP #$1F
+        CMP #$19
         BNE +
             DestroyObject
             RTS
@@ -115,11 +116,11 @@ subBossDrop:
     CreateObject #TEST_XPOS, #$03, #$1D, #$00
     JSR doGetRandomNumberToo
     AND #$07
-    LSR
-    LSR
-    LSR
-    LSR
-    LSR
+    ASL
+    ASL
+    ASL
+    ASL
+    ASL    
     STA Object_x_hi,x
     RTS
     

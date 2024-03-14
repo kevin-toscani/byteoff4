@@ -9,7 +9,7 @@
 !.gitignore
 
 !ExtAssets
-!ExtAssets/*
+!ExtAssets/**/*
 ExtAssets/untracked
 ExtAssets/sabre_ft_txt.py
 

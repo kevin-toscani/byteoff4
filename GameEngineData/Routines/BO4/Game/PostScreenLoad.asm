@@ -131,6 +131,11 @@
         JMP +nextScreen
     +
 
+ifdef BO4_TESTING
+    LDA #$01
+    STA gameMode
+endif
+
     ;; Preset timer and phase
     LDA #$10
     STA bossTimer

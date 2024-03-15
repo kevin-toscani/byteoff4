@@ -146,14 +146,35 @@ MonsterBits:
 
 ifdef ZAP_WHITE_TILE
     doHandleZap:
-        LDA Object_x_hi,x
-        STA tempx
-        LDA Object_y_hi,x
-        STA tempy
-        LDA Object_screen,x
-        STA tempC
-        CreateObjectOnScreen tempx, tempy, #OBJTYPE_EXPLOSION, #$00, tempC
         DestroyObject
+
+        LDA screenType
+        CMP #$08
+        BEQ +bossZap
+        
+        +normalZap:
+            LDA Object_x_hi,x
+            CLC
+            ADC camX
+            STA tempx
+            LDA Object_y_hi,x
+            STA tempy
+            LDA Object_screen,x
+            STA tempC
+            JMP +finishZap
+            
+        
+        +bossZap:
+            LDA Object_x_hi,x
+            STA tempx
+            LDA Object_y_hi,x
+            STA tempy
+            LDA #$00
+            STA tempC
+        
+        +finishZap:
+            CreateObjectOnScreen tempx, tempy, #OBJTYPE_EXPLOSION, #$00, tempC
+
         RTS
 endif
 

@@ -20,9 +20,7 @@ subBossLaunch:
     LDA gameMode
     AND #$01
     BEQ +onePlayerMode
-        ;; Draw the boss hatch that'll launch a flying ball
-        ;[@TODO]
-        ;CreateObject #TEST_XPOS, #TEST_YPOS, #$20, #$00
+        CreateObject #$C8, #$4E, #$20, #$00
         RTS
         
     ;; Skip next phases
@@ -113,7 +111,7 @@ subBossScrollOut:
     
 subBossDrop:
     ;; Drop a fireball from the sky
-    CreateObject #TEST_XPOS, #$03, #$1D, #$00
+    CreateObject #$00, #$03, #$1D, #$00
     JSR doGetRandomNumberToo
     AND #$07
     ASL

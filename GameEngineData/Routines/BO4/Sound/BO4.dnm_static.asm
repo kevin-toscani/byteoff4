@@ -1,7 +1,7 @@
 sabre_maxTracks:
 	.byte 11
 sabre_maxSFX:
-	.byte 20
+	.byte 22
 
 trackHeaderTable_lo:
 	.byte <_default_Intro_header
@@ -51,6 +51,8 @@ sfxHeaderTable_lo:
 	.byte <_sfx_meteorFall_header
 	.byte <_sfx_explosion_header
 	.byte <_sfx_explosionToo_header
+	.byte <_sfx_bossHurt_header
+	.byte <_sfx_quickHit_header
 sfxHeaderTable_hi:
 	.byte >_sfx_zap_header
 	.byte >_sfx_hit_header
@@ -72,6 +74,8 @@ sfxHeaderTable_hi:
 	.byte >_sfx_meteorFall_header
 	.byte >_sfx_explosion_header
 	.byte >_sfx_explosionToo_header
+	.byte >_sfx_bossHurt_header
+	.byte >_sfx_quickHit_header
 
 ;;;; Track index constants
 	_default_Intro        = 0
@@ -106,6 +110,8 @@ sfxHeaderTable_hi:
 	_sfx_meteorFall    = 17
 	_sfx_explosion     = 18
 	_sfx_explosionToo  = 19
+	_sfx_bossHurt      = 20
+	_sfx_quickHit      = 21
 
 env0:
 	.byte 0,ENV_LOOP,0
@@ -866,4 +872,32 @@ _sfx_explosionToo_noise:
 	.byte $0,NL2,$1,NL1,$0,NL2,$1,NL1,$0,NL2
 	.byte INST|CONT|10,$1,NL1,$0,NL2,$1,NL1,$0,NL2,$1
 	.byte NL1,$0,INST|23,INST|CONT|1,$1,END_SFX
+
+_sfx_bossHurt_header:
+	.byte 2
+	.byte 150
+	.word NULL_pulse1
+	.word _sfx_bossHurt_pulse2
+	.word NULL_triangle
+	.word _sfx_bossHurt_noise
+_sfx_bossHurt_pulse2:
+	.byte NL1,INST|CONT|18,F5,CS5,A4,F4,CS4,A3,F3,CS3
+	.byte A2,F2,CS2,A1,INST|1,END_SFX
+_sfx_bossHurt_noise:
+	.byte NL1,INST|CONT|3,$7,NL2,INST|CONT|20,$5,NL3,INST|CONT|3,$8,NL6
+	.byte $8,NL1,INST|1,END_SFX
+
+_sfx_quickHit_header:
+	.byte 1
+	.byte 150
+	.word NULL_pulse1
+	.word _sfx_quickHit_pulse2
+	.word NULL_triangle
+	.word _sfx_quickHit_noise
+_sfx_quickHit_pulse2:
+	.byte NL1,INST|CONT|54,DS4,B4,G3,DS4,B2,G3,DS2,B2
+	.byte G1,INST|CONT|1,DS3,END_SFX
+_sfx_quickHit_noise:
+	.byte NL1,INST|CONT|10,$5,$C,$D,$E,$E,$F,INST|23,INST|40
+	.byte INST|43,INST|1,END_SFX
 

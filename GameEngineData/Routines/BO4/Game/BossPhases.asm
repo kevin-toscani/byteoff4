@@ -125,26 +125,54 @@ subBossDrop:
     CreateObject #$00, #$03, #$21, #$00
     JSR doGetRandomNumberToo
     AND #$07
-    STA temp
-    JSR doGetRandomNumberToo
-    AND #$07
     ASL
     ASL
     ASL
     ASL
     ASL 
     CLC
-    ADC #$08
-    ADC temp
+    ADC #$0A
     STA Object_x_hi,x
+    CLC
+    ADC #$80
+    STA tempx
+    CreateObject tempx, #$03, #$21, #$00
     RTS
     
-subBossEnd:
+subBossLoop:
     ;; Reset the boss phase index
     LDA #$00
     STA bossPhase
     RTS
 
+subBossHurt:
+    DEC bossHealth
+    BNE +
+        LDA #$13
+        STA bossPhase
+    +
+    PlaySound #_sfx_bossHurt
+    RTS
+
+subBossRetreat:
+    LDA #$0A
+    STA bossPhase
+    LDA #$10
+    STA bossTimer
+    RTS
+
+subBossDead:
+    ;; Stop the music
+    StopSound
+
+    ;; Then, every x frames, load two exposions on a random ball spot
+    ;; and play the explosion sound. Which is a repeating action
+    ;; so we don't need to do anything here.
+    RTS
+
+subBossEnd:
+    WarpToScreen #$00, #$C0, #$01
+    RTS
 
 ;; Test constants to play with (or quickly test) phase speeds
 TEST_SPEED   = $40
@@ -160,7 +188,7 @@ tblBossPhaseTimer:
     .db TEST_SPEED, TEST_SPEED, TEST_SPEED
     .db TEST_LOSPEED, TEST_SPEED
     .db TEST_SPEED, TEST_SPEED, TEST_SPEED
-    .db TEST_SPEED
+    .db TEST_SPEED, TEST_SPEED
 
 ;; Low byte table for phase action subroutine addresses
 tblBossPhaseActionLo:
@@ -170,7 +198,9 @@ tblBossPhaseActionLo:
     .db #<subBossLightEye, #<subBossFireball, #<subBossCloseEye
     .db #<subBossScrollOut, #<subBossIdle
     .db #<subBossDrop, #<subBossDrop, #<subBossDrop
-    .db #<subBossEnd
+    .db #<subBossLoop 
+    .db #<subBossHurt, #<subBossRetreat
+    .db #<subBossDead, #<subBossEnd
 
 ;; High byte table for phase action subroutine addresses
 tblBossPhaseActionHi:
@@ -180,6 +210,8 @@ tblBossPhaseActionHi:
     .db #>subBossLightEye, #>subBossFireball, #>subBossCloseEye
     .db #>subBossScrollOut, #>subBossIdle
     .db #>subBossDrop, #>subBossDrop, #>subBossDrop
-    .db #>subBossEnd
+    .db #>subBossLoop
+    .db #>subBossHurt, #>subBossRetreat
+    .db #>subBossDead, #>subBossEnd
 
 tblBossNozzleBalls: .db #$1B, #$22, #$1B, #$23

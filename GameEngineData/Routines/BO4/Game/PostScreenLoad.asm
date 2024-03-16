@@ -136,11 +136,13 @@ ifdef BO4_TESTING
     STA gameMode
 endif
 
-    ;; Preset timer and phase
+    ;; (P)reset boss variables
     LDA #$10
     STA bossTimer
     LDA #$FF
     STA bossPhase
+    LDA #$04
+    STA bossHealth
     
     ;; Preload eye
     CreateObject #$80, #$80, #$18, #$00

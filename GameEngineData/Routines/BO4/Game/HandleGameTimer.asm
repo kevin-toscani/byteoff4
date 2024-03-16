@@ -141,4 +141,28 @@
         ;; Warp to prepared continue point
         WarpToScreen warpToMap, warpToScreen, #$01
     +
+
+
+    ;; Flicker screen if boss is hurt
+    LDA bossPhase
+    CMP #$12
+    BNE +
+        LDA bossTimer
+        AND #$04
+        BEQ +black
         
+        +red:
+            LDA #$26
+            STA bckPal+2
+            LDA #$16
+            JMP +setPal
+            
+        +black:
+            LDA #$2C
+            STA bckPal+2
+            LDA #$1C
+            
+        +setPal:
+        STA bckPal+1
+        JSR doUpdateBackgroundPalette
+    +

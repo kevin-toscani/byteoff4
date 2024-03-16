@@ -162,16 +162,22 @@ OBJECT_IS_ZAPPABLE = $80   ; Use object flag Bit-7 for zappability.
     STA tempA              ; and store it in a temp variable
     LDA Object_y_hi,x      ; Get the object's y-position on screen
     STA tempB              ; and store it in a temp variable
-    LDA ObjectSize,y       ; Get the object's height in tiles
-    AND #%00000111         ;
-    STA tempC              ; and store it in a temp variable
-    STA tempy              ; store it twice; we need to reuse this later
-    LDA ObjectSize,y       ; Get the object's width in tiles
-    LSR                    ;
-    LSR                    ;
-    LSR                    ;
-    AND #%00000111         ;
-    STA tempD              ; and store it in a temp variable
+    
+    
+    ;; BUG FIX - Switch to correct bank first
+    SwitchBank #$1C
+        LDA ObjectSize,y       ; Get the object's height in tiles
+        AND #%00000111         ;
+        STA tempC              ; and store it in a temp variable
+        STA tempy              ; store it twice; we need to reuse this later
+        LDA ObjectSize,y       ; Get the object's width in tiles
+        LSR                    ;
+        LSR                    ;
+        LSR                    ;
+        AND #%00000111         ;
+        STA tempD              ; and store it in a temp variable
+    ReturnBank
+
 
     LDY #$00               ; Reset the sprite RAM pointer to make sure no other
                            ; sprites are being drawn during this frame loop.

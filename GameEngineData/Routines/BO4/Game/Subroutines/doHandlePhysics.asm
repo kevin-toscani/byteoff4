@@ -40,71 +40,168 @@
 	JMP skipPhysics
 doHandlePhysics:
 
-	LDA #$00
-	STA collisionsToCheck ;; blank out collisions to check.
-	
-	;;; check to see if we are using aiming physics.
-	;;; if we are using aim physics, Object_direction will have it's 3rd bit flipped. xxxxXxxx
-	LDA Object_direction,x
-	AND #%00001000
-	BEQ useNormalDirectionalPhysics
-		;; use aimed physics.
-		;; Aimed physics doesn't need to update speed.
-		
-		LDA Object_h_speed_lo,x
-		BPL AddHspeedToAimedX
-			;; subtract h speed to aimed x
-			LDA Object_h_speed_lo,x
-			EOR #$FF
-			STA temp
-			
-			LDA Object_x_lo,x
-			sec
-			sbc temp
-			STA xHold_lo
-			LDA Object_x_hi,x
-			sbc Object_h_speed_hi,x
-			STA xHold_hi
-			JMP figureAimedVspeed
-		AddHspeedToAimedX:
-			LDA Object_x_lo,x
-			CLC
-			ADC Object_h_speed_lo,x
-			STA xHold_lo
-			LDA Object_x_hi,x
-			ADC Object_h_speed_hi,x
-			STA xHold_hi
-		
-		figureAimedVspeed:
+    LDA #$00
+    STA collisionsToCheck ;; blank out collisions to check.
+   
+    ;;; check to see if we are using aiming physics.
+    ;;; if we are using aim physics, Object_direction will have it's 3rd bit flipped. xxxxXxxx
+    LDA Object_direction,x
+    AND #%00001000
+   BNE +useAimedPhysics
+        JMP useNormalDirectionalPhysics
+    +useAimedPhysics:
+       
+        LDA #%00001111
+        STA collisionsToCheck
+        LDY Object_type,x
+        LDA ObjectMaxSpeed,y
+        LSR
+        LSR
+        LSR
+        LSR
+        STA tempA ;; high byte of "speed" will determine how many times we should update move towards speed.
+        ;; use aimed physics.
+        ;; Aimed physics doesn't need to update speed.
+        LDA Object_x_lo,x
+        STA xHold_lo
+        LDA Object_x_hi,x
+        STA xHold_hi
+       
+        LDA Object_y_lo,x
+        STA yHold_lo
+        LDA Object_y_hi,x
+        STA yHold_hi
+       
+        LDA Object_h_speed_lo,x
+        BPL AddHspeedToAimedX
+            ;; subtract h speed to aimed x
+            LDA Object_h_speed_lo,x
+            EOR #$FF
+            STA temp
+            LDY tempA
+            doAimLoop1:
+                LDA xHold_lo
+                sec
+                sbc temp
+                STA xHold_lo
+                LDA xHold_hi
+                sbc Object_h_speed_hi,x
+                STA xHold_hi
+                DEY
+                BPL doAimLoop1
+               
+               
+           
+            JMP figureAimedVspeed
+        AddHspeedToAimedX:
+            LDY tempA
+            doAimLoop2:
+            LDA xHold_lo
+            CLC
+            ADC Object_h_speed_lo,x
+            STA xHold_lo
+            LDA xHold_hi
+            ADC Object_h_speed_hi,x
+            STA xHold_hi
+            DEY
+            BPL doAimLoop2
+       
+        figureAimedVspeed:
 
-		LDA Object_v_speed_lo,x
-		BPL AddVSpeedToAimedY
-			;; subtract v speed to aimed y
-			LDA Object_v_speed_lo,x
-			EOR #$FF
-			STA temp
-			LDA Object_y_lo,x
-			clc
-			adc temp
-			STA yHold_lo
-			LDA Object_y_hi,x
-			adc Object_v_speed_hi,x
-			STA yHold_hi
-			JMP doneWithAimedV
-		AddVSpeedToAimedY:
-			LDA Object_y_lo,x
-			sec
-			sbc Object_v_speed_lo,x
-			STA yHold_lo
-			LDA Object_y_hi,x
-			sbc Object_v_speed_hi,x
-			STA yHold_hi
-		doneWithAimedV:
-		
-		
-		JMP skipPhysics ;; skips all the acc/dec stuff and goes right to movement based on speed
-							;; which was figured out in the directional macro.
-							
+        LDA Object_v_speed_lo,x
+        BPL AddVSpeedToAimedY
+            ;; subtract v speed to aimed y
+            LDA Object_v_speed_lo,x
+            EOR #$FF
+            STA temp
+            LDY tempA
+            doAimLoop3:
+            LDA yHold_lo
+            clc
+            adc temp
+            STA yHold_lo
+            LDA yHold_hi
+            adc Object_v_speed_hi,x
+            STA yHold_hi
+            DEY
+            BPL doAimLoop3
+           
+            JMP doneWithAimedV
+        AddVSpeedToAimedY:
+            LDY tempA
+            doAimLoop4:
+            LDA yHold_lo
+            sec
+            sbc Object_v_speed_lo,x
+            STA yHold_lo
+            LDA yHold_hi
+            sbc Object_v_speed_hi,x
+            STA yHold_hi
+            DEY
+            BPL doAimLoop4
+        doneWithAimedV:
+        ;;;;;;;;;;;;; check xHold_hi and yHold_hi against bounds.
+       
+            LDA yHold_hi
+            CMP #BOUNDS_TOP
+            BEQ +doTopBounds
+            BCC +doTopBounds
+                JMP +doneWithTop
+            +doTopBounds
+               
+                    LDA #$02
+                    STA screenUpdateByte
+           
+                    JSR doHandleBounds
+                    JMP skipPhysics
+                   
+            +doneWithTop
+       
+            STA yHold_hi
+            CLC
+            ADC self_bottom
+            CMP #BOUNDS_BOTTOM ;#240
+        ;   BEQ doBottomBounds
+            BCS +doBottomBounds
+                JMP +doneWithBottom
+            +doBottomBounds:
+                    STA screenUpdateByte
+                    JSR doHandleBounds
+                    JMP skipPhysics
+                   
+            +doneWithBottom
+       
+       
+       
+                LDA xHold_hi
+                clc
+                ADC self_right
+                BCS +doRightBounds
+                    JMP +doneWithRight
+                +doRightBounds:
+               
+                    LDA #$01
+                    STA screenUpdateByte
+                    JSR doHandleBounds
+                    JMP skipPhysics
+                   
+                +doneWithRight
+                LDA xHold_hi
+                CMP #BOUNDS_LEFT
+                BEQ +doLeftBounds
+                BCC +doLeftBounds
+                    JMP +doneWithLeft
+                +doLeftBounds  
+                       
+                        LDA #$03
+                        STA screenUpdateByte
+                        JSR doHandleBounds
+                        JMP skipPhysics
+                +doneWithLeft
+
+       
+        JMP skipPhysics ;; skips all the acc/dec stuff and goes right to movement based on speed
+                            ;; which was figured out in the directional macro.							
 	useNormalDirectionalPhysics:
 	;;; jump out to bank 1C to load in physics values.
 	;SwitchBank #$1C
@@ -814,19 +911,6 @@ isSolidSoLand:
 			STA temp1
 			ChangeActionStep temp, temp1 ;; changes to either idle or running depending on if a direction key is pressed.
 	+dontChangeToIdle
-	
-	
-	
-	
-		;; force y to tile boundary.	
-		; LDA tileY
-		; AND #%11110000
-		; SEC
-		; SBC self_bottom
-		; SEC
-		; SBC #$01
-		; STA Object_y_hi,x
-		; STA yHold_hi
 
 		LDA #$00
 		STA Object_v_speed_lo,x

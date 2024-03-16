@@ -1,6 +1,6 @@
     LDA userScreenByte0
     BNE +
-        JMP +dontUpdateAnimatedTiles ;;making sure that this screen actually has animated tiles set up - thanks CGT
+        JMP +doneUpdatingAnimatedTiles ;;making sure that this screen actually has animated tiles set up - thanks CGT
     +
     
     BPL +
@@ -9,21 +9,52 @@
     
     DEC animTimer
     LDA animTimer
-    BNE +dontUpdateAnimatedTiles
-        LDA #$08
-        STA animTimer
-        INC animFrame
-        LDA animFrame
-        CMP #$03 ;;has it gone over the number of banks we filled?
-        BEQ +resetAnimation
-            SwitchCHRBank animFrame
-            JMP +dontUpdateAnimatedTiles
-        +resetAnimation
+    BEQ +
+        JMP +doneUpdatingAnimatedTiles
+    +
+
+    LDA #$08
+    STA animTimer
+    
+    INC animFrame
+    LDA animFrame
+    CMP #$03 ;;has it gone over the number of banks we filled?
+    BNE +
         LDA #$00
         STA animFrame
-        SwitchCHRBank #$00
-        JMP +dontUpdateAnimatedTiles
+    +
 
+    LDA screenType
+    CMP #$08
+    BNE +defaultAnim
+
+    +bossAnim:
+        LDA bossPhase
+        CMP #$01
+        BEQ +defaultAnim
+        
+        CMP #$0C
+        BEQ +reverseAnim
+        
+        LDA #$00
+        JMP +switchTempChrBank
+
+    +reverseAnim:
+        LDA #$02
+        SEC
+        SBC animFrame
+        JMP +switchTempChrBank
+
+    +defaultAnim:
+        LDA animFrame
+    
+
+    +switchTempChrBank:
+        STA temp
+        SwitchCHRBank temp
+        JMP +doneUpdatingAnimatedTiles
+
+            
 
 ;; 00-1F    CHR1
 ;; 20-9F    CHR0
@@ -57,7 +88,7 @@
     STA temp
     SwitchCHRBank temp
 
-+dontUpdateAnimatedTiles:
++doneUpdatingAnimatedTiles:
     LDA disabledTimer
     BEQ +
         AND #%11111000

@@ -32,14 +32,19 @@
         
         LDA bossPhase
         CMP #$01
-        BEQ +
+        BEQ +phase1
         CMP #$0C
-        BEQ +
+        BEQ +phaseC
+        
+        +defaultPhase:
             LDA #$3D
-            JMP ++
-        +
-        LDA #$3C
-        ++
+            JMP +gotOffset
+        +phase1:
+            LDA #$3C
+            JMP +gotOffset
+        +phaseC:
+            LDA #$3E
+        +gotOffset:
         
         SEC
         SBC camX

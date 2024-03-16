@@ -12,8 +12,14 @@ subBossScrollIn:
 subBossShoot:
     ;; Show fire animation
     CreateObject #$70, #$68, #$1F, #$00
-    ;; Shoot a bouncy ball
-    CreateObject #$82, #$74, #$1B, #$00
+
+    ;; Shoot one of three possible bouncy balls
+    JSR doGetRandomNumberToo
+    AND #$03
+    TAX
+    LDA tblBossNozzleBalls,x
+    STA temp
+    CreateObject #$82, #$74, temp, #$00
     RTS
     
 subBossLaunch:
@@ -52,7 +58,7 @@ subBossOpenEye:
     
 
     +lightEyeUp:
-    CreateObject #$B5, #$62, #$19, #$00
+    CreateObject #$B5, #$5A, #$19, #$00
     RTS
 
 
@@ -164,3 +170,5 @@ tblBossPhaseActionHi:
     .db #>subBossScrollOut, #>subBossIdle
     .db #>subBossDrop, #>subBossDrop, #>subBossDrop
     .db #>subBossEnd
+
+tblBossNozzleBalls: .db #$1B, #$22, #$1B, #$23

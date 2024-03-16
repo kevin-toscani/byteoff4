@@ -311,6 +311,10 @@ OBJECT_IS_ZAPPABLE = $80   ; Use object flag Bit-7 for zappability.
     LDX #$00
 
     -objectLoop:
+        LDA Object_status,x
+        AND #%10000000
+        BEQ +checkNext
+        
         LDA Object_type,x
         CMP #$1E
         BNE +checkNext

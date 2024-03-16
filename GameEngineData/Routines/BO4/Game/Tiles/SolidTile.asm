@@ -1,6 +1,7 @@
-    LDA Object_type,x
-    CMP #$1B
-    BNE +defaultBehavior
+    LDY Object_type,x
+    LDA MonsterBits,y
+    AND #%00100000
+    BEQ +defaultBehavior
 
 
 +bouncyBallBehavior:

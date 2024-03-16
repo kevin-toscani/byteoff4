@@ -302,7 +302,9 @@ OBJECT_IS_ZAPPABLE = $80   ; Use object flag Bit-7 for zappability.
 +zap_done:                 ; We're done zapping now
 
 
-;;TESTING
+
+
+
     ;; If the flying ball X is less than (player X - 8)
     ;; And flying ball is in action step 1
     ;; Go to action step 2

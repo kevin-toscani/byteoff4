@@ -17,9 +17,9 @@
     CMP #$18
     BNE +skipEye
         LDA camX
-        CMP #$43
+        CMP #$45
         BCS +
-            LDA #$00
+            LDA #$F7
             STA Object_x_hi,x
             LDA #$F7
             STA Object_y_hi,x
@@ -29,7 +29,18 @@
         LDA #$60
         STA Object_y_hi,x
 
-        LDA #$3D
+        
+        LDA bossPhase
+        CMP #$01
+        BEQ +
+        CMP #$0C
+        BEQ +
+            LDA #$3D
+            JMP ++
+        +
+        LDA #$3C
+        ++
+        
         SEC
         SBC camX
         BMI +

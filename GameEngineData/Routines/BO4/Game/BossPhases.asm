@@ -63,7 +63,7 @@ subBossLightEye:
     
 subBossFireball:
     ;; Shoot a fireball from the eye
-    CreateObject #TEST_XPOS, #TEST_YPOS, #$1C, #$00
+    CreateObject #$B5, #$62, #$1C, #$00
     RTS
     
 subBossCloseEye:
@@ -111,7 +111,7 @@ subBossScrollOut:
     
 subBossDrop:
     ;; Drop a fireball from the sky
-    CreateObject #$00, #$03, #$1D, #$00
+    CreateObject #$00, #$03, #$21, #$00
     JSR doGetRandomNumberToo
     AND #$07
     ASL

@@ -163,13 +163,14 @@ TRANSMISSION_SPEAK_TICK = $01
         +
         
         ;; Check if it's time to "speak"
-        LDA speakTimer
-        BNE +
-            PlaySound #_sfx_bip
-            JSR doHandleUpdateMusic_safe
-            LDA #TRANSMISSION_SPEAK_TICK
-            STA speakTimer
-        +
+        ;; Replaced with beep for every character
+;        LDA speakTimer
+;        BNE +
+;            PlaySound #_sfx_bip
+;            JSR doHandleUpdateMusic_safe
+;            LDA #TRANSMISSION_SPEAK_TICK
+;            STA speakTimer
+;        +
 
         
         ;; Get next transmission character
@@ -195,7 +196,11 @@ TRANSMISSION_SPEAK_TICK = $01
             STA updateScreenData
             LDA #TRANSMISSION_INTRO_TICK
             STA introTimer
-            DEC speakTimer
+
+            ;DEC speakTimer
+            PlaySound #_sfx_bip
+            JSR doHandleUpdateMusic_safe
+
             INX
             JMP -transmissionLoop
         +

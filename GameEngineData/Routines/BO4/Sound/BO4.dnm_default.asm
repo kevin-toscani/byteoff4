@@ -896,3 +896,37 @@ _default_GameOver_noise:
 _default_GameOver_noise_pattern0:
 	.byte NL6,INST|CONT|27,$6,NL28,INST|CONT|5,$E,NL14,INST|1,D00
 
+_default_BossDead_header:
+	.byte 3
+	.byte 150
+	.byte 1
+	.word _default_BossDead_pulse1
+	.word _default_BossDead_pulse2
+	.word _default_BossDead_triangle
+	.word _default_BossDead_noise
+	.word NULL_DMC
+
+_default_BossDead_pulse1:
+	.word _default_BossDead_pulse1_pattern0
+_default_BossDead_pulse1_pattern0:
+	.byte NL64,INST|CONT|1,C4,D00
+
+_default_BossDead_pulse2:
+	.word _default_BossDead_pulse2_pattern0
+_default_BossDead_pulse2_pattern0:
+	.byte NL64,INST|CONT|1,C4,D00
+
+_default_BossDead_triangle:
+	.word _default_BossDead_triangle_pattern0
+_default_BossDead_triangle_pattern0:
+	.byte NL64,INST|CONT|1,C4,D00
+
+_default_BossDead_noise:
+	.word _default_BossDead_noise_pattern0
+_default_BossDead_noise_pattern0:
+	.byte NL4,INST|CONT|54,$1,NL3,$2,$3,NL2,$4,$6,$7
+	.byte $8,$9,NL1,$A,$B,$C,NL4,$D,NL1,INST|CONT|10
+	.byte $9,$A,$B,$C,NL4,$D,NL1,INST|CONT|23,$9,$A
+	.byte $B,$C,$D,$E,NL5,$F,NL8,INST|40,NL9,INST|43
+	.byte NL1,INST|1,C00
+

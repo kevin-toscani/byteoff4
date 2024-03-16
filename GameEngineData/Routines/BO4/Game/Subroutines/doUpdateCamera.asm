@@ -633,6 +633,9 @@ getCamSeam:
             LDY #187
             LDA (temp16),y
             STA userScreenByte0
+            INY
+            LDA (temp16),y
+            STA userScreenByte1
 
             LDY #125 ;
             LDA (temp16),y

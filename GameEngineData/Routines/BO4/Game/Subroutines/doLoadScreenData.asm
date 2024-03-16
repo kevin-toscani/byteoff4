@@ -175,9 +175,9 @@ skipSettingWarpInXY:
 	LDY #187
 	LDA (collisionPointer),y
 	STA userScreenByte0
-;	INY
-;	LDA (collisionPointer),y
-;	STA userScreenByte1
+	INY
+	LDA (collisionPointer),y
+	STA userScreenByte1
 ;	INY
 ;	LDA (collisionPointer),y
 ;	STA userScreenByte2

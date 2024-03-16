@@ -171,7 +171,7 @@ subBossDead:
     RTS
 
 subBossEnd:
-    WarpToScreen #$00, #$C0, #$01
+    WarpToScreen #$00, #$C1, #$01
     RTS
 
 ;; Test constants to play with (or quickly test) phase speeds

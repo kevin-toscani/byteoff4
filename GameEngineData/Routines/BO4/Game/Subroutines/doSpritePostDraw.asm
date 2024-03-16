@@ -354,6 +354,13 @@
         JSR doTemp16
     +
     
+    LDA #$64
+    SEC
+    SBC bossHealth
+    STA temp
+    DrawSprite #$E0, #$3A, temp, #$02
+    
+    
     JMP +done
   
 .include "Routines\BO4\Game\BossPhases.asm"

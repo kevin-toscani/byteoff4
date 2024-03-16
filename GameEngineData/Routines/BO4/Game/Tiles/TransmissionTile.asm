@@ -151,8 +151,17 @@ TRANSMISSION_SPEAK_TICK = $01
 
     TXA
     PHA
+    TYA
+    PHA
 
-    LDX #$00
+    ;; Get the transmission text table to read from
+    LDX userScreenByte1
+    LDA tblTransmissionTextLo,x
+    STA temp16
+    LDA tblTransmissionTextHi,x
+    STA temp16+1
+    
+    LDY #$00
     -transmissionLoop:
         ;; Check if it's time to do something
         LDA introTimer
@@ -174,7 +183,7 @@ TRANSMISSION_SPEAK_TICK = $01
 
         
         ;; Get next transmission character
-        LDA tblTransmissionText00,x
+        LDA (temp16),y
         
         ;; Acc = $00: end of transmission
         BNE +
@@ -201,40 +210,42 @@ TRANSMISSION_SPEAK_TICK = $01
             PlaySound #_sfx_bip
             JSR doHandleUpdateMusic_safe
 
-            INX
+            INY
             JMP -transmissionLoop
         +
         
         ;; Acc = $01: set PPU pointer 
         CMP #$01
         BNE +
-            INX
-            LDA tblTransmissionText00,x
+            INY
+            LDA (temp16),y
             STA introPPU
-            INX
-            LDA tblTransmissionText00,x
+            INY
+            LDA (temp16),y
             STA introPPU+1
-            INX
+            INY
             JMP -transmissionLoop
         +
         
         ;; Acc = $02: pause frames
         CMP #$02
         BNE +
-            INX
-            LDA tblTransmissionText00,x
+            INY
+            LDA (temp16),y
             STA introTimer
-            INX
+            INY
             JMP -transmissionLoop            
         +
         
         ;; Acc = $03: warp to screen
         CMP #$03
         BNE +
-            INX
-            LDA tblTransmissionText00,x
+            INY
+            LDA (temp16),y
             STA temp
             WarpToScreen #$00, temp, #$01
+            PLA
+            TAY
             PLA
             TAX
             JMP +done
@@ -242,11 +253,13 @@ TRANSMISSION_SPEAK_TICK = $01
         
         ;; Acc between $04 and $7F
         ;; Invalid operation; try the next one
-        INX
+        INY
     JMP -transmissionLoop            
 
     ;; Transmission over - restore gameplay
     +restoreGameplay:
+    PLA
+    TAY
     PLA
     TAX
 
@@ -255,6 +268,10 @@ TRANSMISSION_SPEAK_TICK = $01
     LoadBackgroundPalettes #$05
     JMP +done
 
+tblTransmissionTextLo:
+    .db #<tblTransmissionText00, #<tblTransmissionText01
+tblTransmissionTextHi:
+    .db #>tblTransmissionText00, #>tblTransmissionText01
 
 tblTransmissionText00:
     .db $02, $20                   ; pause 20 frames
@@ -268,8 +285,28 @@ tblTransmissionText00:
     .db $E2, $E7, $DC, $E8, $E6    ; INCOM
     .db $E2, $E7, $E0, $F8         ; ING!
     .db $02, $60                   ; pause 60 frame
-;   .db $00                        ; end of transmission
-;   .db $03, $E4                   ; warp to screen $E4
-    .db $03, $00                   ; warp to screen $00
+    .db $03, $B0                   ; warp to screen $B0
     
+tblTransmissionText01:
+    .db $02, $20                   ; pause $20 frames
+    .db $01, $24, $CA              ; ppu addr $24CA
+    .db $ED, $EB, $DA, $E7, $EC    ; TRANS
+    .db $E6, $E2, $EC, $EC, $E2    ; MISSI
+    .db $E8, $E7                   ; ON
+    .db $02, $60                   ; pause $60 frames
+    .db $01, $25, $28              ; ppu addr $2529
+    
+    .db $E1, $E8, $E7, $DE, $F2    ; HONEY
+    .db $F9, $FF                   ; , 
+    .db $02, $30                   ; pause $30 frames
+    .db $E2, $ED, $FF, $E2, $EC    ; IT IS
+    .db $FF, $ED, $E2, $E6, $DE    ;  TIME
+    .db $02, $10                   ; pause $10 frames
+    .db $01, $25, $4A              ; ppu addr $254A
+    .db $ED, $E8, $FF, $E0, $E8    ; TO GO
+    .db $FF, $ED, $E8, $FF, $DB    ;  TO B
+    .db $DE, $DD                   ; ED
+    .db $02, $70                   ; pause $70 frames
+    .db $03, $E4                   ; warp to screen $E4
+
 +done:

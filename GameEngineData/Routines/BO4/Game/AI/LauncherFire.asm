@@ -1,6 +1,7 @@
     LDA Object_type,x
     CMP #$20
     BNE +notChute
+        PlaySound #_sfx_bossLaunch
         LDA #$1E
         STA tempA
         LDA Object_x_hi,x
@@ -11,6 +12,7 @@
     +notChute:
     CMP #$1E
     BNE +notFlyingBall
+        PlaySound #_sfx_flyingFire
         LDA #$1D
         STA tempA
         LDA Object_x_hi,x
@@ -19,6 +21,7 @@
         JMP +storeTempx
     
     +notFlyingBall:
+        ;PlaySound #_sfx_smallFire ;[@TODO]
         LDA #$14
         STA tempA
         LDA Object_x_hi,x

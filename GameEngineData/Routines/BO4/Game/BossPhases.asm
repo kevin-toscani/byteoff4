@@ -20,6 +20,8 @@ subBossShoot:
     LDA tblBossNozzleBalls,x
     STA temp
     CreateObject #$82, #$74, temp, #$00
+    
+    PlaySound #_sfx_bosspew
     RTS
     
 subBossLaunch:
@@ -27,6 +29,7 @@ subBossLaunch:
     AND #$01
     BEQ +onePlayerMode
         CreateObject #$C8, #$4E, #$20, #$00
+        PlaySound #_sfx_bossOpenHatch
         RTS
         
     ;; Skip next phases
@@ -70,6 +73,7 @@ subBossLightEye:
 subBossFireball:
     ;; Shoot a fireball from the eye
     CreateObject #$B5, #$62, #$1C, #$00
+    PlaySound #_sfx_bossFire
     RTS
     
 subBossCloseEye:
@@ -117,14 +121,21 @@ subBossScrollOut:
     
 subBossDrop:
     ;; Drop a fireball from the sky
+    PlaySound #_sfx_meteorFall
     CreateObject #$00, #$03, #$21, #$00
+    JSR doGetRandomNumberToo
+    AND #$07
+    STA temp
     JSR doGetRandomNumberToo
     AND #$07
     ASL
     ASL
     ASL
     ASL
-    ASL    
+    ASL 
+    CLC
+    ADC #$08
+    ADC temp
     STA Object_x_hi,x
     RTS
     

@@ -15,3 +15,4 @@
     STA tempC
 
     CreateObjectOnScreen tempx, tempy, #$1A, #$00, tempC
+    PlaySound #_sfx_explosion

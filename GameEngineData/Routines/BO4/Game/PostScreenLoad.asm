@@ -142,15 +142,8 @@
     +
 
     ;; Give less health to boss in test mode
-    ifdef BO4_TESTING
-        LDA #$01
-        STA bossHealth
-    endif
-
-    ifndef BO4_TESTING
-        LDA #$04
-        STA bossHealth
-    endif
+    LDA #$04
+    STA bossHealth
 
     ;; (P)reset other boss variables
     LDA #$10
@@ -158,6 +151,8 @@
     LDA #$FF
     STA bossPhase
 
+    ;; Reset player
+    ChangeActionStep player1_object, #$00
 
     ;; Preload eye
     CreateObject #$80, #$80, #$18, #$00

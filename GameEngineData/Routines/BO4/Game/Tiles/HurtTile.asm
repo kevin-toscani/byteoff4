@@ -27,7 +27,10 @@ lblOriginalHurtTile:
         JMP +notDead
     +
 
-    ;; We're dead
+
+;; We're dead
+lblWeAreDead:
+
     ;; Play death song
     PlaySong #_default_Death
     

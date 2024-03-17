@@ -168,6 +168,6 @@
 
 
 ifdef BO4_TESTING
-    LDA #$01
-    STA gameMode
+    ;LDA #$01
+    ;STA gameMode
 endif

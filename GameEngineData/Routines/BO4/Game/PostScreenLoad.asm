@@ -84,6 +84,13 @@
         JMP +nextScreen
     +
 
+    LDX #$00
+    LDA #$FE
+    -
+        STA $0200,x
+        INX
+    BNE -
+
     ;; Re-enable inputs
     LDA bo4Flags
     AND #%01111111

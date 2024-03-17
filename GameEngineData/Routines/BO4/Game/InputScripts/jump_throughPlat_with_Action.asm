@@ -87,7 +87,7 @@
 ;                                        ;;; if it is (equal), can jump.
 ;                                        ;;; if not, skips jumping.
 ;        BEQ +doJump
-;            JMP +skipJumping
+            JMP +skipJumping
 
 +doJump:
     ;PlaySound #sfx_thump

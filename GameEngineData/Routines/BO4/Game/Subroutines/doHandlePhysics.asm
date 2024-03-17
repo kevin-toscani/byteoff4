@@ -690,8 +690,6 @@ IGNORES_SOLID_GROUND = #$40
 	LDA Object_x_hi,x
 	CLC
 	ADC self_left
-    CLC
-    ADC camX
 	STA temp
 
 	
@@ -701,8 +699,6 @@ IGNORES_SOLID_GROUND = #$40
 	LDA Object_x_hi,x
 	CLC
 	ADC self_right
-    CLC
-    ADC camX
 	STA temp3 ;; the right bottom collision point.
 		JSR getPointColTable
 	LDA Object_y_lo,x

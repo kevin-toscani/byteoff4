@@ -118,7 +118,7 @@
 							;ChangeActionStep otherObject, #$07
 							
 							
-								JSR doHandleHurtMonster
+                            JSR doHandleHurtMonster
 								
 							LDX selfObject
 							DestroyObject
@@ -154,7 +154,7 @@
 							JMP +skipCollision
 						+isActive
 						LDA Object_flags,x
-						AND #%00001000
+						AND #%00011000 ; changed to also include monster weapons
 						BNE +isPlayerMonsterCol
 							JMP +notPlayerMonsterCollision
 						+isPlayerMonsterCol
@@ -166,20 +166,8 @@
 								BNE +dontSkipCol
 									JMP +skipCollision
 								+dontSkipCol
-									TXA
-									STA otherObject
-									;; There was a collision between a monster and a weapon.
-									;; player is self.
-									;; monster is other.
-									;JMP RESET
-									
-										TXA
-										PHA
-										LDX selfObject
-										JSR doHandleHurtPlayer
-										PLA
-										TAX
-									
+
+									JSR doHandleHurtPlayer
 									JMP +done
 									
 						+notPlayerMonsterCollision:

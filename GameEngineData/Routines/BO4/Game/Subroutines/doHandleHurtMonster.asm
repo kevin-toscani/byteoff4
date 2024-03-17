@@ -39,7 +39,8 @@
 
 
 
-
+;   Saved for using possible health points / invincibility later
+;
 ;	TXA
 ;	STA temp
 ;	GetActionStep temp

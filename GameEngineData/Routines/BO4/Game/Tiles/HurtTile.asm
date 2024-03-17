@@ -28,7 +28,6 @@ lblOriginalHurtTile:
     +
 
     ;; We're dead
-    
     ;; Play death song
     PlaySong #_default_Death
     
@@ -64,10 +63,7 @@ lblOriginalHurtTile:
         LDA #$E5
         STA warpToScreen
     +
-
     JMP +done
-
-
 
     +notDead:
 

@@ -131,19 +131,27 @@
         JMP +nextScreen
     +
 
-ifdef BO4_TESTING
-    LDA #$01
-    STA gameMode
-endif
+    ;; Force game mode to 2P game in test mode
+    ;; Also, give less health to boss
+    ifdef BO4_TESTING
+        LDA #$01
+        STA gameMode
+        LDA #$01
+        STA bossHealth
+    endif
 
-    ;; (P)reset boss variables
+    ifndef BO4_TESTING
+        LDA #$04
+        STA bossHealth
+    endif
+
+    ;; (P)reset other boss variables
     LDA #$10
     STA bossTimer
     LDA #$FF
     STA bossPhase
-    LDA #$04
-    STA bossHealth
-    
+
+
     ;; Preload eye
     CreateObject #$80, #$80, #$18, #$00
     JMP +done

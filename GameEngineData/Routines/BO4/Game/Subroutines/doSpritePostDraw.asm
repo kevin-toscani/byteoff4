@@ -358,7 +358,7 @@
     SEC
     SBC bossHealth
     STA temp
-    DrawSprite #$E0, #$3A, temp, #$02
+    DrawSprite #$D8, #$3C, temp, #$02
     
     
     JMP +done

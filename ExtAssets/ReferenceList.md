@@ -45,8 +45,12 @@ JamesNES - [4.5.x] Animated Tiles with CHR-RAM Switching
 https://www.nesmakers.com/index.php?threads/4-5-x-animated-tiles-with-chr-ram-switching.7028/
 
 ## Reduce slowdown on title screen
-Panzer - [4.5.9] Simple light-weight Rain
+Panzer (aka Dave Nemeth) - [4.5.9] Simple light-weight Rain
 https://www.nesmakers.com/index.php?threads/4-5-9-simple-light-weight-rain.8083/
+
+## Vertical screen shaker
+Bucket Mouse, SciNEStist - 4.5.9 How To Make The Screen Shake: Improved Version
+http://www.nesmakers.com/index.php?threads/4-5-9-how-to-make-the-screen-shake-improved-version.6867/post-44140
 
 # To do?
 JamesNES - [4.5.9] Move your Inputs out of the Static Bank  

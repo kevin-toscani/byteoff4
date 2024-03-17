@@ -5,6 +5,21 @@ BOSS_SCROLL_RIGHT = #$01
 BOSS_SCROLL_LEFT  = #$0C
 
 
+    LDA camShake
+    BEQ +
+        LDY camShake
+        INC camShake
+        CPY (tblCamShakeEnd - tblCamShake)
+        BCC +updateCamY
+        LDY #0
+        STY camShake
+     
+    +updateCamY:
+        LDA tblCamShake,y
+        STA camY
+    +
+
+
     ;; Screen 08 (boss) has a different type of scrolling
     LDA screenType
     CMP #$08

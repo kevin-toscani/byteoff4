@@ -66,7 +66,7 @@ subBossOpenEye:
 
 
 subBossLightEye:
-    ;; Light up eye
+    ;; Light up eye; moved to eye open
     RTS
 
     
@@ -150,6 +150,8 @@ subBossHurt:
     BNE +
         LDA #$13
         STA bossPhase
+        LDA #$01
+        STA bossTimer
     +
     PlaySound #_sfx_bossHurt
     RTS
@@ -164,6 +166,79 @@ subBossRetreat:
 subBossDead:
     ;; Stop the music
     StopSound
+    
+    ;; Destroy all monsters
+    LDX #$00
+    -monsterLoop:
+        INX
+        LDA Object_flags,x
+        AND #%00011000
+        BEQ +
+            DestroyObject
+        +
+        CPX #TOTAL_MAX_OBJECTS
+    BNE -monsterLoop
+
+    ;; Disable inputs
+    LDA bo4Flags
+    ORA #$80
+    STA bo4Flags
+
+    ;; Change color
+    LDA #$16
+    STA bckPal+1
+    LDA #$26
+    STA bckPal+2
+    LDA #$0D
+    STA bckPal+3
+    JSR doUpdateBackgroundPalette
+        
+    ;; Immediately go to the first explosion
+
+
+subBossExplosion:
+    ;; Play explosion sound effect
+    PlaySound #_sfx_explosionToo
+
+    ;; Initiate screen shake
+    LDA #$01
+    STA camShake
+    
+    ;; Place two explosions on random spots of the discoball
+    LDX #$02
+    -explosionLoop:
+        TXA
+        PHA
+
+        JSR doGetRandomNumber
+        AND #$3F
+        CLC
+        ADC #$B4
+        STA tempx
+        
+        JSR doGetRandomNumberToo
+        AND #$1F
+        STA tempy
+        JSR doGetRandomNumber
+        AND #$0F
+        CLC
+        ADC tempy
+        ADC #$50
+        STA tempy
+        CreateObject tempx, tempy, #$1A, #$00
+        
+        PLA
+        TAX
+        DEX
+    BNE -explosionLoop
+    RTS
+    
+subBossFadeout:
+    RTS
+
+subBossVictory:
+    ;; Play victory music
+    PlaySong #_default_Win
 
     ;; Then, every x frames, load two exposions on a random ball spot
     ;; and play the explosion sound. Which is a repeating action
@@ -174,44 +249,48 @@ subBossEnd:
     WarpToScreen #$00, #$C1, #$01
     RTS
 
-;; Test constants to play with (or quickly test) phase speeds
-TEST_SPEED   = $40
-TEST_HISPEED = $01
-TEST_LOSPEED = $70
-
 
 ;; Boss phase timer values (length per phase)
 tblBossPhaseTimer:
-    .db TEST_SPEED, TEST_LOSPEED, TEST_SPEED
-    .db TEST_SPEED, TEST_SPEED, TEST_SPEED
-    .db TEST_SPEED, TEST_SPEED, TEST_SPEED
-    .db TEST_SPEED, TEST_SPEED, TEST_SPEED
-    .db TEST_LOSPEED, TEST_SPEED
-    .db TEST_SPEED, TEST_SPEED, TEST_SPEED
-    .db TEST_SPEED, TEST_SPEED
+    .db $40, $70, $40, $40
+    .db $40, $40, $40, $40
+    .db $40, $01, $40, $40
+    .db $70, $40, $40, $40
+    .db $40, $40, $40, $40
+    .db $30, $30, $30, $30
+    .db $30, $40, $FF, $20
+    .db $40
 
 ;; Low byte table for phase action subroutine addresses
 tblBossPhaseActionLo:
-    .db #<subBossIdle,  #<subBossScrollIn, #<subBossIdle
-    .db #<subBossShoot, #<subBossShoot, #<subBossShoot
-    .db #<subBossLaunch, #<subBossIdle, #<subBossOpenEye
-    .db #<subBossLightEye, #<subBossFireball, #<subBossCloseEye
-    .db #<subBossScrollOut, #<subBossIdle
-    .db #<subBossDrop, #<subBossDrop, #<subBossDrop
-    .db #<subBossLoop 
-    .db #<subBossHurt, #<subBossRetreat
-    .db #<subBossDead, #<subBossEnd
+
+    ; $00-03
+    .db #<subBossIdle, #<subBossScrollIn, #<subBossIdle, #<subBossShoot
+    ; $04-07
+    .db #<subBossShoot, #<subBossShoot, #<subBossLaunch, #<subBossIdle
+    ; $08-0B
+    .db #<subBossOpenEye, #<subBossLightEye, #<subBossFireball, #<subBossCloseEye
+    ; $0C-0F
+    .db #<subBossScrollOut, #<subBossIdle, #<subBossDrop, #<subBossDrop
+    ; $10-13
+    .db #<subBossDrop, #<subBossLoop, #<subBossHurt, #<subBossRetreat
+    ; $14-17
+    .db #<subBossDead, #<subBossExplosion, #<subBossExplosion, #<subBossExplosion
+    ; $18-1B
+    .db #<subBossExplosion, #<subBossFadeout, #<subBossVictory, #<subBossIdle
+    ; $1C-1F
+    .db #<subBossEnd
 
 ;; High byte table for phase action subroutine addresses
 tblBossPhaseActionHi:
-    .db #>subBossIdle,  #>subBossScrollIn, #>subBossIdle
-    .db #>subBossShoot, #>subBossShoot, #>subBossShoot
-    .db #>subBossLaunch, #>subBossIdle, #>subBossOpenEye
-    .db #>subBossLightEye, #>subBossFireball, #>subBossCloseEye
-    .db #>subBossScrollOut, #>subBossIdle
-    .db #>subBossDrop, #>subBossDrop, #>subBossDrop
-    .db #>subBossLoop
-    .db #>subBossHurt, #>subBossRetreat
-    .db #>subBossDead, #>subBossEnd
+    .db #>subBossIdle,  #>subBossScrollIn, #>subBossIdle, #>subBossShoot
+    .db #>subBossShoot, #>subBossShoot, #>subBossLaunch, #>subBossIdle
+    .db #>subBossOpenEye, #>subBossLightEye, #>subBossFireball, #>subBossCloseEye
+    .db #>subBossScrollOut, #>subBossIdle, #>subBossDrop, #>subBossDrop
+    .db #>subBossDrop, #>subBossLoop, #>subBossHurt, #>subBossRetreat
+    .db #>subBossDead, #>subBossExplosion, #>subBossExplosion, #>subBossExplosion
+    .db #>subBossExplosion, #>subBossFadeout, #>subBossVictory, #>subBossIdle
+    .db #>subBossEnd
 
-tblBossNozzleBalls: .db #$1B, #$22, #$1B, #$23
+tblBossNozzleBalls:
+    .db $1B, $22, $1B, $23

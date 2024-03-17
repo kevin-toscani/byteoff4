@@ -166,3 +166,20 @@
         STA bckPal+1
         JSR doUpdateBackgroundPalette
     +
+    
+    ;; Fade background (see ExtraTables.asm for values)
+    CMP #$19
+    BNE +
+        LDA bossTimer
+        LSR
+        LSR
+        LSR
+        AND #%00001110
+        TAX
+        LDA tblBossDeadPal,x
+        STA bckPal+1
+        LDA tblBossDeadPal+1,x
+        STA bckPal+2
+        JSR doUpdateBackgroundPalette
+    +
+        

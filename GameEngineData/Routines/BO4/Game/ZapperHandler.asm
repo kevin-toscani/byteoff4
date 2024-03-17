@@ -137,6 +137,16 @@ OBJECT_IS_ZAPPABLE = $80   ; Use object flag Bit-7 for zappability.
 ;; Step 4: Highlight a shootable object
 ;;
 
+    LDA screenType
+    CMP #$08
+    BEQ +
+        LDA camX
+        JMP ++
+    +
+    LDA #$00
+    ++
+    STA tempCamX
+
     ;; 4a. Loop through objects
     LDX #$00
 -zap_objLoop:
@@ -159,6 +169,8 @@ OBJECT_IS_ZAPPABLE = $80   ; Use object flag Bit-7 for zappability.
     ;; 4d. Draw white sprite tiles where the object would be
     
     LDA Object_x_hi,x      ; Get the object's x-position on screen
+    SEC
+    SBC tempCamX
     STA tempA              ; and store it in a temp variable
     LDA Object_y_hi,x      ; Get the object's y-position on screen
     STA tempB              ; and store it in a temp variable

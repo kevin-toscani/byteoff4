@@ -154,8 +154,6 @@ ifdef ZAP_WHITE_TILE
         
         +normalZap:
             LDA Object_x_hi,x
-            CLC
-            ADC camX
             STA tempx
             LDA Object_y_hi,x
             STA tempy

@@ -7,6 +7,9 @@
         LDA bo4Flags
         AND #%01111111
         STA bo4Flags
+        
+        LDA #$B4
+        STA zapEnemyTimer
 
         ;; Reset player action step
         ChangeActionStep player1_object, #$00
@@ -131,11 +134,8 @@
         JMP +nextScreen
     +
 
-    ;; Force game mode to 2P game in test mode
-    ;; Also, give less health to boss
+    ;; Give less health to boss in test mode
     ifdef BO4_TESTING
-        LDA #$01
-        STA gameMode
         LDA #$01
         STA bossHealth
     endif
@@ -164,3 +164,10 @@
 
 
 +done:
+
+
+
+ifdef BO4_TESTING
+    LDA #$01
+    STA gameMode
+endif

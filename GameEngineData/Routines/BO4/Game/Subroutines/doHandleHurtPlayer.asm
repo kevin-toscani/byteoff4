@@ -1,5 +1,10 @@
 ;doHandleHurtPlayer:
 
+    ;; Don't hurt in test mode
+    ifdef BO4_TESTING
+        RTS
+    endif
+
     ;; Store X as the other object first
     STX otherObject
 

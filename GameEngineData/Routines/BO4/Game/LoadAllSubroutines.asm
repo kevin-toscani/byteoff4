@@ -171,8 +171,18 @@ ifdef ZAP_WHITE_TILE
             STA tempC
         
         +finishZap:
-            CreateObjectOnScreen tempx, tempy, #OBJTYPE_EXPLOSION, #$00, tempC
 
+        ;; If shuttle, there's a 1 in 4 chance of dropping health
+        LDA Object_type,x
+        CMP #$16
+        BNE +
+            JSR doGetRandomNumber
+            AND #$03
+            BNE +
+            CreateObjectOnScreen tempx, tempy, #$04, #$00, tempC
+        +
+        
+        CreateObjectOnScreen tempx, tempy, #OBJTYPE_EXPLOSION, #$00, tempC
         RTS
 endif
 

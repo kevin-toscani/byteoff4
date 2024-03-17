@@ -31,7 +31,6 @@
         RTS
 
     +defaultMonster:
-    ;; [@TODO] Determine if we want to give monsters health points
     ;; For now, just destroy 'em
     PlaySound #_sfx_quickHit
     DestroyObject
@@ -41,7 +40,10 @@
     STA tempy
     LDA Object_screen,x
     STA tempC
+
+    ;; Finally, explosion.
     CreateObjectOnScreen tempx, tempy, #$24, #$00, tempC
+    
     ;RTS
 
 

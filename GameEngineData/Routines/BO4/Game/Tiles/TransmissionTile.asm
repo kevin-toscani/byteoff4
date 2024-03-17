@@ -285,7 +285,7 @@ tblTransmissionText00:
     .db $E2, $E7, $DC, $E8, $E6    ; INCOM
     .db $E2, $E7, $E0, $F8         ; ING!
     .db $02, $60                   ; pause 60 frame
-    .db $03, $B0                   ; warp to screen $B0
+    .db $03, $CF                   ; warp to screen $CF
     
 tblTransmissionText01:
     .db $02, $20                   ; pause $20 frames

@@ -323,17 +323,25 @@
     JMP +done
 
 
-;; Screen 6: 16x16 BUFFER SCREEN
+;; Screen 6 + 9: 16x16 BUFFER SCREENS
 +nextScreen:    
     CMP #$06
     BEQ +
         JMP +nextScreen
     +
-    WarpToScreen #$00, #$00, #$01
+    WarpToScreen #$00, #$20, #$01
     JMP +done
-    
+   
++nextScreen:    
+    CMP #$09
+    BEQ +
+        JMP +nextScreen
+    +
+    WarpToScreen #$00, #$B0, #$01
+    JMP +done
 
-;; SCREEN 8 - BOSS FIGHT
+
+;; Screen 8 - BOSS FIGHT
 +nextScreen:
     CMP #$08
     BEQ +

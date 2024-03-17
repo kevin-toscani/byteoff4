@@ -35,6 +35,13 @@
     ;; For now, just destroy 'em
     PlaySound #_sfx_quickHit
     DestroyObject
+    LDA Object_x_hi,x
+    STA tempx
+    LDA Object_y_hi,x
+    STA tempy
+    LDA Object_screen,x
+    STA tempC
+    CreateObjectOnScreen tempx, tempy, #$24, #$00, tempC
     ;RTS
 
 

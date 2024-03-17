@@ -141,7 +141,12 @@
         JMP +nextScreen
     +
 
-    ;; Give less health to boss in test mode
+    ;; Re-enable inputs
+    LDA bo4Flags
+    AND #%01111111
+    STA bo4Flags
+
+    ;; Reset boss health
     LDA #$04
     STA bossHealth
 

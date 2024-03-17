@@ -1,6 +1,11 @@
 TRANSMISSION_INTRO_TICK = $0A
 TRANSMISSION_SPEAK_TICK = $01
 
+    CPX player1_object
+    BEQ +
+        JMP +done
+    +
+
     ;; Nullify current tile
     ChangeTileAtCollision #$4E, #$00
 

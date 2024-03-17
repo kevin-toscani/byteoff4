@@ -1,5 +1,5 @@
-RIGHT_SCROLL_PAD  = #$90
-LEFT_SCROLL_PAD   = #$60
+RIGHT_SCROLL_PAD  = #$78
+LEFT_SCROLL_PAD   = #$50
 
 BOSS_SCROLL_RIGHT = #$01
 BOSS_SCROLL_LEFT  = #$0C
@@ -648,9 +648,16 @@ getCamSeam:
             LDY #187
             LDA (temp16),y
             STA userScreenByte0
+
+            BMI +
+                LDA #$00
+                STA platformTimer
+            +
+
             INY
             LDA (temp16),y
             STA userScreenByte1
+            
 
             LDY #125 ;
             LDA (temp16),y

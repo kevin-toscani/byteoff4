@@ -442,6 +442,16 @@ gotHmoveDirection:
 	SBC #$00
 	STA xHold_screen
 
+;;;;;;;;;;;;;;;;;;;;; TEST AGAINST LEFT CAMERA BOUNDS.
+;; Get cam clip left position
+    LDA camX
+    STA temp16 ;; low left cam clip
+    LDA camX_hi
+    ;AND #%00001111
+    SBC #$00
+    AND #%00001111
+    STA temp16+1 ;; high left cam clip
+
     LDA screenType
     CMP #$08
     BNE +	
@@ -450,15 +460,6 @@ gotHmoveDirection:
         JMP doneWithH
 	+
     
-	;;;;;;;;;;;;;;;;;;;;; TEST AGAINST LEFT CAMERA BOUNDS.
-	;; Get cam clip left position
-		LDA camX
-		STA temp16 ;; low left cam clip
-		LDA camX_hi
-		;AND #%00001111
-		SBC #$00
-		AND #%00001111
-		STA temp16+1 ;; high left cam clip
 	;;; Player's position is in xHold_lo and xHold_hi
 	
 		LDA Object_x_hi,x

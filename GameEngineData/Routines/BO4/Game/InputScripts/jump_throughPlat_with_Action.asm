@@ -41,17 +41,19 @@
 
         JMP +doJump
     +checkMore
-     CheckCollisionPoint temp, temp1, #$09, tempA ;; check below feet to see if it is prize block .
-                                        ;;; if it is (equal), can jump.
-                                        ;;; if not, skips jumping.
-    BNE +checkMore 
-        JMP +doJump
-    +checkMore
-    CheckCollisionPoint temp, temp1, #$0A, tempA ;; check below feet to see if it is ladder.
-                                        ;;; if it is (equal), can jump.
-                                        ;;; if not, skips jumping.
-     BNE +dontDoJump
-          JMP  +doJump
+
+
+;     CheckCollisionPoint temp, temp1, #$09, tempA ;; check below feet to see if it is prize block .
+;                                        ;;; if it is (equal), can jump.
+;                                        ;;; if not, skips jumping.
+;    BNE +checkMore 
+;        JMP +doJump
+;    +checkMore
+;    CheckCollisionPoint temp, temp1, #$0A, tempA ;; check below feet to see if it is ladder.
+;                                        ;;; if it is (equal), can jump.
+;                                        ;;; if not, skips jumping.
+;     BNE +dontDoJump
+;          JMP  +doJump
         +dontDoJump
             ;; check second point.
         LDY Object_type,x
@@ -68,16 +70,25 @@
         CheckCollisionPoint temp, temp1, #$07, tempA ;; check below feet to see if it is jumpthrough platform.
                                         ;;; if it is (equal), can jump.
                                         ;;; if not, skips jumping.
-        BEQ +doJump
-        CheckCollisionPoint temp, temp1, #$09, tempA ;; check below feet to see if it is jumpthrough platform.
-                                        ;;; if it is (equal), can jump.
-                                        ;;; if not, skips jumping.
-        BEQ +doJump
-        CheckCollisionPoint temp, temp1, #$0A, tempA ;; check below feet to see if it is ladder.
-                                        ;;; if it is (equal), can jump.
-                                        ;;; if not, skips jumping.
-        BEQ +doJump
-            JMP +skipJumping
+        BNE +dontDoJump
+
+        LDA platformTimer
+        CMP #$C0
+        BCS +dontDoJump
+
+        JMP +doJump
+        
+        +dontDoJump:
+;        CheckCollisionPoint temp, temp1, #$09, tempA ;; check below feet to see if it is jumpthrough platform.
+;                                        ;;; if it is (equal), can jump.
+;                                        ;;; if not, skips jumping.
+;        BEQ +doJump
+;        CheckCollisionPoint temp, temp1, #$0A, tempA ;; check below feet to see if it is ladder.
+;                                        ;;; if it is (equal), can jump.
+;                                        ;;; if not, skips jumping.
+;        BEQ +doJump
+;            JMP +skipJumping
+
 +doJump:
     ;PlaySound #sfx_thump
 

@@ -98,16 +98,16 @@ _default_Title_triangle:
 	.word _default_Title_triangle_pattern0
 	.word _default_Title_triangle_pattern2
 _default_Title_triangle_pattern0:
-	.byte NL12,INST|CONT|38,F2,NL4,F3,INST|1,INST|CONT|38,F2,NL1,CS3
-	.byte NL7,INST|CONT|32,DS3,NL8,INST|CONT|38,F3,INST|1,NL4,INST|CONT|38,F2
+	.byte NL12,INST|CONT|40,F2,NL4,F3,INST|1,INST|CONT|40,F2,NL1,CS3
+	.byte NL7,INST|CONT|32,DS3,NL8,INST|CONT|40,F3,INST|1,NL4,INST|CONT|40,F2
 	.byte DS3,F3,CS3,D00
 _default_Title_triangle_pattern1:
-	.byte NL12,INST|CONT|38,C2,NL4,C3,INST|1,INST|CONT|38,C2,NL1,GS2
-	.byte NL7,INST|CONT|32,AS2,NL8,INST|CONT|38,C3,NL4,INST|1,INST|38,AS2
+	.byte NL12,INST|CONT|40,C2,NL4,C3,INST|1,INST|CONT|40,C2,NL1,GS2
+	.byte NL7,INST|CONT|32,AS2,NL8,INST|CONT|40,C3,NL4,INST|1,INST|40,AS2
 	.byte GS2,NL1,F2,NL7,INST|CONT|32,G2,D00
 _default_Title_triangle_pattern2:
-	.byte NL12,INST|CONT|38,C2,NL4,C3,INST|1,INST|CONT|38,C2,NL1,GS2
-	.byte NL7,INST|CONT|32,AS2,NL16,INST|CONT|38,C3,INST|12,D00
+	.byte NL12,INST|CONT|40,C2,NL4,C3,INST|1,INST|CONT|40,C2,NL1,GS2
+	.byte NL7,INST|CONT|32,AS2,NL16,INST|CONT|40,C3,INST|12,D00
 
 _default_Title_noise:
 	.word _default_Title_noise_pattern0
@@ -658,7 +658,7 @@ _default_Transmission_noise_pattern1:
 _default_Boss_header:
 	.byte 3
 	.byte 180
-	.byte 4
+	.byte 17
 	.word _default_Boss_pulse1
 	.word _default_Boss_pulse2
 	.word _default_Boss_triangle
@@ -666,10 +666,23 @@ _default_Boss_header:
 	.word _default_Boss_DMC
 
 _default_Boss_pulse1:
+	.word _default_Boss_pulse1_pattern2
 	.word _default_Boss_pulse1_pattern0
 	.word _default_Boss_pulse1_pattern0
 	.word _default_Boss_pulse1_pattern0
 	.word _default_Boss_pulse1_pattern1
+	.word _default_Boss_pulse1_pattern0
+	.word _default_Boss_pulse1_pattern0
+	.word _default_Boss_pulse1_pattern0
+	.word _default_Boss_pulse1_pattern1
+	.word _default_Boss_pulse1_pattern3
+	.word _default_Boss_pulse1_pattern4
+	.word _default_Boss_pulse1_pattern4
+	.word _default_Boss_pulse1_pattern5
+	.word _default_Boss_pulse1_pattern3
+	.word _default_Boss_pulse1_pattern4
+	.word _default_Boss_pulse1_pattern4
+	.word _default_Boss_pulse1_pattern6
 _default_Boss_pulse1_pattern0:
 	.byte NL8,INST|CONT|31,F1,NL6,INST|CONT|33,F2,F2,NL4,F2,NL16
 	.byte INST|34,NL24,INST|35,D00
@@ -677,35 +690,176 @@ _default_Boss_pulse1_pattern1:
 	.byte NL8,INST|CONT|31,F1,NL6,INST|CONT|33,F2,F2,NL4,F2,NL9
 	.byte INST|34,NL3,INST|1,NL4,INST|CONT|32,F1,F2,INST|1,INST|CONT|32,FS2
 	.byte INST|1,INST|CONT|32,DS2,F2,D00
+_default_Boss_pulse1_pattern2:
+	.byte NL8,FXX,$0A,INST|CONT|62,F2,NL4,INST|63,NL8,INST|62,NL4,INST|63
+	.byte NL8,INST|62,NL4,FXX,$03,INST|63,INST|32,INST|1,INST|CONT|32,FS2,INST|1
+	.byte INST|CONT|32,DS2,NL8,F2,D00
+_default_Boss_pulse1_pattern3:
+	.byte NL64,INST|CONT|38,C4,D00
+_default_Boss_pulse1_pattern4:
+	.byte NL64,INST|CONT|38,CS4,D00
+_default_Boss_pulse1_pattern5:
+	.byte NL32,INST|CONT|38,B3,C4,D00
+_default_Boss_pulse1_pattern6:
+	.byte NL32,INST|CONT|38,B3,NL8,INST|CONT|31,C3,C2,NL16,C1,BXX,$01
 
 _default_Boss_pulse2:
+	.word _default_Boss_pulse2_pattern2
 	.word _default_Boss_pulse2_pattern0
 	.word _default_Boss_pulse2_pattern0
 	.word _default_Boss_pulse2_pattern0
 	.word _default_Boss_pulse2_pattern1
+	.word _default_Boss_pulse2_pattern0
+	.word _default_Boss_pulse2_pattern0
+	.word _default_Boss_pulse2_pattern0
+	.word _default_Boss_pulse2_pattern1
+	.word _default_Boss_pulse2_pattern3
+	.word _default_Boss_pulse2_pattern4
+	.word _default_Boss_pulse2_pattern5
+	.word _default_Boss_pulse2_pattern6
+	.word _default_Boss_pulse2_pattern7
+	.word _default_Boss_pulse2_pattern8
+	.word _default_Boss_pulse2_pattern9
+	.word _default_Boss_pulse2_pattern10
 _default_Boss_pulse2_pattern0:
 	.byte NL12,INST|CONT|6,F1,F1,NL16,F1,NL12,F1,F1,D00
 _default_Boss_pulse2_pattern1:
 	.byte NL12,INST|CONT|6,F1,F1,F1,NL4,INST|23,F2,INST|1,INST|CONT|23
 	.byte FS2,INST|1,INST|CONT|23,DS2,F2,D00
+_default_Boss_pulse2_pattern2:
+	.byte NL36,INST|CONT|6,F1,NL4,INST|23,F2,INST|1,INST|CONT|23,FS2,INST|1
+	.byte INST|CONT|23,DS2,F2,D00
+_default_Boss_pulse2_pattern3:
+	.byte NL1,INST|CONT|23,F2,GS2,C3,F2,GS2,C3,INST|CONT|40,F2
+	.byte GS2,C3,INST|CONT|43,F2,GS2,C3,INST|CONT|23,F2,GS2,C3
+	.byte F2,GS2,C3,INST|CONT|40,F2,GS2,INST|CONT|23,F2,GS2,C3
+	.byte F2,GS2,C3,INST|CONT|40,F2,GS2,C3,INST|CONT|43,F2,GS2
+	.byte C3,NL4,INST|CONT|1,F2,NL1,INST|23,GS2,C3,F2,GS2
+	.byte C3,INST|CONT|40,F2,GS2,C3,INST|CONT|43,F2,INST|23,GS2,C3
+	.byte F2,GS2,C3,INST|CONT|40,F2,GS2,C3,INST|CONT|43,F2,INST|23
+	.byte GS2,C3,F2,GS2,C3,INST|CONT|40,F2,GS2,D00
+_default_Boss_pulse2_pattern4:
+	.byte NL1,INST|CONT|23,F2,GS2,CS3,F2,GS2,CS3,INST|CONT|40,F2
+	.byte GS2,CS3,INST|CONT|43,F2,GS2,CS3,INST|CONT|23,F2,GS2,CS3
+	.byte F2,GS2,CS3,INST|CONT|40,F2,GS2,INST|CONT|23,F2,GS2,CS3
+	.byte F2,GS2,CS3,INST|CONT|40,F2,GS2,CS3,INST|CONT|43,F2,GS2
+	.byte CS3,NL4,INST|CONT|1,F2,NL1,INST|23,GS2,CS3,F2,GS2
+	.byte CS3,INST|CONT|40,F2,GS2,CS3,INST|CONT|43,F2,INST|23,GS2,CS3
+	.byte F2,GS2,CS3,INST|CONT|40,F2,GS2,CS3,INST|CONT|43,F2,INST|23
+	.byte GS2,CS3,F2,GS2,CS3,INST|CONT|40,F2,GS2,D00
+_default_Boss_pulse2_pattern5:
+	.byte NL1,INST|CONT|23,F2,AS2,CS3,F2,AS2,CS3,INST|CONT|40,F2
+	.byte AS2,CS3,INST|CONT|43,F2,AS2,CS3,INST|CONT|25,F2,INST|CONT|23,AS2
+	.byte CS3,F2,AS2,CS3,INST|CONT|40,F2,AS2,INST|CONT|23,F2,AS2
+	.byte CS3,F2,AS2,CS3,INST|CONT|40,F2,AS2,CS3,INST|CONT|43,F2
+	.byte AS2,CS3,NL4,INST|CONT|1,F2,NL1,INST|23,AS2,CS3,F2
+	.byte AS2,CS3,INST|CONT|40,F2,AS2,CS3,INST|CONT|43,F2,INST|23,AS2
+	.byte CS3,F2,AS2,CS3,INST|CONT|40,F2,AS2,CS3,INST|CONT|43,F2
+	.byte INST|23,AS2,CS3,F2,AS2,CS3,INST|CONT|40,F2,AS2,D00
+_default_Boss_pulse2_pattern6:
+	.byte NL1,INST|CONT|23,F2,B2,D3,G3,F2,B2,D3,G3
+	.byte INST|CONT|40,F2,B2,D3,G3,INST|CONT|23,F2,B2,D3,G3
+	.byte F2,B2,D3,G3,INST|CONT|40,F2,B2,D3,G3,INST|CONT|23
+	.byte F2,B2,D3,G3,F2,B2,D3,G3,G2,C3
+	.byte E3,G3,G2,C3,E3,G3,INST|CONT|40,G2,C3,E3
+	.byte G3,INST|CONT|23,G2,C3,E3,G3,G2,C3,E3,G3
+	.byte INST|CONT|40,G2,C3,E3,G3,INST|CONT|23,G2,C3,E3,G3
+	.byte G2,C3,E3,G3,D00
+_default_Boss_pulse2_pattern7:
+	.byte NL1,INST|CONT|23,GS2,C3,F3,GS3,GS2,C3,F3,GS3
+	.byte INST|CONT|40,GS2,C3,F3,GS3,INST|CONT|23,GS2,C3,F3,GS3
+	.byte GS2,C3,F3,GS3,INST|CONT|40,GS2,C3,F3,GS3,INST|CONT|23
+	.byte GS2,C3,F3,GS3,GS2,C3,F3,GS3,INST|CONT|40,GS2
+	.byte C3,F3,GS3,NL4,INST|1,NL1,INST|CONT|23,GS2,C3,F3
+	.byte GS3,GS2,C3,F3,GS3,INST|CONT|40,GS2,C3,F3,GS3
+	.byte INST|CONT|23,GS2,C3,F3,GS3,GS2,C3,F3,GS3,INST|CONT|40
+	.byte GS2,C3,F3,GS3,D00
+_default_Boss_pulse2_pattern8:
+	.byte NL1,INST|CONT|23,GS2,CS3,F3,GS3,GS2,CS3,F3,GS3
+	.byte INST|CONT|40,GS2,CS3,F3,GS3,INST|CONT|23,GS2,CS3,F3,GS3
+	.byte GS2,CS3,F3,GS3,INST|CONT|40,GS2,CS3,F3,GS3,INST|CONT|23
+	.byte GS2,CS3,F3,GS3,GS2,CS3,F3,GS3,INST|CONT|40,GS2
+	.byte CS3,F3,GS3,NL4,INST|1,NL1,INST|CONT|23,GS2,CS3,F3
+	.byte GS3,GS2,CS3,F3,GS3,INST|CONT|40,GS2,CS3,F3,GS3
+	.byte INST|CONT|23,GS2,CS3,F3,GS3,GS2,CS3,F3,GS3,INST|CONT|40
+	.byte GS2,CS3,F3,GS3,D00
+_default_Boss_pulse2_pattern9:
+	.byte NL1,INST|CONT|23,AS2,CS3,F3,AS3,AS2,CS3,F3,AS3
+	.byte INST|CONT|40,AS2,CS3,F3,AS3,INST|CONT|23,AS2,CS3,F3,AS3
+	.byte AS2,CS3,F3,AS3,INST|CONT|40,AS2,CS3,F3,AS3,INST|CONT|23
+	.byte AS2,CS3,F3,AS3,AS2,CS3,F3,AS3,INST|CONT|40,AS2
+	.byte CS3,F3,AS3,NL4,INST|1,NL1,INST|CONT|23,AS2,CS3,F3
+	.byte AS3,AS2,CS3,F3,AS3,INST|CONT|40,AS2,CS3,F3,AS3
+	.byte INST|CONT|23,AS2,CS3,F3,AS3,AS2,CS3,F3,AS3,INST|CONT|40
+	.byte AS2,CS3,F3,AS3,D00
+_default_Boss_pulse2_pattern10:
+	.byte NL1,INST|CONT|23,D3,F3,G3,B3,D3,F3,G3,B3
+	.byte INST|CONT|40,D3,F3,G3,B3,INST|CONT|23,D3,F3,G3,B3
+	.byte D3,F3,G3,B3,INST|CONT|40,D3,F3,G3,B3,INST|CONT|23
+	.byte D3,F3,G3,B3,D3,F3,G3,B3,C3,E3
+	.byte G3,C4,C3,E3,INST|CONT|40,G3,INST|CONT|43,C4,NL24,INST|1
+	.byte D00
 
 _default_Boss_triangle:
+	.word _default_Boss_triangle_pattern2
 	.word _default_Boss_triangle_pattern0
 	.word _default_Boss_triangle_pattern0
 	.word _default_Boss_triangle_pattern0
 	.word _default_Boss_triangle_pattern1
+	.word _default_Boss_triangle_pattern0
+	.word _default_Boss_triangle_pattern0
+	.word _default_Boss_triangle_pattern0
+	.word _default_Boss_triangle_pattern1
+	.word _default_Boss_triangle_pattern3
+	.word _default_Boss_triangle_pattern4
+	.word _default_Boss_triangle_pattern5
+	.word _default_Boss_triangle_pattern6
+	.word _default_Boss_triangle_pattern3
+	.word _default_Boss_triangle_pattern4
+	.word _default_Boss_triangle_pattern5
+	.word _default_Boss_triangle_pattern7
 _default_Boss_triangle_pattern0:
 	.byte NL8,INST|CONT|32,F1,NL4,F2,NL8,F1,NL4,F2,NL40
 	.byte F1,D00
 _default_Boss_triangle_pattern1:
 	.byte NL8,INST|CONT|32,F1,NL4,F2,NL8,F1,NL4,F2,NL8
 	.byte INST|12,NL16,INST|CONT|32,F1,NL8,FS1,NL4,DS1,F1,D00
+_default_Boss_triangle_pattern2:
+	.byte NL48,INST|CONT|6,F1,NL8,INST|CONT|32,FS1,NL4,DS1,F1,D00
+_default_Boss_triangle_pattern3:
+	.byte NL12,INST|CONT|32,F1,NL8,F2,F1,NL4,F2,NL14,F1
+	.byte NL6,F2,NL4,F1,NL8,F2,D00
+_default_Boss_triangle_pattern4:
+	.byte NL12,INST|CONT|32,CS2,NL8,CS3,CS2,NL4,CS3,NL14,CS2
+	.byte NL6,CS3,NL4,CS2,NL8,CS3,D00
+_default_Boss_triangle_pattern5:
+	.byte NL12,INST|CONT|32,AS1,NL8,AS2,AS1,NL4,AS2,NL14,AS1
+	.byte NL6,AS2,NL4,AS1,NL8,AS2,D00
+_default_Boss_triangle_pattern6:
+	.byte NL12,INST|CONT|32,B1,NL8,B2,B1,NL4,B2,NL14,C2
+	.byte NL6,C3,NL4,C2,NL8,C3,D00
+_default_Boss_triangle_pattern7:
+	.byte NL12,INST|CONT|32,B1,NL8,B2,B1,NL4,B2,NL16,C2
+	.byte NL6,C3,NL10,INST|12,D00
 
 _default_Boss_noise:
+	.word _default_Boss_noise_pattern3
 	.word _default_Boss_noise_pattern2
 	.word _default_Boss_noise_pattern0
 	.word _default_Boss_noise_pattern0
 	.word _default_Boss_noise_pattern1
+	.word _default_Boss_noise_pattern2
+	.word _default_Boss_noise_pattern0
+	.word _default_Boss_noise_pattern0
+	.word _default_Boss_noise_pattern1
+	.word _default_Boss_noise_pattern4
+	.word _default_Boss_noise_pattern5
+	.word _default_Boss_noise_pattern5
+	.word _default_Boss_noise_pattern5
+	.word _default_Boss_noise_pattern5
+	.word _default_Boss_noise_pattern5
+	.word _default_Boss_noise_pattern5
+	.word _default_Boss_noise_pattern6
 _default_Boss_noise_pattern0:
 	.byte NL4,INST|CONT|36,$0,INST|CONT|30,$D,INST|CONT|37,$8,INST|CONT|28,$B,$C
 	.byte INST|CONT|36,$0,INST|CONT|37,$8,INST|CONT|28,$C,INST|CONT|36,$0,INST|CONT|30,$D
@@ -721,15 +875,53 @@ _default_Boss_noise_pattern2:
 	.byte $B,$C,INST|CONT|36,$0,INST|CONT|37,$8,INST|CONT|28,$C,INST|CONT|36,$0
 	.byte INST|CONT|30,$D,INST|CONT|37,$8,NL2,INST|CONT|28,$A,INST|CONT|30,$8,NL4
 	.byte INST|CONT|28,$F,INST|CONT|36,$0,INST|CONT|37,$8,INST|CONT|30,$D,D00
+_default_Boss_noise_pattern3:
+	.byte NL64,NUL,D00
+_default_Boss_noise_pattern4:
+	.byte NL4,INST|CONT|37,$8,NL2,INST|CONT|28,$B,INST|CONT|30,$D,INST|CONT|28,$C
+	.byte INST|CONT|30,$D,NL4,INST|CONT|37,$8,NL2,INST|CONT|28,$B,INST|CONT|30,$D
+	.byte INST|CONT|28,$C,INST|CONT|30,$D,NL4,INST|CONT|37,$8,NL2,INST|CONT|28,$B
+	.byte INST|CONT|30,$D,INST|CONT|36,$0,INST|CONT|28,$D,INST|CONT|30,$A,INST|CONT|44,$D
+	.byte INST|CONT|37,$8,INST|CONT|30,$D,$A,INST|CONT|37,$9,INST|CONT|28,$B,INST|CONT|36
+	.byte $9,$0,INST|CONT|30,$D,NL4,INST|CONT|37,$8,NL2,INST|CONT|28,$B
+	.byte INST|CONT|30,$D,D00
+_default_Boss_noise_pattern5:
+	.byte NL2,INST|CONT|36,$0,INST|CONT|28,$D,INST|30,INST|28,INST|CONT|37,$8,INST|CONT|28
+	.byte $D,INST|CONT|36,$0,INST|CONT|28,$D,INST|30,INST|28,INST|CONT|37,$8,INST|CONT|28
+	.byte $D,INST|CONT|36,$0,INST|CONT|28,$D,INST|CONT|37,$8,INST|CONT|28,$D,INST|CONT|36
+	.byte $0,INST|CONT|28,$D,INST|CONT|30,$A,INST|CONT|44,$D,INST|CONT|37,$8,INST|CONT|30
+	.byte $D,$A,INST|CONT|37,$9,INST|CONT|28,$B,INST|CONT|36,$9,$0,INST|CONT|30
+	.byte $D,NL4,INST|CONT|37,$8,NL2,INST|CONT|28,$B,INST|CONT|30,$D,D00
+_default_Boss_noise_pattern6:
+	.byte NL4,INST|CONT|37,$8,NL2,INST|CONT|28,$B,INST|CONT|30,$D,INST|CONT|28,$C
+	.byte INST|CONT|30,$D,NL4,INST|CONT|37,$8,NL2,INST|CONT|28,$B,INST|CONT|30,$D
+	.byte INST|CONT|28,$C,INST|CONT|30,$D,NL4,INST|CONT|37,$8,NL2,INST|CONT|28,$B
+	.byte INST|CONT|30,$D,NL32,INST|CONT|37,$8,D00
 
 _default_Boss_DMC:
+	.word _default_Boss_DMC_pattern2
 	.word _default_Boss_DMC_pattern0
 	.word _default_Boss_DMC_pattern0
 	.word _default_Boss_DMC_pattern0
 	.word _default_Boss_DMC_pattern1
+	.word _default_Boss_DMC_pattern0
+	.word _default_Boss_DMC_pattern0
+	.word _default_Boss_DMC_pattern0
+	.word _default_Boss_DMC_pattern1
+	.word _default_Boss_DMC_pattern0
+	.word _default_Boss_DMC_pattern0
+	.word _default_Boss_DMC_pattern0
+	.word _default_Boss_DMC_pattern0
+	.word _default_Boss_DMC_pattern0
+	.word _default_Boss_DMC_pattern0
+	.word _default_Boss_DMC_pattern0
+	.word _default_Boss_DMC_pattern0
 _default_Boss_DMC_pattern0:
 	.byte NL64,NUL,D00
 _default_Boss_DMC_pattern1:
+	.byte NL36,NUL,NL4,F1,NL8,F2,FS2,NL4,DS2,F2
+	.byte D00
+_default_Boss_DMC_pattern2:
 	.byte NL36,NUL,NL4,F1,NL8,F2,FS2,NL4,DS2,F2
 	.byte D00
 

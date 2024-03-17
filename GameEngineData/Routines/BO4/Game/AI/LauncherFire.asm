@@ -21,7 +21,18 @@
         JMP +storeTempx
     
     +notFlyingBall:
-        ;PlaySound #_sfx_smallFire ;[@TODO]
+    CMP #$17
+    BNE +notPlane
+        PlaySound #_sfx_flyingFire
+        LDA #$25
+        STA tempA
+        LDA Object_x_hi,x
+        CLC
+        ADC #$0C
+        JMP +storeTempx
+        
+    +notPlane:
+        PlaySound #_sfx_smallFire
         LDA #$14
         STA tempA
         LDA Object_x_hi,x

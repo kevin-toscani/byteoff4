@@ -1,7 +1,7 @@
 sabre_maxTracks:
 	.byte 11
 sabre_maxSFX:
-	.byte 22
+	.byte 23
 
 trackHeaderTable_lo:
 	.byte <_default_Intro_header
@@ -53,6 +53,7 @@ sfxHeaderTable_lo:
 	.byte <_sfx_explosionToo_header
 	.byte <_sfx_bossHurt_header
 	.byte <_sfx_quickHit_header
+	.byte <_sfx_smallFire_header
 sfxHeaderTable_hi:
 	.byte >_sfx_zap_header
 	.byte >_sfx_hit_header
@@ -76,6 +77,7 @@ sfxHeaderTable_hi:
 	.byte >_sfx_explosionToo_header
 	.byte >_sfx_bossHurt_header
 	.byte >_sfx_quickHit_header
+	.byte >_sfx_smallFire_header
 
 ;;;; Track index constants
 	_default_Intro        = 0
@@ -112,6 +114,7 @@ sfxHeaderTable_hi:
 	_sfx_explosionToo  = 19
 	_sfx_bossHurt      = 20
 	_sfx_quickHit      = 21
+	_sfx_smallFire     = 22
 
 env0:
 	.byte 0,ENV_LOOP,0
@@ -900,4 +903,15 @@ _sfx_quickHit_pulse2:
 _sfx_quickHit_noise:
 	.byte NL1,INST|CONT|10,$5,$C,$D,$E,$E,$F,INST|23,INST|40
 	.byte INST|43,INST|1,END_SFX
+
+_sfx_smallFire_header:
+	.byte 1
+	.byte 150
+	.word NULL_pulse1
+	.word NULL_pulse2
+	.word NULL_triangle
+	.word _sfx_smallFire_noise
+_sfx_smallFire_noise:
+	.byte NL1,INST|CONT|23,$2,$0,NL2,INST|CONT|10,$2,$3,NL1,INST|CONT|54
+	.byte $2,NL3,$3,NL5,INST|23,NL1,INST|1,END_SFX
 

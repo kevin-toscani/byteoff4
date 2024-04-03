@@ -196,6 +196,10 @@ doHandleGameTimer1D:
     AND #$01
     BEQ +spawnZapEnemyDone
     
+    ;; And only on default game screen types
+    LDA screenType
+    BNE +spawnZapEnemyDone
+    
     ;; Unless there's no input available
     LDA bo4Flags
     AND #$80

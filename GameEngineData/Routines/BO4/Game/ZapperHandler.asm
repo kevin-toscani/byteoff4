@@ -55,6 +55,15 @@ OBJECT_IS_ZAPPABLE = $80   ; Use object flag Bit-7 for zappability.
     BNE +
         JMP +zap_done
     +
+    
+    
+    ;; Check input allowed
+    LDA bo4Flags
+    AND #$80
+    BEQ +
+        JMP +zap_done
+    +
+    
 
     ;; Check zapper cooldown timer
     LDA zapperTimer

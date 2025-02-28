@@ -27,7 +27,7 @@ SwitchBank #$1D
         ADC #0              ; 026
         STA pointer5+1      ; 029
 
-        ;; 8bit: waste 171 cycles
+        ;; 8bit: waste 169 cycles
         LDY #34             ; 031
         - DEY ; 5y-1   
         BNE -               ; 200
